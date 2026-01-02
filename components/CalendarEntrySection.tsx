@@ -1,0 +1,76 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { CalendarDays, ArrowRight } from "lucide-react";
+import { INDIAN_STATES, stateToSlug } from "@/lib/constants";
+import { useHolidayData } from "@/lib/HolidayContext";
+import { CustomSelect } from "@/components/CustomSelect";
+
+export function CalendarEntrySection() {
+    const { selectedState } = useHolidayData();
+    const [entrySectionState, setEntrySectionState] = useState<string>(selectedState);
+
+    // Sync local state when global selectedState changes
+    useEffect(() => {
+        setEntrySectionState(selectedState);
+    }, [selectedState]);
+
+    const handleNavigate = () => {
+        if (entrySectionState === "All States/UTs") {
+            window.location.href = "/all-bank-holiday-2026";
+            return;
+        }
+        const slug = stateToSlug(entrySectionState);
+        window.location.href = `/${slug}-bank-holiday-2026`;
+    };
+
+    const dropdownOptions = [
+        { value: "All States/UTs", label: "All States/UTs" },
+        ...INDIAN_STATES.map(s => ({ value: s, label: s }))
+    ];
+
+    return (
+        <section id="official-calendar-2026" className="w-full py-8 text-white relative z-50 -mt-[40px] md:-mt-[52px] mb-0 scroll-mt-[400px]">
+            <div className="w-full max-w-[1050px] mx-auto px-4">
+                <div className="flex items-center gap-3 mb-[8px]">
+                    <div
+                        className="w-6 h-6 bg-[#ffc61c] animate-pulse"
+                        style={{
+                            maskImage: 'url(/lightning.png)',
+                            maskSize: 'contain',
+                            maskRepeat: 'no-repeat',
+                            maskPosition: 'center',
+                            WebkitMaskImage: 'url(/lightning.png)',
+                            WebkitMaskSize: 'contain',
+                            WebkitMaskRepeat: 'no-repeat',
+                            WebkitMaskPosition: 'center'
+                        }}
+                    />
+                    <h2 className="text-2xl font-bold tracking-tight">Official State/UT-wise Bank Holiday Calendar 2026</h2>
+                </div>
+
+                <div id="calendar-entry-box" className="w-full bg-white/5 backdrop-blur-sm border-[0.25px] border-[#7d3cff]/50 rounded-[4px] p-6 shadow-xl grid grid-cols-1 md:grid-cols-2 items-end gap-6">
+                    {/* Region Selector - 50% Width */}
+                    <div className="w-full">
+                        <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest pl-1">State/UT</label>
+                        <CustomSelect
+                            value={entrySectionState}
+                            onChange={setEntrySectionState}
+                            options={dropdownOptions}
+                            className="h-14 bg-[#0a0a0a] border-[0.5px] border-white/10 text-white text-sm font-medium rounded-[4px] hover:border-[#ffc61c] focus:border-[#ffc61c]"
+                        />
+                    </div>
+
+                    {/* CTA Button - 50% Width */}
+                    <button
+                        onClick={handleNavigate}
+                        className="w-full h-14 bg-[#7d3cff] hover:bg-[#6b2fff] text-white text-sm font-normal px-8 rounded-[4px] transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer"
+                    >
+                        View Official 2026 Calendar
+                        <ArrowRight className="w-5 h-5 text-white" />
+                    </button>
+                </div>
+            </div>
+        </section>
+    );
+}

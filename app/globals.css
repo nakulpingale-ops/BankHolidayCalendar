@@ -1,26 +1,242 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #000000;
+    --foreground: #ffffff;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html {
+    scroll-behavior: smooth;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+a,
+button,
+select,
+[role="button"] {
+    cursor: pointer;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    color: var(--foreground);
+    background: radial-gradient(circle at 50% 0%, #2e1065 0%, #0f0529 35%, #000000 100%);
+    background-attachment: fixed;
+    font-family: Arial, Helvetica, sans-serif;
+    min-height: 100vh;
+}
+
+@keyframes target-pulse {
+    0% {
+        box-shadow: 0 0 0 rgba(125, 60, 255, 0);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(125, 60, 255, 0.6);
+    }
+
+    100% {
+        box-shadow: 0 0 0 rgba(125, 60, 255, 0);
+    }
+}
+
+.animate-target-pulse {
+    animation: target-pulse 1.5s ease-in-out 1 forwards;
+}
+
+@keyframes pulse-custom {
+
+    0%,
+    100% {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+        filter: brightness(1.3);
+    }
+}
+
+.animate-icon-pulse {
+    animation: pulse-custom 2s infinite ease-in-out;
+}
+
+@keyframes toast-enter {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, 100%);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+}
+
+@keyframes toast-exit {
+    0% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(-50%, 100%);
+    }
+}
+
+.animate-toast-enter {
+    animation: toast-enter 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-toast-exit {
+    animation: toast-exit 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* ==============================================
+   PRINT-FRIENDLY STYLES
+   ============================================== */
+
+/* Print-only elements - hidden on screen */
+.print-only {
+    display: none !important;
+}
+
+@media print {
+
+    /* ========== PAGE SETTINGS - HIDE BROWSER HEADERS/FOOTERS ========== */
+    @page {
+        margin: 0;
+        size: auto;
+    }
+
+    /* ========== HIDE NON-ESSENTIAL ELEMENTS ========== */
+    body>*:not(.print-container) {
+        display: none !important;
+    }
+
+    header,
+    nav,
+    footer,
+    .no-print,
+    .print-container button {
+        display: none !important;
+    }
+
+    /* ========== RESET HTML/BODY ========== */
+    html {
+        background: #ffffff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    body {
+        margin: 0 !important;
+        padding: 1.5cm !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-family: Arial, Helvetica, sans-serif !important;
+        font-size: 12pt !important;
+        line-height: 1.4 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* ========== SHOW PRINT CONTAINER ========== */
+    .print-container {
+        display: block !important;
+        visibility: visible !important;
+        position: static !important;
+        width: 100% !important;
+        background: #ffffff !important;
+    }
+
+    .print-container * {
+        visibility: visible !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        box-shadow: none !important;
+    }
+
+    /* ========== SHOW PRINT-ONLY ELEMENTS ========== */
+    .print-only {
+        display: block !important;
+        visibility: visible !important;
+    }
+
+    /* ========== PRINT HEADER ========== */
+    .print-header {
+        display: block !important;
+        visibility: visible !important;
+        text-align: center !important;
+        margin-bottom: 20px !important;
+        padding-bottom: 12px !important;
+        border-bottom: 2px solid #000000 !important;
+    }
+
+    .print-header-brand {
+        display: block !important;
+        font-size: 24pt !important;
+        font-weight: bold !important;
+        color: #000000 !important;
+        margin: 0 0 8px 0 !important;
+        letter-spacing: 2px !important;
+    }
+
+    .print-header-title {
+        display: block !important;
+        font-size: 18pt !important;
+        font-weight: normal !important;
+        color: #000000 !important;
+        margin: 0 0 6px 0 !important;
+    }
+
+    .print-header-state {
+        display: block !important;
+        font-size: 14pt !important;
+        font-weight: normal !important;
+        color: #000000 !important;
+        margin: 0 !important;
+    }
+
+    /* ========== TABLE STYLING ========== */
+    .print-container table {
+        display: table !important;
+        visibility: visible !important;
+        width: 100% !important;
+        border-collapse: collapse !important;
+        margin-top: 16px !important;
+    }
+
+    .print-container thead {
+        display: table-header-group !important;
+    }
+
+    .print-container tbody {
+        display: table-row-group !important;
+    }
+
+    .print-container tr {
+        display: table-row !important;
+        page-break-inside: avoid !important;
+    }
+
+    .print-container th,
+    .print-container td {
+        display: table-cell !important;
+        visibility: visible !important;
+        border: 1px solid #000000 !important;
+        padding: 8px 12px !important;
+        text-align: left !important;
+        background: #ffffff !important;
+        color: #000000 !important;
+        font-size: 11pt !important;
+    }
+
+    .print-container th {
+        font-weight: bold !important;
+        background: #f0f0f0 !important;
+        text-transform: uppercase !important;
+        font-size: 10pt !important;
+    }
 }
