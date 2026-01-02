@@ -15,6 +15,20 @@ import { Share2, CalendarPlus, Download, Printer } from "lucide-react";
 import { notFound } from "next/navigation";
 import { Breadcrumb } from "@/components/Breadcrumb";
 
+// This tells Cloudflare which specific pages to create
+export async function generateStaticParams() {
+    // Add the names of your main holiday pages here
+    // For example: bankholidaycalendar.com/india or /pune
+    return [
+        { slug: 'india' },
+        { slug: 'pune' },
+        { slug: '2026' }
+    ];
+}
+
+// This ensures only the pages listed above are built
+export const dynamicParams = false;
+
 export default function StateCalendarPage({ params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = use(params);
     const { getHolidays, holidays, selectedState } = useHolidayData();
