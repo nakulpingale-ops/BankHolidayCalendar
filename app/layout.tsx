@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter_Tight } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/Header";
@@ -8,6 +9,7 @@ import { HolidayProvider } from "@/lib/HolidayContext";
 import { SeoIndex } from "@/components/SeoIndex";
 import { JsonLdSchema } from "@/components/JsonLdSchema";
 import { FeedbackPopup } from "@/components/FeedbackPopup";
+import { Analytics } from "@/components/Analytics";
 
 
 
@@ -47,6 +49,20 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${interTight.className} w-full min-h-screen overflow-x-hidden bg-[#0F172A] flex flex-col items-center text-white antialiased`} suppressHydrationWarning>
+        {/* Google Analytics 4 */}
+        <Script
+          strategy="afterInteractive"
+          src="https://www.googletagmanager.com/gtag/js?id=G-HQV7FT38DS"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-HQV7FT38DS', { send_page_view: false });
+          `}
+        </Script>
+        <Analytics />
         <ScrollToTop />
         <ThemeProvider
           attribute="class"
