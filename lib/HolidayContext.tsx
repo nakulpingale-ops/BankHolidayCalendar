@@ -22,6 +22,7 @@ interface HolidayContextType {
     selectedState: string;
     setSelectedState: (state: string) => void;
     detectUserLocation: () => Promise<string>;
+    loading: boolean;
 }
 
 // Helper: Normalize state names for robust matching
@@ -190,7 +191,7 @@ export function HolidayProvider({ children, initialHolidays }: { children: React
 
 
     return (
-        <HolidayContext.Provider value={{ holidays, isBankOpen, getHolidays, selectedState, setSelectedState, detectUserLocation }}>
+        <HolidayContext.Provider value={{ holidays, isBankOpen, getHolidays, selectedState, setSelectedState, detectUserLocation, loading: false }}>
             {children}
         </HolidayContext.Provider>
     );

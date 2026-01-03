@@ -104,23 +104,27 @@ body {
 
 @media print {
 
-    /* ========== PAGE SETTINGS - HIDE BROWSER HEADERS/FOOTERS ========== */
+    /* ========== PAGE SETTINGS ========== */
     @page {
         margin: 0;
         size: auto;
     }
 
     /* ========== HIDE NON-ESSENTIAL ELEMENTS ========== */
-    body>*:not(.print-container) {
+    /* Hide elements with print:hidden class */
+    .print\:hidden {
         display: none !important;
+        visibility: hidden !important;
     }
 
+    /* Hide common layout elements by tag */
     header,
     nav,
     footer,
-    .no-print,
-    .print-container button {
+    #inner-page-filters,
+    aside {
         display: none !important;
+        visibility: hidden !important;
     }
 
     /* ========== RESET HTML/BODY ========== */
@@ -148,14 +152,31 @@ body {
         visibility: visible !important;
         position: static !important;
         width: 100% !important;
+        max-width: 100% !important;
         background: #ffffff !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
     }
 
     .print-container * {
         visibility: visible !important;
-        background: #ffffff !important;
         color: #000000 !important;
+        text-shadow: none !important;
         box-shadow: none !important;
+    }
+
+    /* ========== ENABLE BACKGROUND COLORS FOR STATUS BADGES ========== */
+    /* We need to override the universal color reset for specific badges */
+    .print-container .bg-red-900\/40 {
+        background-color: rgba(127, 29, 29, 0.4) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .print-container .bg-green-900\/40 {
+        background-color: rgba(20, 169, 0, 0.4) !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
     }
 
     /* ========== SHOW PRINT-ONLY ELEMENTS ========== */
@@ -218,6 +239,7 @@ body {
 
     .print-container tr {
         display: table-row !important;
+        break-inside: avoid !important;
         page-break-inside: avoid !important;
     }
 
@@ -228,7 +250,7 @@ body {
         border: 1px solid #000000 !important;
         padding: 8px 12px !important;
         text-align: left !important;
-        background: #ffffff !important;
+        background: transparent !important;
         color: #000000 !important;
         font-size: 11pt !important;
     }

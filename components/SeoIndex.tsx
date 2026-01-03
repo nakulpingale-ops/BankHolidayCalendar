@@ -5,7 +5,7 @@ import { INDIAN_STATES, stateToSlug } from "@/lib/constants";
 
 export function SeoIndex() {
     return (
-        <section className="w-full py-12 mt-10 border-t border-white/5">
+        <section className="w-full py-12 mt-10 border-t border-white/5 print:hidden">
             <div className="w-full max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8">
                 <h2 className="text-[12px] font-bold text-[#7d3cff] uppercase tracking-widest mb-5">
                     REGIONAL BANK HOLIDAY CALENDARS 2026

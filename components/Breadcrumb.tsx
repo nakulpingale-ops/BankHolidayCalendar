@@ -42,7 +42,7 @@ export function Breadcrumb({ stateName, stateSlug }: BreadcrumbProps) {
             />
 
             {/* Visual Breadcrumb */}
-            <nav aria-label="Breadcrumb" className="w-full max-w-[1050px] mx-auto px-4 mb-5">
+            <nav aria-label="Breadcrumb" className="w-full max-w-[1050px] mx-auto px-4 mb-5 print:hidden">
                 <ol className="flex items-center gap-1.5 text-[12px]">
                     <li>
                         <a

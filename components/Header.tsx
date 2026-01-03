@@ -5,7 +5,7 @@ import { MarketStatus } from "./MarketStatus";
 
 export function Header() {
     return (
-        <header className="fixed top-0 left-0 z-50 w-full pt-4 pb-4 transition-all duration-300 bg-black/20 backdrop-blur-md border-b border-purple-500/20">
+        <header className="fixed top-0 left-0 z-50 w-full pt-4 pb-4 transition-all duration-300 bg-black/20 backdrop-blur-md border-b border-purple-500/20 print:hidden">
             <div className="flex items-center justify-between w-full max-w-[1050px] mx-auto px-4">
                 <div className="flex flex-col -ml-0.5">
                     <Link href="/" className="text-base md:text-xl font-bold tracking-normal text-white hover:opacity-90 transition-opacity leading-none">
