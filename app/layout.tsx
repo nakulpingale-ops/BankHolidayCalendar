@@ -62,6 +62,15 @@ export default function RootLayout({
             gtag('config', 'G-HQV7FT38DS', { send_page_view: false });
           `}
         </Script>
+
+        {/* Google AdSense */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5019551171853082"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+
         <Analytics />
         <ScrollToTop />
         <ThemeProvider
