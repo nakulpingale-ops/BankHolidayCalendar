@@ -44,11 +44,30 @@ const HolidayContext = createContext<HolidayContextType | undefined>(undefined);
 // Import standardized slug functions from constants
 import { stateToSlug, slugToState } from "@/lib/constants";
 
-export function HolidayProvider({ children, initialHolidays }: { children: React.ReactNode, initialHolidays: Holiday[] }) {
-    const [holidays, setHolidays] = useState<Holiday[]>(initialHolidays);
+export function HolidayProvider({ children }: { children: React.ReactNode }) {
+    const [holidays, setHolidays] = useState<Holiday[]>([]);
+    const [loading, setLoading] = useState(true);
 
     // Default to Maharashtra as fallback
     const [selectedState, setSelectedStateInternal] = useState("Maharashtra");
+
+    // Load CSV data client-side
+    useEffect(() => {
+        fetch("/bankholidays2026.csv")
+            .then((res) => res.text())
+            .then((csvText) => {
+                const { data } = Papa.parse<Holiday>(csvText, {
+                    header: true,
+                    skipEmptyLines: true,
+                });
+                setHolidays(data);
+                setLoading(false);
+            })
+            .catch((err) => {
+                console.error("Failed to load holiday data:", err);
+                setLoading(false);
+            });
+    }, []);
 
     const setSelectedState = (state: string) => {
         setSelectedStateInternal(state);
@@ -191,7 +210,7 @@ export function HolidayProvider({ children, initialHolidays }: { children: React
 
 
     return (
-        <HolidayContext.Provider value={{ holidays, isBankOpen, getHolidays, selectedState, setSelectedState, detectUserLocation, loading: false }}>
+        <HolidayContext.Provider value={{ holidays, isBankOpen, getHolidays, selectedState, setSelectedState, detectUserLocation, loading }}>
             {children}
         </HolidayContext.Provider>
     );

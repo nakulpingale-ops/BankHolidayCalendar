@@ -1,13 +1,10 @@
 import type { Metadata } from "next";
 import { Inter_Tight } from "next/font/google";
-import fs from "fs";
-import path from "path";
-import Papa from "papaparse";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
-import { HolidayProvider, Holiday } from "@/lib/HolidayContext";
+import { HolidayProvider } from "@/lib/HolidayContext";
 import { SeoIndex } from "@/components/SeoIndex";
 import { JsonLdSchema } from "@/components/JsonLdSchema";
 import { FeedbackPopup } from "@/components/FeedbackPopup";
@@ -47,14 +44,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Read and parse CSV file (Server Side)
-  const csvPath = path.join(process.cwd(), "public", "bankholidays2026.csv");
-  const csvFile = fs.readFileSync(csvPath, "utf8");
-  const { data } = Papa.parse<Holiday>(csvFile, {
-    header: true,
-    skipEmptyLines: true,
-  });
-
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${interTight.className} w-full min-h-screen overflow-x-hidden bg-[#0F172A] flex flex-col items-center text-white antialiased`} suppressHydrationWarning>
@@ -65,7 +54,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <HolidayProvider initialHolidays={data}>
+          <HolidayProvider>
             <JsonLdSchema />
             {/* Header Wrapper */}
             <div className="w-full">

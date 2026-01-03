@@ -1,6 +1,6 @@
-export const runtime = "edge";
-
 "use client";
+
+export const runtime = "edge";
 
 import { useState, use, useEffect } from "react";
 import { format, parse, startOfMonth, endOfMonth, eachMonthOfInterval } from "date-fns";
