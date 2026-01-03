@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { format, parse, eachMonthOfInterval } from "date-fns";
 import Papa from "papaparse";
+import Link from "next/link";
 import { useHolidayData } from "@/lib/HolidayContext";
 import { INDIAN_STATES, stateToSlug } from "@/lib/constants";
 import { CustomSelect } from "@/components/CustomSelect";
@@ -379,6 +380,24 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
                 </section>
 
             </div>
+
+            {/* Browse All States - Crawlable Links for SEO */}
+            {stateName === "All States/UTs" && (
+                <section className="w-full max-w-[1050px] mx-auto px-4 print:hidden">
+                    <h2 className="text-lg font-bold text-white mb-4 uppercase tracking-wide">Browse State-wise Bank Holidays 2026</h2>
+                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
+                        {INDIAN_STATES.map((state) => (
+                            <Link
+                                key={state}
+                                href={`/${stateToSlug(state)}-bank-holiday-2026`}
+                                className="text-sm text-[#e5e7eb] hover:text-[#7d3cff] transition-colors py-1"
+                            >
+                                {state}
+                            </Link>
+                        ))}
+                    </div>
+                </section>
+            )}
 
             {/* D. Footer Content Stack - Hidden on Print */}
             <div className="w-full space-y-12 print:hidden">
