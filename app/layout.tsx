@@ -37,6 +37,9 @@ export const metadata: Metadata = {
     icon: "/favicon.svg",
     apple: "/apple-touch-icon.png",
   },
+  other: {
+    "google-adsense-account": "ca-pub-5019551171853082",
+  },
 };
 
 import { ScrollToTop } from "@/components/ScrollToTop";
