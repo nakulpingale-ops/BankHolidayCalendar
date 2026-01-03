@@ -36,14 +36,19 @@ export function StatusCard({ label, date, state, status }: StatusCardProps) {
     ];
 
     // Determine tooltip text
-    let tooltipText = "";
-    if (status.isOpen) {
-        tooltipText = "Normal working day";
-    } else if (status.reason === 'Sunday') {
-        tooltipText = "Reason: Weekly Holiday";
-    } else {
-        tooltipText = `Reason: ${status.reason}`;
-    }
+    const getTooltipText = () => {
+        if (status.isOpen) return "Normal working day";
+        switch (status.reason) {
+            case 'Sunday':
+                return "Weekly Holiday: All banks in India remain closed on Sundays as per RBI guidelines.";
+            case 'Second Saturday':
+                return "Weekend Holiday: Banks are closed on the 2nd Saturday of every month.";
+            case 'Fourth Saturday':
+                return "Weekend Holiday: Banks are closed on the 4th Saturday of every month.";
+            default:
+                return `Holiday: ${status.reason}`;
+        }
+    };
 
     const [flash, setFlash] = useState(false);
 
@@ -61,7 +66,7 @@ export function StatusCard({ label, date, state, status }: StatusCardProps) {
 
     return (
         <div
-            className={`w-full flex flex-col h-full rounded-[4px] border pl-9 pr-6 py-5 relative overflow-hidden transition-all duration-300 group/card ${flash
+            className={`w-full flex flex-col h-full rounded-[4px] border px-6 py-5 relative overflow-hidden transition-all duration-300 group/card ${flash
                 ? "border-[#7d3cff] bg-[#7d3cff]/10 shadow-[0_0_30px_rgba(125,60,255,0.3)]"
                 : "border-white/5 bg-white/5 backdrop-blur-sm shadow-xl"
                 }`}
@@ -71,9 +76,11 @@ export function StatusCard({ label, date, state, status }: StatusCardProps) {
                 {format(date, "d MMM yyyy")}
             </div>
 
-            <div className="mt-4 mb-2">
+            <div className="mt-4 mb-[3px]">
                 <h3 className="text-xl text-white font-medium tracking-normal">Are banks open</h3>
-                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-normal uppercase leading-none -mt-[6px]">
+                <h2
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-normal uppercase leading-none -mt-[6px] bg-gradient-to-b from-white via-white to-gray-400 bg-clip-text text-transparent"
+                >
                     {label}?
                 </h2>
             </div>
@@ -82,13 +89,13 @@ export function StatusCard({ label, date, state, status }: StatusCardProps) {
             <div className="flex-1 flex flex-col justify-center gap-4">
                 {/* Main Status Box */}
                 <div
-                    className={`w-full px-4 py-5 rounded-[4px] flex items-center justify-center shadow-inner min-h-[60px] h-auto relative transition-all duration-300 ease-out ${flash
+                    className={`w-full px-4 py-5 rounded-[4px] flex items-center justify-center gap-2 shadow-inner min-h-[60px] h-auto relative transition-all duration-300 ease-out ${flash
                         ? flashTheme
                         : `${theme.boxBorder} ${theme.boxBg} ${theme.boxGlow}`
                         }`}
                 >
                     {/* Text Container - 650px max on desktop, full width on mobile */}
-                    <div className="w-full md:max-w-[650px] mx-auto text-center">
+                    <div className="md:max-w-[650px] text-center">
                         <span className="text-white text-[14px] font-normal relative z-10 break-words text-center max-w-full inline" style={{ overflowWrap: 'break-word', wordWrap: 'break-word', lineHeight: '1.4' }}>
                             {state === "Dadra and Nagar Haveli and Daman and Diu" ? (
                                 // Special two-line layout for longest UT name
@@ -110,16 +117,16 @@ export function StatusCard({ label, date, state, status }: StatusCardProps) {
                         </span>
                     </div>
 
-                    {/* Info Icon with Tooltip - Anchored to outer box */}
-                    {!status.isOpen && status.reason !== 'Sunday' && (
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 group/info">
+                    {/* Info Icon with Tooltip - Inline */}
+                    {!status.isOpen && (
+                        <div className="relative group/info shrink-0">
                             <Info className="w-4 h-4 text-white hover:text-white/80 cursor-pointer transition-colors" />
-                            <div className="absolute bottom-full right-0 mb-3 w-max max-w-[200px] px-3 py-2 bg-[#1e293b] border border-white/10 rounded-[6px] shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all duration-200 z-50 pointer-events-none transform translate-y-1 group-hover/info:translate-y-0">
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-max max-w-[200px] px-3 py-2 bg-[#1e293b] border border-white/10 rounded-[6px] shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all duration-200 z-50 pointer-events-none transform translate-y-1 group-hover/info:translate-y-0">
                                 <span className="text-[11px] text-white font-medium block text-center leading-tight">
-                                    {tooltipText}
+                                    {getTooltipText()}
                                 </span>
                                 {/* Arrow */}
-                                <div className="absolute -bottom-1 right-1.5 w-2 h-2 bg-[#1e293b] border-r border-b border-white/10 transform rotate-45"></div>
+                                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#1e293b] border-r border-b border-white/10 transform rotate-45"></div>
                             </div>
                         </div>
                     )}

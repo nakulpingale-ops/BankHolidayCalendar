@@ -94,19 +94,19 @@ export function FutureChecker() {
 
     // Helper to get tooltip text
     const getTooltipText = (status: any) => {
-        if (status.isOpen) {
-            return "Normal working day";
+        if (status.isOpen) return "Normal working day";
+
+        switch (status.reason) {
+            case 'Sunday':
+                return "Weekly Holiday: All banks in India remain closed on Sundays as per RBI guidelines.";
+            case 'Second Saturday':
+                return "Weekend Holiday: Banks are closed on the 2nd Saturday of every month.";
+            case 'Fourth Saturday':
+                return "Weekend Holiday: Banks are closed on the 4th Saturday of every month.";
+            default:
+                // Named holidays (e.g., "Republic Day") take priority over weekend logic in HolidayContext
+                return `Holiday: ${status.reason}`;
         }
-        if (status.reason === 'Sunday') {
-            return "Weekly Holiday: All banks in India remain closed on Sundays as per RBI guidelines.";
-        }
-        if (status.reason === 'Second Saturday') {
-            return "Weekend Holiday: Banks are closed on the 2nd Saturday of every month.";
-        }
-        if (status.reason === 'Fourth Saturday') {
-            return "Weekend Holiday: Banks are closed on the 4th Saturday of every month.";
-        }
-        return `Holiday: ${status.reason}`;
     };
 
     const [flash, setFlash] = useState(false);

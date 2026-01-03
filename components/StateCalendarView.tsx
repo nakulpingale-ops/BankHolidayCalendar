@@ -367,6 +367,14 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
                         >
                             <Download className="w-4 h-4" />
                         </button>
+                        <button
+                            onClick={handlePrint}
+                            disabled={isActionDisabled}
+                            className={actionButtonClass}
+                            title="Print Calendar"
+                        >
+                            <Printer className="w-4 h-4" />
+                        </button>
                     </div>
                 </section>
 
