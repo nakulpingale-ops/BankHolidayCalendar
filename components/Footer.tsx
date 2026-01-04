@@ -22,7 +22,13 @@ export function Footer() {
                         <h3 className="text-[12px] font-bold text-[#7d3cff] uppercase tracking-widest">POPULAR PAGES</h3>
                         <div className="flex flex-col gap-3">
                             <Link href="/all-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#14A900] transition-colors duration-300">All Bank Holidays 2026</Link>
+                            <Link href="/all-bank-holiday-2025" className="text-[14px] text-[#e5e7eb] hover:text-[#14A900] transition-colors duration-300">All Bank Holidays 2025</Link>
+                            <Link href="/#quick-status" className="text-[14px] text-[#e5e7eb] hover:text-[#14A900] transition-colors duration-300">Bank Holiday Today</Link>
+                            <Link href="/#quick-status" className="text-[14px] text-[#e5e7eb] hover:text-[#14A900] transition-colors duration-300">Bank Holiday Tomorrow</Link>
                             <Link href="/maharashtra-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#14A900] transition-colors duration-300">Maharashtra Bank Holidays 2026</Link>
+                            <Link href="/delhi-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#14A900] transition-colors duration-300">Delhi Bank Holidays 2026</Link>
+                            <Link href="/karnataka-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#14A900] transition-colors duration-300">Karnataka Bank Holidays 2026</Link>
+                            <Link href="/tamil-nadu-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#14A900] transition-colors duration-300">Tamil Nadu Bank Holidays 2026</Link>
                         </div>
                     </div>
 

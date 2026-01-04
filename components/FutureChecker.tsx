@@ -119,13 +119,13 @@ export function FutureChecker() {
                         {/* Header & Controls Row */}
                         <div className="flex flex-col md:flex-row justify-between items-start mb-[3px]">
                             {/* Header - Pushed down to align with Input Boxes (skipping labels) */}
-                            <div className="flex items-center gap-3 mt-[35px]">
+                            <div className="flex items-start md:items-center gap-3 mt-[35px]">
                                 <Calendar className="w-6 h-6 text-[#7d3cff]" />
-                                <h2 className="text-2xl font-bold tracking-tight">Future Bank Holiday Date Check</h2>
+                                <h2 className="text-2xl font-bold tracking-tight">Future Bank Holiday <span className="whitespace-nowrap">Date Check</span></h2>
                             </div>
 
                             {/* External Control Bar - Right Aligned */}
-                            <div className="flex flex-col md:flex-row items-stretch md:items-end justify-end gap-3">
+                            <div className="w-full md:w-auto flex flex-col md:flex-row items-stretch md:items-end justify-end gap-3">
                                 {/* Date Input */}
                                 <div className="w-full md:w-auto">
                                     <label className="block text-[12px] font-bold text-gray-500 mb-[5px] uppercase tracking-normal pl-3">Select Date</label>
@@ -226,7 +226,7 @@ export function FutureChecker() {
                                     </div>
 
                                     {/* Services Row */}
-                                    <div className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+                                    <div className="flex flex-wrap justify-start md:justify-center gap-x-6 gap-y-2">
                                         {[
                                             { name: "RTGS / NEFT", ok: true },
                                             { name: "UPI / IMPS", ok: true },

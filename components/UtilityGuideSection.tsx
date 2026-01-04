@@ -14,7 +14,7 @@ export function UtilityGuideSection({ stateName }: UtilityGuideSectionProps) {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Share List */}
-                    <div className="bg-[#0f1014] border border-[#7d3cff]/20 rounded-lg p-5 flex flex-col gap-3 hover:border-[#7d3cff]/40 transition-colors">
+                    <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-2 text-[#7d3cff]">
                             <Share2 className="w-5 h-5" />
                             <span className="font-bold text-sm uppercase tracking-wide">Share List</span>
@@ -25,7 +25,7 @@ export function UtilityGuideSection({ stateName }: UtilityGuideSectionProps) {
                     </div>
 
                     {/* Add to Calendar */}
-                    <div className="bg-[#0f1014] border border-[#7d3cff]/20 rounded-lg p-5 flex flex-col gap-3 hover:border-[#7d3cff]/40 transition-colors">
+                    <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-2 text-[#7d3cff]">
                             <CalendarPlus className="w-5 h-5" />
                             <span className="font-bold text-sm uppercase tracking-wide">Add to Calendar</span>
@@ -36,7 +36,7 @@ export function UtilityGuideSection({ stateName }: UtilityGuideSectionProps) {
                     </div>
 
                     {/* Download List */}
-                    <div className="bg-[#0f1014] border border-[#7d3cff]/20 rounded-lg p-5 flex flex-col gap-3 hover:border-[#7d3cff]/40 transition-colors">
+                    <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-2 text-[#7d3cff]">
                             <Download className="w-5 h-5" />
                             <span className="font-bold text-sm uppercase tracking-wide">Download List</span>

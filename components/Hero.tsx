@@ -35,7 +35,7 @@ export function Hero() {
     const statusTomorrow = isBankOpen(tomorrow, selectedState);
 
     return (
-        <section className="w-full pt-16 pb-0 -mb-10 text-white">
+        <section id="quick-status" className="w-full pt-16 pb-0 -mb-10 text-white">
             <div className="w-full max-w-[1050px] mx-auto px-4">
                 {/* State Selector for Global Context */}
 
@@ -90,12 +90,12 @@ export function Hero() {
                 </div>
 
                 <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-[12px] px-4 text-[12px] text-gray-500">
-                    <div className="flex items-center gap-1.5">
-                        <AlertCircle className="w-[14px] h-[14px] text-yellow-500 shrink-0" />
+                    <div className="flex items-start md:items-center gap-1.5">
+                        <AlertCircle className="w-[14px] h-[14px] text-yellow-500 shrink-0 mt-[1.5px]" />
                         <span>Branch visits and clearing services are available basis bank operational hours.</span>
                     </div>
-                    <div className="flex items-center gap-1.5 align-middle">
-                        <CheckCircle className="w-[14px] h-[14px] text-[#14A900] shrink-0" />
+                    <div className="flex items-start md:items-center gap-1.5">
+                        <CheckCircle className="w-[14px] h-[14px] text-[#14A900] shrink-0 mt-[1.5px]" />
                         <span>Verified via RBI circulars, State Gazettes & bank notices. Updated daily.</span>
                     </div>
                 </div>

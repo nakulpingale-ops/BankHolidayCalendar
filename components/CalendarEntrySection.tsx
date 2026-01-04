@@ -32,7 +32,7 @@ export function CalendarEntrySection() {
     return (
         <section id="official-calendar-2026" className="w-full py-8 text-white relative z-50 -mt-[40px] md:-mt-[52px] mb-0 scroll-mt-[400px]">
             <div className="w-full max-w-[1050px] mx-auto px-4">
-                <div className="flex items-center gap-3 mb-[8px]">
+                <div className="flex items-start md:items-center gap-3 mb-[8px]">
                     <div
                         className="w-6 h-6 bg-[#ffc61c] animate-pulse"
                         style={{

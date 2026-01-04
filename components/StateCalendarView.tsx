@@ -169,12 +169,15 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
             </div>
 
             {/* A. High Impact Header - Hidden on Print */}
-            <header className="w-full max-w-[1100px] mx-auto text-center space-y-1.5 px-4 -mt-7 print:hidden">
+            <header className="w-full max-w-[1100px] mx-auto text-center space-y-1.5 px-4 -mt-[51px] md:-mt-7 print:hidden">
                 <h1 className="font-black text-white uppercase tracking-tighter leading-none">
-                    <span className="block text-[32px] md:text-[56px] whitespace-nowrap">ANNUAL BANKING CALENDAR 2026</span>
-                    <span className="block -mt-1 text-[#7d3cff] text-[24px] md:text-[42px]">{stateName === "All States/UTs" ? "ALL INDIA" : stateName}</span>
+                    <span className="block text-[32px] md:text-[56px] md:whitespace-nowrap">
+                        <span className="block md:inline">ANNUAL BANKING</span>
+                        <span className="block md:inline"> CALENDAR 2026</span>
+                    </span>
+                    <span className="block mt-[3px] md:-mt-1 text-[#7d3cff] text-[24px] md:text-[42px]">{stateName === "All States/UTs" ? "ALL INDIA" : stateName}</span>
                 </h1>
-                <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 text-[12px] uppercase tracking-widest font-medium">
+                <div className="flex flex-wrap items-center justify-center gap-[5px] md:gap-6 text-[12px] uppercase tracking-widest font-medium">
                     <div className="flex items-center gap-2">
                         <div className="w-2 h-2 rounded-full bg-[#22c55e] shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse"></div>
                         <span className="text-white">RTGS / NEFT</span>
