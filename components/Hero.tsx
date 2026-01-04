@@ -74,29 +74,34 @@ export function Hero() {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-[6px]">
-                    <StatusCard
-                        label="TODAY"
-                        date={today}
-                        state={selectedState}
-                        status={statusToday}
-                    />
-                    <StatusCard
-                        label="TOMORROW"
-                        date={tomorrow}
-                        state={selectedState}
-                        status={statusTomorrow}
-                    />
-                </div>
-
-                <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-[12px] px-4 text-[12px] text-gray-500">
-                    <div className="flex items-start md:items-center gap-1.5">
-                        <AlertCircle className="w-[14px] h-[14px] text-yellow-500 shrink-0 mt-[1.5px]" />
-                        <span>Branch visits and clearing services are available basis bank operational hours.</span>
+                <div className={`backdrop-blur-sm border-[0.5px] rounded-[4px] p-4 md:p-6 transition-all duration-300 ${statusToday.isOpen
+                    ? "border-[#14A900]/50 bg-[#14A900]/5"
+                    : "border-[#ef4444]/50 bg-[#ef4444]/5"
+                    }`}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <StatusCard
+                            label="TODAY"
+                            date={today}
+                            state={selectedState}
+                            status={statusToday}
+                        />
+                        <StatusCard
+                            label="TOMORROW"
+                            date={tomorrow}
+                            state={selectedState}
+                            status={statusTomorrow}
+                        />
                     </div>
-                    <div className="flex items-start md:items-center gap-1.5">
-                        <CheckCircle className="w-[14px] h-[14px] text-[#14A900] shrink-0 mt-[1.5px]" />
-                        <span>Verified via RBI circulars, State Gazettes & bank notices. Updated daily.</span>
+
+                    <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-[16px] px-4 text-[12px] text-gray-400">
+                        <div className="flex items-start md:items-center gap-1.5">
+                            <AlertCircle className="w-[14px] h-[14px] text-yellow-500 shrink-0 mt-[1.5px] md:mt-0" />
+                            <span>Branch visits and clearing services are available basis bank operational hours.</span>
+                        </div>
+                        <div className="flex items-start md:items-center gap-1.5">
+                            <CheckCircle className="w-[14px] h-[14px] text-[#14A900] shrink-0 mt-[1.5px] md:mt-0" />
+                            <span>Verified via RBI circulars, State Gazettes & bank notices. Updated daily.</span>
+                        </div>
                     </div>
                 </div>
             </div>
