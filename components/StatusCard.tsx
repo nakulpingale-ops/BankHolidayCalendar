@@ -66,9 +66,11 @@ export function StatusCard({ label, date, state, status }: StatusCardProps) {
 
     return (
         <div
-            className={`w-full flex flex-col h-full rounded-[4px] border px-6 py-5 relative overflow-hidden transition-all duration-300 group/card ${flash
+            className={`w-full flex flex-col h-full rounded-[4px] border-[0.5px] px-6 py-5 relative overflow-hidden transition-all duration-300 group/card ${flash
                 ? "border-[#7d3cff] bg-[#7d3cff]/10 shadow-[0_0_30px_rgba(125,60,255,0.3)]"
-                : "border-white/5 bg-white/5 backdrop-blur-sm shadow-xl"
+                : status.isOpen
+                    ? "border-[#14A900]/50 bg-white/5 backdrop-blur-sm shadow-xl"
+                    : "border-[#ef4444]/50 bg-white/5 backdrop-blur-sm shadow-xl"
                 }`}
         >
             {/* Date Top Right */}
