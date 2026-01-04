@@ -54,7 +54,7 @@ export default function AboutPage() {
                                     <li className="flex items-start gap-4">
                                         <div className="w-2.5 h-2.5 rounded-full bg-[#14A900] mt-[5px] flex-shrink-0 shadow-[0_0_8px_rgba(20,169,0,0.4)]"></div>
                                         <div className="flex flex-col gap-1">
-                                            <span className="text-[#14A900] font-black uppercase text-[12px] tracking-widest leading-none">REAL-TIME ACCURACY</span>
+                                            <span className="text-[#14A900] font-black uppercase text-[12px] tracking-widest leading-none">VERIFIED ACCURACY</span>
                                             <p>Processed locally for maximum user privacy and speed.</p>
                                         </div>
                                     </li>

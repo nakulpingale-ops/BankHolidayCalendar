@@ -35,7 +35,7 @@ export function SeoGuideSection({ stateName }: SeoGuideSectionProps) {
                     <p>
                         The <strong>Bank Holiday Calendar 2026</strong> is governed principally by the <strong>Negotiable Instruments Act, 1881</strong>.
                         Under Section 25 of this act, the central and state governments declare specific days as public holidays.
-                        Our <strong>Bank Holiday Calendar 2026</strong> tracks these announcements in real-time to provide you with the most up-to-date schedule for {displayState}.
+                        Our <strong>Bank Holiday Calendar 2026</strong> tracks these announcements based on official schedules to provide you with the most up-to-date calendar for {displayState}.
                     </p>
 
                     <h2 className="flex items-center gap-3">

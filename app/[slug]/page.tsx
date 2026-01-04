@@ -24,12 +24,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
 
     const title = stateName === "All States"
-        ? "All Bank Holidays 2026 India - Complete State-wise List | HolBank"
+        ? "All Bank Holidays 2026 India - Official State-wise List | HolBank"
         : `${stateName} Bank Holidays 2026 - Official List & Dates | HolBank`;
 
     const description = stateName === "All States"
-        ? "Complete list of all bank holidays in India for 2026. State-wise official holiday calendar with dates, days, and RBI-verified banking schedules for all Indian States & UTs."
-        : `Official ${stateName} bank holidays 2026 list. Check all ${stateName} banking holiday dates, days, and RBI-verified schedule. Download calendar & plan ahead.`;
+        ? "View the 2026 bank holiday list state-wise. Filter by State/UT and month, and see bank closures for holidays, Sundays, and 2nd & 4th Saturdays."
+        : `View the 2026 bank holiday list for ${stateName}. Filter by month, and see bank closures for holidays, Sundays, and 2nd & 4th Saturdays.`;
 
     return {
         title,

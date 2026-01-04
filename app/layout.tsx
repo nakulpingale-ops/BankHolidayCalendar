@@ -17,11 +17,11 @@ const interTight = Inter_Tight({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bankholidaycalendar.com"),
-  title: "Bank Holiday Calendar 2026 - Check Live Status & State-wise List",
-  description: "Verify if banks are open today or tomorrow with the ultimate Bank Holiday Calendar 2026. Get state-wise holiday data, download 2026 banking schedules, and check future dates for all Indian States & UTs. Verified via RBI circulars.",
+  title: "Bank Holiday Calendar 2026 - Official State-wise Holiday List",
+  description: "Check whether banks are open or closed today and tomorrow in India. Based on bank holiday schedules, Sundays, and 2nd & 4th Saturdays.",
   openGraph: {
-    title: "Bank Holiday Calendar 2026 - Check Live Status & State-wise List",
-    description: "Verify if banks are open today or tomorrow with the ultimate Bank Holiday Calendar 2026. Get state-wise holiday data, download 2026 banking schedules, and check future dates for all Indian States & UTs. Verified via RBI circulars.",
+    title: "Bank Holiday Calendar 2026 - Official State-wise Holiday List",
+    description: "Check whether banks are open or closed today and tomorrow in India. Based on official bank holiday schedules, Sundays, and 2nd & 4th Saturdays.",
     type: "website",
     url: "https://bankholidaycalendar.com",
     siteName: "Bank Holiday Calendar",
