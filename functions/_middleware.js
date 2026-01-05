@@ -1,17 +1,14 @@
 export async function onRequest(context) {
-    const req = context.request;
-    const url = new URL(req.url);
-    const host = (req.headers.get("host") || "").toLowerCase();
+    const { request, next } = context;
+    const url = new URL(request.url);
 
-    const CANONICAL_HOST = "bankholidaycalendar.com";
-
-    // Redirect Pages subdomain + www -> apex (preserve path + query)
-    if (host.endsWith(".pages.dev") || host === `www.${CANONICAL_HOST}`) {
-        url.protocol = "https:";
-        url.hostname = CANONICAL_HOST;
-        return Response.redirect(url.toString(), 301);
+    if (url.hostname.endsWith(".pages.dev")) {
+        const canonicalUrl = new URL(url.pathname + url.search, "https://bankholidaycalendar.com");
+        return new Response(null, {
+            status: 301,
+            headers: { "Location": canonicalUrl.toString() }
+        });
     }
 
-    // Otherwise proceed normally
-    return context.next();
+    return next();
 }
