@@ -79,7 +79,7 @@ export function StatusCard({ label, date, state, status }: StatusCardProps) {
             </div>
 
             <div className="mt-4 mb-[3px]">
-                <h3 className="text-xl text-white font-medium tracking-normal">Are banks open</h3>
+                <h3 className="text-xl text-white font-medium tracking-normal">Are banks open in India</h3>
                 <h2
                     className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-normal uppercase leading-none -mt-[6px] bg-gradient-to-b from-white via-white to-gray-400 bg-clip-text text-transparent"
                 >

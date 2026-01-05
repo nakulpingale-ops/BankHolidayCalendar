@@ -10,6 +10,8 @@ import { SeoIndex } from "@/components/SeoIndex";
 import { JsonLdSchema } from "@/components/JsonLdSchema";
 import { FeedbackPopup } from "@/components/FeedbackPopup";
 import { Analytics } from "@/components/Analytics";
+import { PagesDevGuard } from "@/components/PagesDevGuard";
+import { CanonicalUrl } from "@/components/CanonicalUrl";
 
 
 
@@ -17,11 +19,11 @@ const interTight = Inter_Tight({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bankholidaycalendar.com"),
-  title: "Bank Holiday Calendar 2026 - Official State-wise Holiday List",
-  description: "Check whether banks are open or closed today and tomorrow in India. Based on bank holiday schedules, Sundays, and 2nd & 4th Saturdays.",
+  title: "Bank Holiday Calendar 2026 India - Official State-wise Holiday List",
+  description: "Check whether banks are open or closed today and tomorrow in India (state-wise). Based on bank holiday schedules, Sundays, and 2nd & 4th Saturdays.",
   openGraph: {
-    title: "Bank Holiday Calendar 2026 - Official State-wise Holiday List",
-    description: "Check whether banks are open or closed today and tomorrow in India. Based on official bank holiday schedules, Sundays, and 2nd & 4th Saturdays.",
+    title: "Bank Holiday Calendar 2026 India - Official State-wise Holiday List",
+    description: "Check whether banks are open or closed today and tomorrow in India (state-wise). Based on official bank holiday schedules, Sundays, and 2nd & 4th Saturdays.",
     type: "website",
     url: "https://bankholidaycalendar.com",
     siteName: "Bank Holiday Calendar",
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
     follow: true,
   },
   alternates: {
-    canonical: "./",
+    canonical: "https://bankholidaycalendar.com/",
   },
   icons: {
     icon: "/favicon.svg",
@@ -51,6 +53,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* SEO: Canonical URL Management */}
+        <PagesDevGuard />
+        <CanonicalUrl />
+      </head>
       <body className={`${interTight.className} w-full min-h-screen overflow-x-hidden bg-[#0F172A] flex flex-col items-center text-white antialiased`} suppressHydrationWarning>
         {/* Google Analytics 4 */}
         <Script

@@ -1,0 +1,14 @@
+# Cloudflare Pages Redirects - SEO Canonicalization
+# Force all traffic to https://bankholidaycalendar.com
+
+# 1. Redirect pages.dev default domain to canonical apex
+https://bankholidaycalendar.pages.dev/*  https://bankholidaycalendar.com/:splat  301!
+
+# 2. Redirect www to apex (HTTPS)
+https://www.bankholidaycalendar.com/*    https://bankholidaycalendar.com/:splat  301!
+
+# 3. Redirect www to apex (HTTP)
+http://www.bankholidaycalendar.com/*     https://bankholidaycalendar.com/:splat  301!
+
+# 4. Redirect http apex to https apex
+http://bankholidaycalendar.com/*         https://bankholidaycalendar.com/:splat  301!
