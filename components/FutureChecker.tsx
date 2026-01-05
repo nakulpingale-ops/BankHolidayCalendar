@@ -133,7 +133,7 @@ export function FutureChecker() {
                                         type="date"
                                         value={date}
                                         onChange={(e) => setDate(e.target.value)}
-                                        className="w-full md:w-[160px] h-[38px] bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/50 rounded-[4px] px-3 text-white text-[14px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] outline-none transition-all hover:border-[#7d3cff]"
+                                        className="w-full md:w-[160px] h-[38px] bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/50 rounded-[4px] px-3 text-white text-[14px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] outline-none transition-all hover:border-[#7d3cff] cursor-pointer"
                                     />
                                 </div>
 

@@ -49,7 +49,7 @@ export function CalendarEntrySection() {
                     <h2 className="text-2xl font-bold tracking-tight">Official State/UT-wise Bank Holiday Calendar 2026</h2>
                 </div>
 
-                <div id="calendar-entry-box" className="w-full bg-white/5 backdrop-blur-sm border-[0.25px] border-[#7d3cff]/50 rounded-[4px] p-6 shadow-xl grid grid-cols-1 md:grid-cols-2 items-end gap-6">
+                <div id="calendar-entry-box" className="w-full bg-white/5 backdrop-blur-sm border-[0.25px] border-[#ffc71c]/50 rounded-[4px] p-6 shadow-xl grid grid-cols-1 md:grid-cols-2 items-end gap-6">
                     {/* Region Selector - 50% Width */}
                     <div className="w-full">
                         <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest pl-1">State/UT</label>
@@ -64,10 +64,10 @@ export function CalendarEntrySection() {
                     {/* CTA Button - 50% Width */}
                     <button
                         onClick={handleNavigate}
-                        className="w-full h-14 bg-[#7d3cff] hover:bg-[#6b2fff] text-white text-sm font-normal px-8 rounded-[4px] transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer"
+                        className="w-full h-14 bg-[#ffc71c] hover:bg-[#ffc71c] text-[#111111] text-sm font-normal px-8 rounded-[4px] transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer"
                     >
                         View Official 2026 Calendar
-                        <ArrowRight className="w-5 h-5 text-white" />
+                        <ArrowRight className="w-5 h-5 text-[#111111]" />
                     </button>
                 </div>
             </div>
