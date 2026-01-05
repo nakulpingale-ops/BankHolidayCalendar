@@ -65,7 +65,7 @@ export function Hero() {
                                 <select
                                     value={selectedState}
                                     onChange={(e) => setSelectedState(e.target.value)}
-                                    className="w-full bg-[#0e0a18] border border-[#26222f] text-white text-sm rounded-[4px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-transparent block py-2 pl-3 pr-8 transition-all outline-none appearance-none hover:border-[#7d3cff] cursor-pointer truncate"
+                                    className="w-full bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/50 text-white text-sm rounded-[4px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] block py-2 pl-3 pr-8 transition-all outline-none appearance-none hover:border-[#7d3cff] cursor-pointer truncate"
                                 >
                                     {INDIAN_STATES.map(s => <option key={s} value={s} className="bg-black text-white">{s}</option>)}
                                 </select>
@@ -92,7 +92,7 @@ export function Hero() {
                     />
                 </div>
 
-                <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-[12px] px-4 text-[12px] text-gray-500">
+                <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 mt-[12px] px-4 text-[12px] text-white">
                     <div className="flex items-start md:items-center gap-1.5">
                         <AlertCircle className="w-[14px] h-[14px] text-yellow-500 shrink-0 mt-[1.5px]" />
                         <span>Branch visits and clearing services are available basis bank operational hours.</span>

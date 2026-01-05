@@ -133,7 +133,7 @@ export function FutureChecker() {
                                         type="date"
                                         value={date}
                                         onChange={(e) => setDate(e.target.value)}
-                                        className="w-full md:w-[160px] h-[38px] bg-[#0e0a18] border border-[#26222f] rounded-[4px] px-3 text-white text-[14px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-transparent outline-none transition-all hover:border-[#7d3cff]"
+                                        className="w-full md:w-[160px] h-[38px] bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/50 rounded-[4px] px-3 text-white text-[14px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] outline-none transition-all hover:border-[#7d3cff]"
                                     />
                                 </div>
 
@@ -157,7 +157,7 @@ export function FutureChecker() {
                                         <select
                                             value={state}
                                             onChange={(e) => setState(e.target.value)}
-                                            className="w-full md:w-auto h-[38px] bg-[#0e0a18] border border-[#26222f] rounded-[4px] pl-3 pr-8 text-white text-[14px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-transparent outline-none appearance-none transition-all cursor-pointer hover:border-[#7d3cff] truncate"
+                                            className="w-full md:w-auto h-[38px] bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/50 rounded-[4px] pl-3 pr-8 text-white text-[14px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] outline-none appearance-none transition-all cursor-pointer hover:border-[#7d3cff] truncate"
                                         >
                                             {INDIAN_STATES.map(s => <option key={s} value={s} className="bg-black text-white">{s}</option>)}
                                         </select>
@@ -172,7 +172,9 @@ export function FutureChecker() {
                         {/* Big Bounding Box - Results Only */}
                         <div className={`backdrop-blur-sm border rounded-[4px] p-6 shadow-xl transition-all duration-300 ${flash
                             ? "bg-[#17102A] border-[#7d3cff] shadow-[0_0_30px_rgba(125,60,255,0.3)]"
-                            : "bg-white/5 border-[#7d3cff]/50"
+                            : result?.status.isOpen
+                                ? "bg-white/5 border-[#14A900]/50"
+                                : "bg-white/5 border-[#ef4444]/50"
                             }`}>
                             {!isValidYear ? (
                                 <div className="flex flex-col items-center justify-center p-8 gap-3 text-center">

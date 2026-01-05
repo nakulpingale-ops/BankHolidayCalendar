@@ -14,6 +14,7 @@ import { BrandHeadline } from "@/components/BrandHeadline";
 import { Toast } from "@/components/Toast";
 import { Share2, CalendarPlus, Download, Printer } from "lucide-react";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { ADS_ENABLED } from "@/lib/adsConfig";
 
 interface StateCalendarViewProps {
     slug: string;
@@ -198,10 +199,11 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
             </header>
 
             {/* AdSense Slot - Hidden on Print */}
-            <div className="w-[300px] lg:w-[970px] h-[250px] mx-auto -mt-[11px] mb-1 bg-[#0f0f12] flex items-center justify-center overflow-hidden print:hidden">
-                <span className="block lg:hidden text-gray-500 text-sm font-bold uppercase tracking-widest">Advertisement (300x250)</span>
-                <span className="hidden lg:block text-gray-500 text-sm font-bold uppercase tracking-widest">Advertisement (970x250)</span>
-            </div>
+            {ADS_ENABLED && (
+                <div className="w-[300px] lg:w-[970px] min-h-[250px] mx-auto -mt-[11px] mb-1 bg-[#0f0f12] flex items-center justify-center overflow-hidden print:hidden">
+                    {/* Empty container ready for AdSense injection */}
+                </div>
+            )}
 
             {/* B. Control Bar (Filters & Actions) & C. Holiday List Wrapper */}
             <div className="flex flex-col gap-[5px] w-full max-w-[1050px] mx-auto px-4">

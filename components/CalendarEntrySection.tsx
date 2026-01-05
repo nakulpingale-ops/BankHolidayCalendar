@@ -57,7 +57,7 @@ export function CalendarEntrySection() {
                             value={entrySectionState}
                             onChange={setEntrySectionState}
                             options={dropdownOptions}
-                            className="h-14 bg-[#0a0a0a] border-[0.5px] border-white/10 text-white text-sm font-medium rounded-[4px] hover:border-[#ffc61c] focus:border-[#ffc61c]"
+                            className="h-14 bg-[#0a0a0a] text-white text-sm font-medium rounded-[4px]"
                         />
                     </div>
 

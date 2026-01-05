@@ -2,12 +2,18 @@
 
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
+import { ADS_ENABLED } from "@/lib/adsConfig";
 
 const AD_HIDDEN_KEY = "holbank_ad_hidden";
 
 export function AdSensePlaceholder() {
     const [isHidden, setIsHidden] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+
+    // Don't render anything if ads are not enabled
+    if (!ADS_ENABLED) {
+        return null;
+    }
 
     // Check sessionStorage on mount
     useEffect(() => {
@@ -36,15 +42,9 @@ export function AdSensePlaceholder() {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            {/* Label */}
-            <div className="w-[300px] md:w-[728px] flex justify-start mb-1">
-                <span className="text-[10px] font-medium tracking-widest text-slate-400 dark:text-slate-500">ADVERTISEMENT</span>
-            </div>
-
             {/* Mobile Slot (300x250) - Visible on small screens, hidden on md+ */}
-            <div className="md:hidden w-[300px] h-[250px] bg-[#0f0f12] rounded-md relative overflow-hidden flex flex-col items-center justify-center group">
-                <span className="text-gray-500 text-sm font-bold uppercase tracking-widest">Advertisement</span>
-                <span className="text-gray-600 text-xs mt-2">Mobile (300x250)</span>
+            <div className="md:hidden w-[300px] min-h-[250px] bg-[#0f0f12] rounded-md relative overflow-hidden flex flex-col items-center justify-center group">
+                {/* Empty container ready for AdSense injection */}
 
                 {/* Close Button - Mobile */}
                 <button
@@ -58,9 +58,8 @@ export function AdSensePlaceholder() {
             </div>
 
             {/* Desktop Slot (728x90) - Hidden on small screens, visible on md+ */}
-            <div className="hidden md:flex w-[728px] max-w-full h-[90px] bg-[#0f0f12] relative overflow-hidden flex-col items-center justify-center rounded-md group">
-                <span className="text-gray-500 text-sm font-bold uppercase tracking-widest">Advertisement</span>
-                <span className="text-gray-600 text-xs mt-2">Leaderboard (728x90)</span>
+            <div className="hidden md:flex w-[728px] max-w-full min-h-[90px] bg-[#0f0f12] relative overflow-hidden flex-col items-center justify-center rounded-md group">
+                {/* Empty container ready for AdSense injection */}
 
                 {/* Close Button - Desktop */}
                 <button
