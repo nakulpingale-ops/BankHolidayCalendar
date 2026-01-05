@@ -1,32 +1,17 @@
-import type { PagesFunction } from "@cloudflare/workers-types";
-
-// Cloudflare Pages Functions middleware for host-based redirects
-// Runs at the edge before serving static content
-
-interface Env {
-    ASSETS: { fetch: typeof fetch };
-}
-
-export const onRequest: PagesFunction<Env> = async (context) => {
+// @ts-nocheck
+export const onRequest = async (context) => {
     const req = context.request;
     const url = new URL(req.url);
     const host = (req.headers.get("host") || "").toLowerCase();
 
+    // Canonical host
     const targetHost = "bankholidaycalendar.com";
 
-    const shouldRedirectFromPagesDev = host.endsWith(".pages.dev");
-    const shouldRedirectFromWww = host === "www.bankholidaycalendar.com";
-
-    if (shouldRedirectFromPagesDev || shouldRedirectFromWww) {
-        const redirectUrl = new URL(url.toString());
-        redirectUrl.protocol = "https:";
-        redirectUrl.hostname = targetHost;
-        return new Response(null, {
-            status: 301,
-            headers: {
-                Location: redirectUrl.toString(),
-            },
-        });
+    // Redirect any Pages default hostname + www to apex
+    if (host.endsWith(".pages.dev") || host === "www.bankholidaycalendar.com") {
+        url.protocol = "https:";
+        url.hostname = targetHost;
+        return Response.redirect(url.toString(), 301);
     }
 
     return context.next();
