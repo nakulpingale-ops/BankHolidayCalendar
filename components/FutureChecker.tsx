@@ -112,7 +112,7 @@ export function FutureChecker() {
     const [flash, setFlash] = useState(false);
 
     return (
-        <section className="w-full py-4 md:py-12 mt-2 md:-mt-[38px] relative z-10">
+        <section className="w-full py-4 md:py-12 -mt-[23px] md:-mt-[38px] relative z-10">
             <div className="flex flex-col gap-8 w-full max-w-[1050px] mx-auto px-4">
                 <div className="flex flex-col gap-2">
                     <section className="w-full py-8 text-white">

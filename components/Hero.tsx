@@ -44,7 +44,6 @@ export function Hero() {
                         <Zap className="w-6 h-6 text-[#7d3cff]" />
                         <div>
                             <h2 className="text-2xl font-bold tracking-tight">Quick Status</h2>
-                            <p className="text-[11px] text-gray-500 mt-0.5">India bank holidays (state-wise)</p>
                         </div>
                     </div>
                     <div className="flex flex-col items-end gap-1 flex-shrink max-w-full">
