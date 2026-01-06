@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 
 export default function TomorrowPage() {
     return (
-        <div className="pt-[96px] md:pt-[112px]">
+        <div className="pt-[140px] md:pt-[160px]">
             <DayView mode="tomorrow" />
         </div>
     );
