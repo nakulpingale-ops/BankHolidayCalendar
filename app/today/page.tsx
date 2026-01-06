@@ -10,5 +10,9 @@ export const metadata: Metadata = {
 };
 
 export default function TodayPage() {
-    return <DayView mode="today" />;
+    return (
+        <div className="pt-[96px] md:pt-[112px]">
+            <DayView mode="today" />
+        </div>
+    );
 }
