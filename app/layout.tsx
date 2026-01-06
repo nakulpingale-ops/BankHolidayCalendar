@@ -12,6 +12,7 @@ import { FeedbackPopup } from "@/components/FeedbackPopup";
 import { Analytics } from "@/components/Analytics";
 import { PagesDevGuard } from "@/components/PagesDevGuard";
 import { CanonicalUrl } from "@/components/CanonicalUrl";
+import { DebugGlow } from "@/components/DebugGlow";
 
 
 
@@ -59,6 +60,7 @@ export default function RootLayout({
         <CanonicalUrl />
       </head>
       <body className={`${interTight.className} w-full min-h-screen overflow-x-hidden bg-[#0F172A] flex flex-col items-center text-white antialiased`} suppressHydrationWarning>
+        <DebugGlow />
         {/* Google Analytics 4 */}
         <Script
           strategy="afterInteractive"

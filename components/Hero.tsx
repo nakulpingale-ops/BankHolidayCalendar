@@ -64,7 +64,7 @@ export function Hero() {
                                 <select
                                     value={selectedState}
                                     onChange={(e) => setSelectedState(e.target.value)}
-                                    className="w-full bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/50 text-white text-sm rounded-[4px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] block py-2 pl-3 pr-8 transition-all outline-none appearance-none hover:border-[#7d3cff] cursor-pointer truncate"
+                                    className="w-full bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/65 text-white text-sm rounded-[4px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] block py-2 pl-3 pr-8 transition-all outline-none appearance-none hover:border-[#7d3cff] cursor-pointer truncate"
                                 >
                                     {INDIAN_STATES.map(s => <option key={s} value={s} className="bg-black text-white">{s}</option>)}
                                 </select>

@@ -133,7 +133,7 @@ export function FutureChecker() {
                                         type="date"
                                         value={date}
                                         onChange={(e) => setDate(e.target.value)}
-                                        className="w-full md:w-[160px] h-[38px] bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/50 rounded-[4px] px-3 text-white text-[14px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] outline-none transition-all hover:border-[#7d3cff] cursor-pointer"
+                                        className="w-full md:w-[160px] h-[38px] bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/65 rounded-[4px] px-3 text-white text-[14px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] outline-none transition-all hover:border-[#7d3cff] cursor-pointer"
                                     />
                                 </div>
 
@@ -157,7 +157,7 @@ export function FutureChecker() {
                                         <select
                                             value={state}
                                             onChange={(e) => setState(e.target.value)}
-                                            className="w-full md:w-auto h-[38px] bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/50 rounded-[4px] pl-3 pr-8 text-white text-[14px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] outline-none appearance-none transition-all cursor-pointer hover:border-[#7d3cff] truncate"
+                                            className="w-full md:w-auto h-[38px] bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/65 rounded-[4px] pl-3 pr-8 text-white text-[14px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] outline-none appearance-none transition-all cursor-pointer hover:border-[#7d3cff] truncate"
                                         >
                                             {INDIAN_STATES.map(s => <option key={s} value={s} className="bg-black text-white">{s}</option>)}
                                         </select>
@@ -236,10 +236,13 @@ export function FutureChecker() {
                                             { name: "Forex Windows", ok: result.status.isOpen }
                                         ].map(s => (
                                             <div key={s.name} className="flex items-center gap-2">
-                                                <div className={`w-2.5 h-2.5 rounded-full ${s.ok
-                                                    ? 'bg-[#14a900] animate-status-live'
-                                                    : 'bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.8)]'
-                                                    }`} />
+                                                <div
+                                                    className="w-2.5 h-2.5 rounded-full liveGlow transition-colors duration-300"
+                                                    data-status={s.ok ? "open" : "closed"}
+                                                    style={{
+                                                        backgroundColor: s.ok ? "rgb(34, 197, 94)" : "rgb(239, 68, 68)"
+                                                    }}
+                                                />
                                                 <span className="text-gray-300 text-xs font-medium">{s.name}</span>
                                             </div>
                                         ))}

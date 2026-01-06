@@ -180,19 +180,19 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
                 </h1>
                 <div className="flex flex-wrap items-center justify-center gap-[5px] md:gap-6 text-[12px] uppercase tracking-widest font-medium">
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-[#22c55e] shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse"></div>
+                        <div className="w-2.5 h-2.5 rounded-full liveGlow transition-colors duration-300 bg-green-500" data-status="open"></div>
                         <span className="text-white">RTGS / NEFT</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-[#22c55e] shadow-[0_0_8px_rgba(34,197,94,0.6)] animate-pulse"></div>
+                        <div className="w-2.5 h-2.5 rounded-full liveGlow transition-colors duration-300 bg-green-500" data-status="open"></div>
                         <span className="text-white">UPI / IMPS</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-red-600/50 animate-pulse"></div>
+                        <div className="w-2.5 h-2.5 rounded-full liveGlow transition-colors duration-300 bg-red-600/50" data-status="closed"></div>
                         <span className="text-white/40">Cheque Clearing</span>
                     </div>
                     <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 rounded-full bg-red-600/50 animate-pulse"></div>
+                        <div className="w-2.5 h-2.5 rounded-full liveGlow transition-colors duration-300 bg-red-600/50" data-status="closed"></div>
                         <span className="text-white/40">Forex Windows</span>
                     </div>
                 </div>
@@ -209,7 +209,7 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
             <div className="flex flex-col gap-[5px] w-full max-w-[1050px] mx-auto px-4">
                 {/* B. Control Bar (Filters & Actions) - Hidden on Print */}
                 <div className="w-full print:hidden">
-                    <div id="inner-page-filters" className="w-full relative z-20 bg-white/5 backdrop-blur-sm border border-[#7d3cff]/50 rounded-[4px] p-4 flex flex-col md:flex-row gap-4 items-center md:items-end justify-between shadow-2xl scroll-mt-[100px]">
+                    <div id="inner-page-filters" className="w-full relative z-20 bg-white/5 backdrop-blur-sm border border-[#7d3cff]/65 rounded-[4px] p-4 flex flex-col md:flex-row gap-4 items-center md:items-end justify-between shadow-2xl scroll-mt-[100px]">
                         <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
                             {/* Region Selector */}
                             <div className="w-full">

@@ -138,7 +138,13 @@ export function StatusCard({ label, date, state, status }: StatusCardProps) {
                 <div className="flex flex-wrap gap-x-6 gap-y-2 justify-start md:justify-center">
                     {services.map((service) => (
                         <div key={service.name} className="flex items-center gap-2">
-                            <div className={`w-2.5 h-2.5 rounded-full ${service.available ? 'bg-[#14a900] animate-status-live' : 'bg-red-600 shadow-[0_0_8px_rgba(220,38,38,0.8)]'}`} />
+                            <div
+                                className="w-2.5 h-2.5 rounded-full liveGlow transition-colors duration-300"
+                                data-status={service.available ? "open" : "closed"}
+                                style={{
+                                    backgroundColor: service.available ? "rgb(34, 197, 94)" : "rgb(239, 68, 68)"
+                                }}
+                            />
                             <span className="text-gray-300 text-xs font-medium">{service.name}</span>
                         </div>
                     ))}

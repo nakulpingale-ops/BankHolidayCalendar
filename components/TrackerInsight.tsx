@@ -153,10 +153,13 @@ export function TrackerInsight() {
                                     { name: "Forex Windows", ok: false }
                                 ].map(s => (
                                     <div key={s.name} className="flex items-center gap-2">
-                                        <div className={`w-2 h-2 rounded-full shadow-sm ${s.ok
-                                            ? 'bg-[#22c55e] shadow-[0_0_8px_rgba(34,197,94,0.6)]'
-                                            : 'bg-[#ef4444] shadow-[0_0_8px_rgba(239,68,68,0.6)]'
-                                            }`} />
+                                        <div
+                                            className="w-2.5 h-2.5 rounded-full liveGlow transition-colors duration-300"
+                                            data-status={s.ok ? "open" : "closed"}
+                                            style={{
+                                                backgroundColor: s.ok ? "rgb(34, 197, 94)" : "rgb(239, 68, 68)"
+                                            }}
+                                        />
                                         <span className="text-[11px] font-medium text-gray-300 tracking-wide">{s.name}</span>
                                     </div>
                                 ))}

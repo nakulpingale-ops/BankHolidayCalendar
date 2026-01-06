@@ -25,6 +25,85 @@ body {
     min-height: 100vh;
 }
 
+/* ==============================================
+   LIVE STATUS GLOW
+   ============================================== */
+:root {
+    --status-open: 34 197 94;
+    /* Green */
+    --status-closed: 239 68 68;
+    /* Red */
+}
+
+@keyframes subtlePulse {
+    0% {
+        box-shadow: 0 0 0 0 rgb(var(--status-rgb) / 0.4);
+        opacity: 0.8;
+    }
+
+    50% {
+        box-shadow: 0 0 10px 3px rgb(var(--status-rgb) / 0.3);
+        opacity: 1;
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgb(var(--status-rgb) / 0.4);
+        opacity: 0.8;
+    }
+}
+
+.liveGlow {
+    position: relative;
+    transform: translateZ(0);
+    isolation: isolate;
+}
+
+/* Define colors based on data attribute */
+.liveGlow[data-status="open"] {
+    --status-rgb: var(--status-open);
+}
+
+.liveGlow[data-status="closed"] {
+    --status-rgb: var(--status-closed);
+}
+
+/* The pulsating ring behind the element */
+.liveGlow::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    /* Slightly expand to be visible */
+    border-radius: inherit;
+    z-index: -1;
+    animation: subtlePulse 2.8s infinite ease-in-out;
+    pointer-events: none;
+    box-shadow: 0 0 8px rgb(var(--status-rgb) / 0.5);
+}
+
+/* Accessibility: Disable animation for reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .liveGlow::before {
+        animation: none;
+        box-shadow: 0 0 0 1px rgb(var(--status-rgb) / 0.3);
+    }
+}
+
+/* ==============================================
+   DEBUG MODE OVERRIDES (?glowDebug=1)
+   ============================================== */
+.debug-glow-mode .liveGlow::before {
+    inset: -4px !important;
+    animation: subtlePulse 3.2s infinite ease-in-out !important;
+    box-shadow: 0 0 20px rgb(var(--status-rgb) / 0.9) !important;
+    opacity: 1 !important;
+    border: 1px solid rgb(var(--status-rgb)) !important;
+}
+
+.debug-glow-mode .liveGlow {
+    outline: 2px solid rgb(var(--status-rgb) / 0.6) !important;
+    outline-offset: 2px;
+}
+
 @keyframes target-pulse {
     0% {
         box-shadow: 0 0 0 rgba(255, 199, 28, 0);
