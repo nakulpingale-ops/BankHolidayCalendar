@@ -12,7 +12,7 @@ export function Footer() {
                         <div className="flex flex-col gap-3">
                             <Link href="https://saturdaytracker.com" target="_blank" className="text-[14px] text-[#e5e7eb] hover:text-[#14A900] transition-colors duration-300">Saturday Tracker</Link>
                             <Link href="/" className="text-[14px] text-[#e5e7eb] hover:text-[#14A900] transition-colors duration-300">Bank Holiday Calendar</Link>
-                            <span className="text-[13px] text-[#6b7280]">Coming Soon: Bank Holiday List</span>
+                            {/* <span className="text-[13px] text-[#6b7280]">Coming Soon: Bank Holiday List</span> */}
                             <span className="text-[13px] text-[#6b7280]">Coming Soon: Plan Long Weekends</span>
                         </div>
                     </div>
