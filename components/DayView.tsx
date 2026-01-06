@@ -46,7 +46,7 @@ export function DayView({ mode }: DayViewProps) {
     const label = mode === "today" ? "TODAY" : "TOMORROW";
 
     return (
-        <section className="w-full pt-24 md:pt-28 pb-12 text-white">
+        <section className="w-full pt-36 md:pt-48 pb-12 text-white">
             <div className="w-full max-w-[800px] mx-auto px-4 flex flex-col gap-8">
 
                 {/* Header / Selector */}
