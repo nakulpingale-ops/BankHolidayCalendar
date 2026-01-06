@@ -1,9 +1,9 @@
 "use client";
 
+import { Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
 
-export function DebugGlow() {
+function DebugGlowContent() {
     const searchParams = useSearchParams();
     const isDebug = searchParams.get("glowDebug") === "1";
 
@@ -16,4 +16,12 @@ export function DebugGlow() {
     }, [isDebug]);
 
     return null;
+}
+
+export function DebugGlow() {
+    return (
+        <Suspense fallback={null}>
+            <DebugGlowContent />
+        </Suspense>
+    );
 }
