@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import { use } from "react";
 import { Metadata } from "next";
-import { INDIAN_STATES, slugToState } from "@/lib/constants";
+import { INDIAN_STATES, slugToState, stateToSlug } from "@/lib/constants";
 import { StateCalendarView } from "@/components/StateCalendarView";
 
 const BASE_URL = "https://bankholidaycalendar.com";
@@ -50,7 +50,7 @@ export async function generateStaticParams() {
     return [
         { slug: "all-bank-holiday-2026" },
         ...INDIAN_STATES.map((state) => ({
-            slug: `${state.toLowerCase().replace(/ /g, "-")}-bank-holiday-2026`,
+            slug: `${stateToSlug(state)}-bank-holiday-2026`,
         })),
     ];
 }
