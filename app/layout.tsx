@@ -61,19 +61,7 @@ export default function RootLayout({
       </head>
       <body className={`${interTight.className} w-full min-h-screen overflow-x-hidden bg-[#0F172A] flex flex-col items-center text-white antialiased`} suppressHydrationWarning>
         <DebugGlow />
-        {/* Google Analytics 4 */}
-        <Script
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-HQV7FT38DS"
-        />
-        <Script id="ga4-init" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-HQV7FT38DS', { send_page_view: false });
-          `}
-        </Script>
+
 
         {/* Google AdSense */}
         <Script
