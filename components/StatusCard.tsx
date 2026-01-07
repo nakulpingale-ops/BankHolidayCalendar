@@ -9,11 +9,16 @@ interface StatusCardProps {
     date: Date;
     state: string;
     status: BankStatus;
+    headingLevel?: "h1" | "h2";
 }
 
-export function StatusCard({ label, date, state, status }: StatusCardProps) {
+export function StatusCard({ label, date, state, status, headingLevel = "h2" }: StatusCardProps) {
     const isDigitalOpen = true;
     const isPhysicalOpen = status.isOpen;
+
+    // ... existing status logic ...
+
+    const HeadingTag = headingLevel;
 
     // Theme configuration based on status
     const theme = status.isOpen
@@ -27,6 +32,8 @@ export function StatusCard({ label, date, state, status }: StatusCardProps) {
             boxBorder: "",
             boxGlow: "shadow-[0_0_20px_rgba(133,0,0,0.1)]"
         };
+
+    // ... (rest of the component logic until return statement)
 
     const services = [
         { name: "RTGS / NEFT", available: isDigitalOpen },
@@ -79,12 +86,14 @@ export function StatusCard({ label, date, state, status }: StatusCardProps) {
             </div>
 
             <div className="mt-4 mb-[3px]">
-                <h3 className="text-xl text-white font-medium tracking-normal">Are banks open</h3>
-                <h2
-                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-normal uppercase leading-none -mt-[6px] bg-gradient-to-b from-white via-white to-gray-400 bg-clip-text text-transparent"
-                >
-                    {label}?
-                </h2>
+                <HeadingTag className="block">
+                    <span className="text-xl text-white font-medium tracking-normal mr-1.5">Are banks open</span>
+                    <span
+                        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-normal uppercase leading-none bg-gradient-to-b from-white via-white to-gray-400 bg-clip-text text-transparent"
+                    >
+                        {label}?
+                    </span>
+                </HeadingTag>
             </div>
 
             {/* Content Wrapper - Centered Vertically */}

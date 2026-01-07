@@ -6,13 +6,14 @@ import { Zap, MapPin, AlertCircle, CheckCircle, Calendar, ArrowRight, ArrowLeft 
 import Link from "next/link";
 import { StatusCard } from "@/components/StatusCard";
 import { useHolidayData } from "@/lib/HolidayContext";
-import { INDIAN_STATES } from "@/lib/constants";
+import { INDIAN_STATES, stateToSlug } from "@/lib/constants";
 
 interface DayViewProps {
     mode: "today" | "tomorrow";
+    hideHeader?: boolean;
 }
 
-export function DayView({ mode }: DayViewProps) {
+export function DayView({ mode, hideHeader = false }: DayViewProps) {
     const [mounted, setMounted] = useState(false);
     const [todayDate, setTodayDate] = useState<Date>(new Date());
 
@@ -45,23 +46,29 @@ export function DayView({ mode }: DayViewProps) {
     const status = isBankOpen(targetDate, selectedState);
     const label = mode === "today" ? "TODAY" : "TOMORROW";
 
+    // Build the dynamic CTA link
+    const calendarSlug = stateToSlug(selectedState);
+    const calendarHref = `/${calendarSlug}-bank-holiday-2026`;
+
     return (
         <section className="w-full pt-6 pb-12 text-white">
-            <div className="w-full max-w-[800px] mx-auto px-4 flex flex-col gap-8">
+            <div className="w-full max-w-[800px] mx-auto px-4 flex flex-col gap-2">
 
                 {/* Header / Selector */}
-                <div className="flex flex-col md:flex-row justify-between items-end gap-4 border-b border-white/10 pb-6">
-                    <div className="flex items-center gap-3">
-                        <Calendar className="w-8 h-8 text-[#7d3cff]" />
-                        <div>
-                            <h1 className="text-2xl md:text-3xl font-black tracking-tight leading-none uppercase">
-                                <span className="text-gray-400 block text-lg font-bold mb-1">Are banks open</span>
-                                <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
-                                    {label} in {selectedState}?
-                                </span>
-                            </h1>
+                <div className={`flex flex-col md:flex-row ${hideHeader ? 'justify-end' : 'justify-between'} items-end gap-4 ${!hideHeader ? 'border-b border-white/10 pb-6' : ''}`}>
+                    {!hideHeader && (
+                        <div className="flex items-center gap-3">
+                            <Calendar className="w-8 h-8 text-[#7d3cff]" />
+                            <div>
+                                <h1 className="text-2xl md:text-3xl font-black tracking-tight leading-none uppercase">
+                                    <span className="text-gray-400 block text-lg font-bold mb-1">Are banks open</span>
+                                    <span className="bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                                        {label} in {selectedState}?
+                                    </span>
+                                </h1>
+                            </div>
                         </div>
-                    </div>
+                    )}
 
                     <div className="flex flex-col w-full md:w-auto min-w-[250px]">
                         <div className="flex items-center justify-between mb-2">
@@ -98,13 +105,14 @@ export function DayView({ mode }: DayViewProps) {
                         date={targetDate}
                         state={selectedState}
                         status={status}
+                        headingLevel={hideHeader ? "h1" : "h2"}
                     />
                 </div>
 
                 {/* Internal Navigation */}
-                <div className="flex flex-col md:flex-row gap-4 justify-between pt-6 border-t border-white/10">
+                <div className="flex flex-col md:flex-row gap-4 justify-between pt-6">
                     <Link
-                        href="/"
+                        href={calendarHref}
                         className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors text-sm font-medium"
                     >
                         <ArrowLeft className="w-4 h-4" />
@@ -134,11 +142,11 @@ export function DayView({ mode }: DayViewProps) {
                 <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 mt-4 text-[12px] text-gray-500">
                     <div className="flex items-start gap-1.5">
                         <AlertCircle className="w-[14px] h-[14px] text-yellow-500 shrink-0 mt-[1.5px]" />
-                        <span>Confirm with local branch</span>
+                        <span>Branch visits and clearing services are available basis bank operational hours.</span>
                     </div>
                     <div className="flex items-start gap-1.5">
                         <CheckCircle className="w-[14px] h-[14px] text-[#14A900] shrink-0 mt-[1.5px]" />
-                        <span>Based on RBI & State Govt Holidays</span>
+                        <span>Verified via RBI circulars, State Gazettes & bank notices. Updated daily.</span>
                     </div>
                 </div>
 
