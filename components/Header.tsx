@@ -16,7 +16,7 @@ export function Header() {
                     </span>
                 </div>
 
-                <div className="flex items-center gap-6">
+                <div className="flex items-center gap-2 md:gap-6 min-w-0 flex-shrink">
                     <Link
                         href="#official-calendar-2026"
                         onClick={(e) => {
@@ -49,7 +49,7 @@ export function Header() {
                                 section.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                         }}
-                        className="flex items-center gap-2 text-xs font-medium text-gray-300 hover:text-white transition-colors group"
+                        className="flex items-center gap-1 md:gap-2 text-xs font-medium text-gray-300 hover:text-white transition-colors group flex-shrink-0"
                     >
                         <div
                             className="w-4 h-4 bg-[#ffc61c] animate-icon-pulse flex-shrink-0"

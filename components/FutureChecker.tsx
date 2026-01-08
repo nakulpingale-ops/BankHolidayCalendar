@@ -127,14 +127,19 @@ export function FutureChecker() {
                             {/* External Control Bar - Right Aligned */}
                             <div className="w-full md:w-auto flex flex-col md:flex-row items-stretch md:items-end justify-end gap-3">
                                 {/* Date Input */}
-                                <div className="w-full md:w-auto">
+                                <div className="w-full md:w-auto relative">
                                     <label className="block text-[12px] font-bold text-gray-500 mb-[5px] uppercase tracking-normal pl-3">Select Date</label>
-                                    <input
-                                        type="date"
-                                        value={date}
-                                        onChange={(e) => setDate(e.target.value)}
-                                        className="w-full md:w-[160px] h-[38px] bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/65 rounded-[4px] px-3 text-white text-[14px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] outline-none transition-all hover:border-[#7d3cff] cursor-pointer"
-                                    />
+                                    <div className="relative">
+                                        <input
+                                            type="date"
+                                            value={date}
+                                            onChange={(e) => setDate(e.target.value)}
+                                            className="w-full md:w-[160px] h-[38px] bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/65 rounded-[4px] px-3 pr-10 md:pr-3 text-white text-[14px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] outline-none transition-all hover:border-[#7d3cff] cursor-pointer appearance-none"
+                                        />
+                                        <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none md:hidden">
+                                            <svg className="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 {/* State/UT Dropdown with Header Row */}
@@ -216,12 +221,12 @@ export function FutureChecker() {
                                         {!result.status.isOpen && (
                                             <div className="relative group/info shrink-0">
                                                 <Info className="w-5 h-5 text-white hover:text-white/80 cursor-pointer transition-colors" />
-                                                <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-max max-w-[200px] px-3 py-2 bg-[#1e293b] border border-white/10 rounded-[6px] shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all duration-200 z-50 pointer-events-none transform translate-y-1 group-hover/info:translate-y-0">
-                                                    <span className="text-[11px] text-white font-medium block text-center leading-tight">
+                                                <div className="fixed inset-x-4 top-1/2 -translate-y-1/2 md:absolute md:inset-auto md:bottom-full md:left-1/2 md:-translate-x-1/2 mb-0 md:mb-3 w-auto md:w-max max-w-[calc(100vw-32px)] md:max-w-[200px] px-3 py-2 bg-[#1e293b] border border-white/10 rounded-[6px] shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all duration-200 z-50 pointer-events-none transform md:translate-y-1 group-hover/info:translate-y-0 text-center md:text-left">
+                                                    <span className="text-[11px] text-white font-medium block leading-tight whitespace-normal">
                                                         {getTooltipText(result.status)}
                                                     </span>
                                                     {/* Arrow */}
-                                                    <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#1e293b] border-r border-b border-white/10 transform rotate-45"></div>
+                                                    <div className="hidden md:block absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#1e293b] border-r border-b border-white/10 transform rotate-45"></div>
                                                 </div>
                                             </div>
                                         )}

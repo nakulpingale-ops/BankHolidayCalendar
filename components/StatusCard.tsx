@@ -132,12 +132,12 @@ export function StatusCard({ label, date, state, status, headingLevel = "h2" }: 
                     {!status.isOpen && (
                         <div className="relative group/info shrink-0">
                             <Info className="w-4 h-4 text-white hover:text-white/80 cursor-pointer transition-colors" />
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-max max-w-[200px] px-3 py-2 bg-[#1e293b] border border-white/10 rounded-[6px] shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all duration-200 z-50 pointer-events-none transform translate-y-1 group-hover/info:translate-y-0">
-                                <span className="text-[11px] text-white font-medium block text-center leading-tight">
+                            <div className="fixed inset-x-4 top-1/2 -translate-y-1/2 md:absolute md:inset-auto md:bottom-full md:left-1/2 md:-translate-x-1/2 mb-0 md:mb-3 w-auto md:w-max max-w-[calc(100vw-32px)] md:max-w-[200px] px-3 py-2 bg-[#1e293b] border border-white/10 rounded-[6px] shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all duration-200 z-50 pointer-events-none transform md:translate-y-1 group-hover/info:translate-y-0 text-center md:text-left">
+                                <span className="text-[11px] text-white font-medium block leading-tight whitespace-normal">
                                     {getTooltipText()}
                                 </span>
                                 {/* Arrow */}
-                                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#1e293b] border-r border-b border-white/10 transform rotate-45"></div>
+                                <div className="hidden md:block absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#1e293b] border-r border-b border-white/10 transform rotate-45"></div>
                             </div>
                         </div>
                     )}

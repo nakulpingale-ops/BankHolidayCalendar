@@ -60,7 +60,7 @@ export function Hero() {
                                     {isDetecting ? '...' : 'DETECT'}
                                 </button>
                             </div>
-                            <div className="relative flex-shrink max-w-[140px] md:max-w-none w-full">
+                            <div className="relative flex-shrink max-w-[175px] md:max-w-none w-full">
                                 <select
                                     value={selectedState}
                                     onChange={(e) => setSelectedState(e.target.value)}
