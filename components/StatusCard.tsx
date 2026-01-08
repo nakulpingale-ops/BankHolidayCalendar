@@ -78,23 +78,27 @@ export function StatusCard({ label, date, state, status, headingLevel = "h2" }: 
                 : status.isOpen
                     ? "border-[#14A900]/50 bg-white/5 backdrop-blur-sm shadow-xl"
                     : "border-[#ef4444]/50 bg-white/5 backdrop-blur-sm shadow-xl"
-                }`}
+                } min-h-[220px] md:min-h-0`}
         >
-            {/* Date Top Right */}
-            <div className="absolute top-5 right-6 text-gray-400 font-medium text-lg">
-                {format(date, "d MMM yyyy")}
-            </div>
+            {/* Header Area - Refactored for Mobile 2-Row Layout */}
+            <HeadingTag className="flex flex-col gap-0.5 mt-4 mb-[3px] w-full md:block relative">
+                {/* Mobile Row 1: Label + Date */}
+                <span className="flex justify-between items-start md:contents w-full">
+                    <span className="text-xl text-white font-medium tracking-normal whitespace-nowrap md:whitespace-normal md:text-left md:block md:w-full order-1 md:order-none">Are banks open</span>
 
-            <div className="mt-4 mb-[3px]">
-                <HeadingTag className="block">
-                    <span className="text-xl text-white font-medium tracking-normal mr-1.5">Are banks open</span>
-                    <span
-                        className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-normal uppercase leading-none bg-gradient-to-b from-white via-white to-gray-400 bg-clip-text text-transparent"
-                    >
-                        {label}?
+                    {/* Date - Relative on Mobile, Absolute on Desktop */}
+                    <span className="text-gray-400 font-medium text-lg whitespace-nowrap order-2 md:order-none md:absolute md:top-[-2.25rem] md:right-[-0rem]">
+                        {format(date, "d MMM yyyy")}
                     </span>
-                </HeadingTag>
-            </div>
+                </span>
+
+                {/* Mobile Row 2 / Desktop Line 2: Big Word */}
+                <span
+                    className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-normal uppercase leading-none bg-gradient-to-b from-white via-white to-gray-400 bg-clip-text text-transparent block md:text-left md:mt-1"
+                >
+                    {label}?
+                </span>
+            </HeadingTag>
 
             {/* Content Wrapper - Centered Vertically */}
             <div className="flex-1 flex flex-col justify-center gap-4">
