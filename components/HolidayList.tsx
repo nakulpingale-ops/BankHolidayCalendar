@@ -315,8 +315,15 @@ export function HolidayList() {
                                             type="date"
                                             value={checkDate}
                                             onChange={(e) => setCheckDate(e.target.value)}
-                                            className="h-9 w-auto min-w-[128px] sm:w-auto rounded-[4px] border border-white/10 bg-black/20 px-2 sm:px-3 text-sm text-white/90 outline-none focus:border-[#7d3cff]/50 hover:border-[#7d3cff]/30 transition-colors uppercase appearance-none shrink"
-                                            placeholder="Check Date"
+                                            className="h-9 w-auto min-w-[128px] sm:w-auto rounded-[4px] border px-2 sm:px-3 text-sm outline-none transition-colors uppercase appearance-none shrink
+                                                text-[rgba(255,255,255,0.92)] sm:text-white/90
+                                                bg-[rgba(255,255,255,0.06)] sm:bg-black/20
+                                                border-[rgba(255,255,255,0.14)] sm:border-white/10
+                                                caret-[rgba(255,255,255,0.92)] sm:caret-current
+                                                placeholder:text-[rgba(255,255,255,0.45)] placeholder:opacity-100
+                                                focus:border-[rgba(125,60,255,0.6)] focus:shadow-[0_0_0_2px_rgba(125,60,255,0.25)]
+                                                hover:border-[#7d3cff]/30"
+                                            placeholder="DD-MM-YYYY"
                                         />
                                         {checkDate && (
                                             <button
@@ -376,8 +383,8 @@ export function HolidayList() {
 
                         {/* Mobile Saturday Toggle */}
                         <div className="flex lg:hidden items-center justify-start pl-0 pr-2 py-1 mt-[5px]">
-                            <label className="flex items-center gap-2 cursor-pointer group">
-                                <div className="relative flex items-center">
+                            <label className="flex items-center gap-4 cursor-pointer group">
+                                <div className="relative flex items-center scale-[1.35] origin-left">
                                     <input
                                         type="checkbox"
                                         checked={includeSaturdayClosures}
@@ -387,7 +394,7 @@ export function HolidayList() {
                                     <div className="w-7 h-3.5 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
                                     <div className="absolute left-0.5 w-2.5 h-2.5 bg-white/60 rounded-full peer-checked:translate-x-3.5 transition-transform peer-checked:bg-white"></div>
                                 </div>
-                                <span className="text-[10px] text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
+                                <span className="text-[14px] text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
                                     Include 2nd and 4th Saturdays
                                 </span>
                             </label>
