@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter_Tight } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -17,6 +17,12 @@ import { DebugGlow } from "@/components/DebugGlow";
 
 
 const interTight = Inter_Tight({ subsets: ["latin"] });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0F172A",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://bankholidaycalendar.com"),
@@ -87,7 +93,7 @@ export default function RootLayout({
             </div>
 
             {/* Main Content Wrapper */}
-            <main className="w-full max-w-[1300px] mx-auto px-4 md:px-6 flex flex-col items-center justify-center pt-[20px] -mt-[30px] relative z-10">
+            <main className="w-full flex flex-col items-center justify-start pt-[20px] relative z-10">
               {children}
             </main>
 

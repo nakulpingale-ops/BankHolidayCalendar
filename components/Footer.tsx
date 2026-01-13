@@ -17,7 +17,7 @@ function FooterContent() {
 
     return (
         <footer className="w-full py-16 mt-20 bg-[#050505] border-t border-white/5 print:hidden">
-            <div className="w-full max-w-[1200px] mx-auto px-6">
+            <div className="w-full max-w-none px-4 sm:max-w-[1200px] sm:mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 items-start">
 
                     {/* Task 1: HOLBANK GLOBAL NETWORK */}

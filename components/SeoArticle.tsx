@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 
 export function SeoArticle() {
     return (
-        <article className="w-full max-w-[970px] mx-auto px-4 pb-8 prose prose-invert break-words">
+        <article className="w-full max-w-none px-4 sm:max-w-[1050px] sm:mx-auto pb-8 prose prose-invert break-words">
             <div className="prose prose-invert max-w-none 
                 prose-p:text-[14px] prose-p:leading-relaxed prose-p:text-gray-400 
                 prose-h2:text-[18px] prose-h2:font-bold prose-h2:text-transparent prose-h2:bg-clip-text prose-h2:bg-gradient-to-r prose-h2:from-white prose-h2:to-purple-200 prose-h2:mt-8 prose-h2:mb-4

@@ -1,72 +1,46 @@
 "use client";
 
 import React, { createContext, useContext, useEffect, useState } from "react";
-import Papa from "papaparse";
-import { parse, isSameDay, isSunday, isSaturday, getWeekOfMonth, getYear } from "date-fns";
+import { parse, isSameDay, isSunday, isSaturday, getWeekOfMonth } from "date-fns";
 import { BankStatus } from "@/lib/logic";
+import {
+    fetchHolidaysCsv,
+    CsvHolidayRow,
+    getCombinedHolidays,
+    HolidayItem,
+    normalizeStateName
+} from "@/src/lib/holidays";
 
-import { INDIAN_STATES } from "@/lib/constants";
+import { INDIAN_STATES, stateToSlug, slugToState } from "@/lib/constants";
 
-export interface Holiday {
-    Date: string;
-    "Holiday": string;
-    State: string;
-    Status: string;
-}
+// Re-export types for consumers
+export type { HolidayItem, CsvHolidayRow };
 
 interface HolidayContextType {
-    holidays: Holiday[];
-
+    holidays: CsvHolidayRow[]; // Raw CSV data
     isBankOpen: (date: Date, state: string) => BankStatus;
-    getHolidays: (state: string, month?: number) => Holiday[];
+    getHolidays: (state: string, year?: number) => HolidayItem[]; // Returns rich, merged list
     selectedState: string;
     setSelectedState: (state: string) => void;
     detectUserLocation: () => Promise<string>;
     loading: boolean;
 }
 
-// Helper: Normalize state names for robust matching
-// 1. Trim whitespace
-// 2. Convert to lowercase
-// 3. Replace '&' with 'and'
-// 4. Collapse multiple spaces
-function normalizeStateName(name: string): string {
-    if (!name) return "";
-    return name
-        .trim()
-        .toLowerCase()
-        .replace(/&/g, "and")
-        .replace(/\s+/g, " ");
-}
-
 const HolidayContext = createContext<HolidayContextType | undefined>(undefined);
 
-// Import standardized slug functions from constants
-import { stateToSlug, slugToState } from "@/lib/constants";
-
 export function HolidayProvider({ children }: { children: React.ReactNode }) {
-    const [holidays, setHolidays] = useState<Holiday[]>([]);
+    const [holidays, setHolidays] = useState<CsvHolidayRow[]>([]);
     const [loading, setLoading] = useState(true);
 
     // Default to Maharashtra as fallback
     const [selectedState, setSelectedStateInternal] = useState("Maharashtra");
 
-    // Load CSV data client-side
+    // Load CSV data client-side using new utility
     useEffect(() => {
-        fetch("/bankholidays2026.csv")
-            .then((res) => res.text())
-            .then((csvText) => {
-                const { data } = Papa.parse<Holiday>(csvText, {
-                    header: true,
-                    skipEmptyLines: true,
-                });
-                setHolidays(data);
-                setLoading(false);
-            })
-            .catch((err) => {
-                console.error("Failed to load holiday data:", err);
-                setLoading(false);
-            });
+        fetchHolidaysCsv().then(data => {
+            setHolidays(data);
+            setLoading(false);
+        });
     }, []);
 
     const setSelectedState = (state: string) => {
@@ -156,7 +130,13 @@ export function HolidayProvider({ children }: { children: React.ReactNode }) {
 
         // 2. Check CSV for specific holidays
         const holiday = holidays.find((h) => {
-            const holidayDate = parse(h.Date, "yyyy/MM/dd", new Date());
+            const holidayDate = parse(h.Date, "yyyy-MM-dd", new Date());
+            // Fallback parse if needed, but getCombinedHolidays handles this robustly.
+            // Here we do a quick check on raw data for performance, or we could use the optimized map.
+            // For simplicity and to match previous logic, we parse here.
+
+            // Note: CsvHolidayRow Date is string YYYY-MM-DD
+            if (!holidayDate || isNaN(holidayDate.getTime())) return false;
 
             const normalizedParamState = normalizeStateName(state);
             const normalizedRowState = normalizeStateName(h.State);
@@ -191,23 +171,10 @@ export function HolidayProvider({ children }: { children: React.ReactNode }) {
         return { isOpen: true, reason: "", type: "weekday" };
     };
 
-    const getHolidays = (state: string, month?: number): Holiday[] => {
-        return holidays.filter((h) => {
-            const hDate = parse(h.Date, "yyyy/MM/dd", new Date());
-
-            // Updated matching logic as per final request
-            // Logic: if (selectedState.trim().toLowerCase() === csvState.trim().toLowerCase())
-            const s1 = state.trim().toLowerCase();
-            const s2 = h.State.trim().toLowerCase();
-
-            const isStateMatch = h.State === "All" || s2 === s1;
-            const isMonthMatch = month !== undefined ? hDate.getMonth() === month : true;
-            // Also filter for year 2026 if specifically requested, but for now just all
-            return isStateMatch && isMonthMatch;
-        });
+    // New Helper: Returns the robust, merged list of holidays for UI
+    const getHolidays = (state: string, year: number = 2026): HolidayItem[] => {
+        return getCombinedHolidays(holidays, state, year);
     }
-
-
 
     return (
         <HolidayContext.Provider value={{ holidays, isBankOpen, getHolidays, selectedState, setSelectedState, detectUserLocation, loading }}>

@@ -21,5 +21,27 @@ export async function onRequest(context) {
         });
     }
 
+    // Redirect /?state=... to canonical path
+    // Matches / or /2026 with ?state= param
+    if ((url.pathname === "/" || url.pathname === "/2026") && url.searchParams.has("state")) {
+        const stateParam = url.searchParams.get("state");
+        if (stateParam) {
+            // Slugify logic
+            const slug = stateParam.toLowerCase()
+                .replace(/&/g, "and")
+                .replace(/\s+/g, "-")
+                .replace(/[^a-z0-9-]/g, "")
+                .replace(/-+/g, "-")
+                .replace(/^-|-$/g, "");
+
+            const targetUrl = new URL(`/${slug}-bank-holiday-2026`, url.origin);
+
+            return new Response(null, {
+                status: 301,
+                headers: { "Location": targetUrl.toString() }
+            });
+        }
+    }
+
     return next();
 }

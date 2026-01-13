@@ -6,9 +6,7 @@
     --foreground: #ffffff;
 }
 
-html {
-    /* Removed scroll-behavior: smooth to fix janky scroll performance */
-}
+/* Removed scroll-behavior: smooth to fix janky scroll performance */
 
 a,
 button,
@@ -19,10 +17,17 @@ select,
 
 body {
     color: var(--foreground);
-    background: radial-gradient(circle at 50% 0%, #2e1065 0%, #0f0529 35%, #000000 100%);
+    background: #0A0A0A;
     background-attachment: fixed;
     font-family: Arial, Helvetica, sans-serif;
     min-height: 100vh;
+}
+
+html,
+body {
+    width: 100%;
+    max-width: none;
+    overflow-x: hidden;
 }
 
 /* ==============================================

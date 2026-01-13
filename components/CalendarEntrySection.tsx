@@ -1,22 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { CalendarDays, ArrowRight } from "lucide-react";
 import { INDIAN_STATES, stateToSlug } from "@/lib/constants";
-import { useHolidayData } from "@/lib/HolidayContext";
 import { CustomSelect } from "@/components/CustomSelect";
 
 export function CalendarEntrySection() {
-    const { selectedState } = useHolidayData();
-    const [entrySectionState, setEntrySectionState] = useState<string>(selectedState);
-
-    // Sync local state when global selectedState changes
-    useEffect(() => {
-        setEntrySectionState(selectedState);
-    }, [selectedState]);
+    const [entrySectionState, setEntrySectionState] = useState<string>("all");
 
     const handleNavigate = () => {
-        if (entrySectionState === "All States/UTs") {
+        // Master route for "All States"
+        if (entrySectionState === "all" || entrySectionState === "All States/UTs") {
             window.location.href = "/all-bank-holiday-2026";
             return;
         }
@@ -25,13 +19,13 @@ export function CalendarEntrySection() {
     };
 
     const dropdownOptions = [
-        { value: "All States/UTs", label: "All States/UTs" },
+        { value: "all", label: "All States/UTs" },
         ...INDIAN_STATES.map(s => ({ value: s, label: s }))
     ];
 
     return (
-        <section id="official-calendar-2026" className="w-full py-8 text-white relative z-50 -mt-[90px] md:-mt-[102px] mb-0 scroll-mt-[400px]">
-            <div className="w-full max-w-[1050px] mx-auto px-4">
+        <section id="official-calendar-2026" className="w-full py-8 text-white relative z-50 -mt-[25px] md:-mt-[37px] mb-0 scroll-mt-[400px]">
+            <div className="w-full max-w-none px-4 sm:max-w-[1050px] sm:mx-auto">
                 <div className="flex items-start md:items-center gap-3 mb-[8px]">
                     <div
                         className="w-6 h-6 bg-[#ffc61c] animate-pulse"
@@ -46,10 +40,10 @@ export function CalendarEntrySection() {
                             WebkitMaskPosition: 'center'
                         }}
                     />
-                    <h2 className="text-2xl font-bold tracking-tight">Official State/UT-wise Bank Holiday Calendar 2026</h2>
+                    <h2 className="text-2xl font-bold tracking-tight">Complete State/UT-wise Bank Holiday Calendar 2026</h2>
                 </div>
 
-                <div id="calendar-entry-box" className="w-full bg-white/5 backdrop-blur-sm border-[0.25px] border-[#ffc71c]/50 rounded-[4px] p-6 shadow-xl grid grid-cols-1 md:grid-cols-2 items-end gap-6">
+                <div id="calendar-entry-box" className="w-full bg-[#121212]/80 backdrop-blur-sm border-[0.25px] border-[#7d3cff]/45 rounded-[4px] p-6 shadow-xl grid grid-cols-1 md:grid-cols-2 items-end gap-6">
                     {/* Region Selector - 50% Width */}
                     <div className="w-full">
                         <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest pl-1">State/UT</label>
@@ -64,10 +58,10 @@ export function CalendarEntrySection() {
                     {/* CTA Button - 50% Width */}
                     <button
                         onClick={handleNavigate}
-                        className="w-full h-14 bg-[#ffc71c] hover:bg-[#ffc71c] text-[#111111] text-sm font-normal px-8 rounded-[4px] transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer"
+                        className="w-full h-14 bg-[#7d3cff] hover:bg-[#8b52ff] text-white text-sm font-medium px-8 rounded-[4px] transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer shadow-lg shadow-purple-500/10"
                     >
-                        View Official 2026 Calendar
-                        <ArrowRight className="w-5 h-5 text-[#111111]" />
+                        {entrySectionState === "all" ? <>View All States/UTs 2026<br className="sm:hidden" /> Holiday List</> : <>View {entrySectionState} 2026<br className="sm:hidden" /> Holiday List</>}
+                        <ArrowRight className="w-5 h-5 text-white" />
                     </button>
                 </div>
             </div>

@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { format, parse, eachMonthOfInterval } from "date-fns";
+import { useState, useEffect, useMemo } from "react";
+import { format, eachMonthOfInterval, isSaturday, isSunday, getWeekOfMonth } from "date-fns";
 import Papa from "papaparse";
 import Link from "next/link";
 import { useHolidayData } from "@/lib/HolidayContext";
+import { normalizeCsvRow, HolidayItem, isPastDate } from "@/src/lib/holidays";
 import { INDIAN_STATES, stateToSlug } from "@/lib/constants";
 import { CustomSelect } from "@/components/CustomSelect";
 import { FaqSection } from "@/components/FaqSection";
@@ -12,9 +13,12 @@ import { SeoGuideSection } from "@/components/SeoGuideSection";
 import { UtilityGuideSection } from "@/components/UtilityGuideSection";
 import { BrandHeadline } from "@/components/BrandHeadline";
 import { Toast } from "@/components/Toast";
-import { Share2, CalendarPlus, Download, Printer } from "lucide-react";
+import { Share2, CalendarPlus, Download, Printer, MapPin, Calendar } from "lucide-react";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { PrintHeader } from "./PrintHeader";
 import { ADS_ENABLED } from "@/lib/adsConfig";
+import { CompareStates } from "@/components/InternalLinking/CompareStates";
+import { LearnGuides } from "@/components/InternalLinking/LearnGuides";
 
 interface StateCalendarViewProps {
     slug: string;
@@ -26,6 +30,24 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
     const [stateName, setStateName] = useState(initialStateName);
     const [selectedMonth, setSelectedMonth] = useState<number | "all">("all");
     const [toast, setToast] = useState<{ show: boolean; message: string }>({ show: false, message: "" });
+    const [includeSaturdayClosures, setIncludeSaturdayClosures] = useState(true);
+
+    // Persist Saturday Toggle preference
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const savedSatToggle = localStorage.getItem("includeSaturdayClosures");
+            if (savedSatToggle !== null) {
+                setIncludeSaturdayClosures(savedSatToggle === "true");
+            }
+        }
+    }, []);
+
+    const handleSatToggleChange = (value: boolean) => {
+        setIncludeSaturdayClosures(value);
+        if (typeof window !== 'undefined') {
+            localStorage.setItem("includeSaturdayClosures", value.toString());
+        }
+    };
 
     // Sync local state when global selectedState changes
     useEffect(() => {
@@ -47,27 +69,56 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
     };
 
     // Logic: If "All States/UTs", show global list. Else show specific state list.
-    let displayedHolidays = [];
+    let displayedHolidays: HolidayItem[] = [];
 
     if (stateName === "All States/UTs") {
-        displayedHolidays = holidays.filter(h => {
-            // Month filter
-            if (selectedMonth !== "all") {
-                const d = parse(h.Date, "yyyy/MM/dd", new Date());
-                return d.getMonth() === selectedMonth;
-            }
-            return true;
-        });
+        // Convert raw CSV rows to rich HolidayItems
+        displayedHolidays = holidays
+            .map(row => normalizeCsvRow(row))
+            .filter((item): item is HolidayItem => item !== null)
+            .filter(h => {
+                // Month filter
+                if (selectedMonth !== "all") {
+                    return h.date.getMonth() === selectedMonth;
+                }
+                return true;
+            });
     } else {
-        displayedHolidays = getHolidays(stateName, selectedMonth === "all" ? undefined : selectedMonth);
+        displayedHolidays = getHolidays(stateName, 2026); // Default year
+        if (selectedMonth !== "all") {
+            displayedHolidays = displayedHolidays.filter(h => h.date.getMonth() === selectedMonth);
+        }
     }
 
     // Sort chronologically
-    displayedHolidays.sort((a, b) => {
-        const dateA = new Date(a.Date);
-        const dateB = new Date(b.Date);
-        return dateA.getTime() - dateB.getTime();
-    });
+    displayedHolidays.sort((a, b) => a.date.getTime() - b.date.getTime());
+
+    // Add isSaturdayClosure flag to each holiday
+    const holidaysWithSatFlag = useMemo(() => {
+        return displayedHolidays.map(h => {
+            const dateObj = h.date;
+            const weekOfMonth = getWeekOfMonth(dateObj);
+            const isSat = isSaturday(dateObj);
+            const nameLower = h.name.toLowerCase();
+
+            const isSaturdayClosure =
+                nameLower.includes("second saturday") ||
+                nameLower.includes("fourth saturday") ||
+                (isSat && h.type === "Banking" && (weekOfMonth === 2 || weekOfMonth === 4));
+
+            return { ...h, isSaturdayClosure };
+        });
+    }, [displayedHolidays]);
+
+    // Filter based on Saturday toggle AND exclude Sundays from inner page list
+    const visibleHolidays = useMemo(() => {
+        // First, exclude Sundays from the list (keep them only for homepage "Next closure" insight)
+        const holidaysWithoutSundays = holidaysWithSatFlag.filter(h => !isSunday(h.date));
+
+        // Then apply Saturday toggle
+        if (includeSaturdayClosures) return holidaysWithoutSundays;
+        return holidaysWithoutSundays.filter(h => !h.isSaturdayClosure);
+    }, [holidaysWithSatFlag, includeSaturdayClosures]);
 
     // Dropdown options for Inner Page
     const innerStateOptions = [
@@ -83,7 +134,7 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
     // --- Interactive Handlers ---
 
     const handleShare = async () => {
-        if (displayedHolidays.length === 0) return;
+        if (visibleHolidays.length === 0) return;
         const shareData = {
             title: `Bank Holiday Calendar 2026 - ${stateName}`,
             text: `Check out the official Bank Holiday Calendar 2026 for ${stateName}`,
@@ -106,7 +157,16 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
     const handleDownloadCSV = () => {
         if (displayedHolidays.length === 0) return;
 
-        const csv = Papa.unparse(displayedHolidays);
+        // Map simplified items back to flat object for CSV download
+        const dataToExport = displayedHolidays.map(h => ({
+            Date: h.dateISO,
+            Day: h.dayOfWeek,
+            Holiday: h.name,
+            State: h.state,
+            Type: h.type
+        }));
+
+        const csv = Papa.unparse(dataToExport);
         const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
         const url = URL.createObjectURL(blob);
         const link = document.createElement("a");
@@ -126,14 +186,14 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
         let icsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//BankHolidayCalendar//EN\n";
 
         displayedHolidays.forEach((h) => {
-            const dateStr = h.Date.replace(/[\/-]/g, ""); // YYYYMMDD
-            const uid = `${dateStr}-${h.Holiday.replace(/\s+/g, "")}@bankholidaycalendar.com`;
+            const dateStr = h.dateISO.replace(/[-]/g, ""); // YYYYMMDD
+            const uid = `${dateStr}-${h.name.replace(/\s+/g, "")}@bankholidaycalendar.com`;
 
             icsContent += "BEGIN:VEVENT\n";
             icsContent += `UID:${uid}\n`;
             icsContent += `DTSTART;VALUE=DATE:${dateStr}\n`;
-            icsContent += `SUMMARY:${h.Holiday} (${h.Status})\n`;
-            icsContent += `DESCRIPTION:Bank Holiday in ${h.State}. Status: ${h.Status}\n`;
+            icsContent += `SUMMARY:${h.name} (${h.type})\n`;
+            icsContent += `DESCRIPTION:Bank Holiday in ${h.state}. Type: ${h.type}\n`;
             icsContent += "END:VEVENT\n";
         });
 
@@ -155,7 +215,7 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
         window.print();
     };
 
-    const isActionDisabled = displayedHolidays.length === 0;
+    const isActionDisabled = visibleHolidays.length === 0;
     const actionButtonClass = `p-2 border border-[#7d3cff]/20 rounded-[4px] text-[#7d3cff] hover:border-[#7d3cff] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-[#7d3cff]/20 print:hidden`;
 
     return (
@@ -246,6 +306,26 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
                                 />
                             </div>
 
+                            {/* Saturday Toggle - inline with dropdowns */}
+                            <div className="flex items-center w-full sm:w-auto sm:self-end sm:pb-[6px]">
+                                <label className="flex items-center gap-2 cursor-pointer group">
+                                    <div className="relative flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            id="saturdayToggle"
+                                            checked={includeSaturdayClosures}
+                                            onChange={(e) => handleSatToggleChange(e.target.checked)}
+                                            className="sr-only peer"
+                                        />
+                                        <div className="w-8 h-4 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
+                                        <div className="absolute left-0.5 w-3 h-3 bg-white/60 rounded-full peer-checked:translate-x-4 transition-transform peer-checked:bg-white"></div>
+                                    </div>
+                                    <span className="text-xs text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
+                                        Include 2nd and 4th Saturdays
+                                    </span>
+                                </label>
+                            </div>
+
                         </div>
 
                         {/* Actions */}
@@ -287,13 +367,8 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
                 </div>
 
                 {/* C. Holiday List (Data Table) - VISIBLE on Print */}
-                <section className="w-full max-w-[1050px] mx-auto px-4 print:block print:visible print:w-full print:p-0">
-                    {/* Print-Only Header - Visible only in Print */}
-                    <div className="hidden print:block print:mb-6 print:border-b-2 print:border-black print:pb-4 text-center">
-                        <p className="text-2xl font-bold text-black mb-2 tracking-widest">HOLBANK</p>
-                        <p className="text-xl text-black">ANNUAL BANKING CALENDAR 2026</p>
-                        <p className="text-lg text-black mt-1">{stateName === "All States/UTs" ? "All India" : stateName}</p>
-                    </div>
+                <section className="w-full max-w-[1050px] mx-auto px-4 print:block print:visible print:w-full print:p-0 print-container">
+                    <PrintHeader stateName={stateName} />
 
                     <div className="overflow-x-auto rounded-[4px] border border-white/10 print:border-black print:rounded-none">
                         <table className="w-full text-left border-collapse print:w-full">
@@ -309,33 +384,33 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-white/5 text-sm print:divide-black">
-                                {displayedHolidays.length > 0 ? (
-                                    displayedHolidays.map((h, idx) => (
-                                        <tr key={idx} className="hover:bg-white/5 transition-colors print:break-inside-avoid">
-                                            <td className="p-4 text-white font-medium whitespace-nowrap print:text-black print:p-2">
-                                                {format(parse(h.Date, "yyyy/MM/dd", new Date()), "dd MMM yyyy")}
-                                            </td>
-                                            <td className="p-4 text-gray-400 print:text-black print:p-2">
-                                                {format(parse(h.Date, "yyyy/MM/dd", new Date()), "EEEE")}
-                                            </td>
-                                            <td className="p-4 text-white font-medium print:text-black print:p-2">
-                                                {h["Holiday"]}
-                                            </td>
-                                            {stateName === "All States/UTs" && (
-                                                <td className="p-4 text-gray-400 text-xs print:text-black print:p-2">
-                                                    {h["State"]}
+                                {visibleHolidays.length > 0 ? (
+                                    visibleHolidays.map((h, idx) => {
+                                        const isPast = isPastDate(h.dateISO);
+                                        return (
+                                            <tr key={idx} className={`hover:bg-white/5 transition-colors print:break-inside-avoid ${isPast ? 'opacity-60' : ''}`}>
+                                                <td className={`p-4 font-medium whitespace-nowrap print:text-black print:p-2 ${h.date.getDay() === 0 ? (isPast ? 'text-red-400/50' : 'text-red-400') : (isPast ? 'text-white/50' : 'text-white')}`}>
+                                                    {format(h.date, "dd MMM yyyy")}
                                                 </td>
-                                            )}
-                                            <td className="p-4 print:p-2">
-                                                <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium print:border print:border-black print:px-2 print:py-1 ${h.Status === "Closed"
-                                                    ? "bg-red-900/40 text-red-200 border border-red-500/20 print:text-black print:bg-transparent print:font-bold"
-                                                    : "bg-green-900/40 text-green-200 border border-green-500/20 print:text-black print:bg-transparent"
-                                                    }`}>
-                                                    {h.Status}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    ))
+                                                <td className={`p-4 print:text-black print:p-2 ${h.date.getDay() === 0 ? (isPast ? 'text-red-400/40' : 'text-red-400/70') : (isPast ? 'text-gray-500/50' : 'text-gray-400')}`}>
+                                                    {format(h.date, "EEEE")}
+                                                </td>
+                                                <td className={`p-4 font-medium print:text-black print:p-2 ${isPast ? 'text-white/50' : 'text-white'}`}>
+                                                    {h.name}
+                                                </td>
+                                                {stateName === "All States/UTs" && (
+                                                    <td className={`p-4 text-xs print:text-black print:p-2 ${isPast ? 'text-gray-500/50' : 'text-gray-400'}`}>
+                                                        {h.state}
+                                                    </td>
+                                                )}
+                                                <td className="p-4 print:p-2">
+                                                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium print:border print:border-black print:px-2 print:py-1 border border-red-500/20 print:text-black print:bg-transparent print:font-bold ${isPast ? 'bg-red-900/20 text-red-200/50 opacity-70' : 'bg-red-900/40 text-red-200'}`}>
+                                                        Closed ({h.type})
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })
                                 ) : (
                                     <tr>
                                         <td colSpan={stateName === "All States/UTs" ? 5 : 4} className="p-8 text-center text-gray-500 print:text-black">
@@ -386,8 +461,100 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
 
             </div>
 
+            {/* G: State Page Content Upgrades (Month-wise & Insights) - Restructured */}
+            <section className="w-full max-w-[1050px] mx-auto px-4 mb-3 print:hidden">
+
+                {/* G1: Month-by-month Breakdown - Full Width */}
+                <div className="space-y-6 mb-8">
+                    <h3 className="text-xl font-bold text-white uppercase tracking-wide border-b border-white/10 pb-2">
+                        Month-by-Month Breakdown
+                    </h3>
+                    {(() => {
+                        // Compute holidays per month using visibleHolidays (excludes Sundays, respects Saturday toggle)
+                        const monthData = months.map((m, mIdx) => {
+                            const mHolidays = visibleHolidays.filter(h => h.date.getMonth() === m.getMonth());
+                            const longWeekends = mHolidays.filter(h => {
+                                const day = h.date.getDay();
+                                return day === 1 || day === 5;
+                            });
+                            return { month: m, mIdx, mHolidays, longWeekends };
+                        }).filter(md => md.mHolidays.length > 0);
+
+                        // Compute max items for equal height
+                        const maxItems = Math.max(...monthData.map(md => md.mHolidays.length), 0);
+
+                        return (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                {monthData.map(({ month, mIdx, mHolidays, longWeekends }) => (
+                                    <div key={mIdx} className="bg-white/5 border border-white/10 rounded-[4px] p-4 flex flex-col">
+                                        <div className="flex justify-between items-baseline mb-2">
+                                            <h4 className="font-bold text-white">{format(month, "MMMM")}</h4>
+                                            <span className="text-xs text-gray-400 font-medium">{mHolidays.length} Day{mHolidays.length !== 1 ? 's' : ''} Closed</span>
+                                        </div>
+                                        <ul className="space-y-1 mb-3 flex-1">
+                                            {/* Render all holidays */}
+                                            {mHolidays.map((h, hIdx) => (
+                                                <li key={hIdx} className="text-sm text-gray-300 truncate">
+                                                    • {h.name}
+                                                </li>
+                                            ))}
+                                            {/* Placeholder rows for equal height */}
+                                            {Array.from({ length: maxItems - mHolidays.length }).map((_, pIdx) => (
+                                                <li key={`placeholder-${pIdx}`} className="text-sm text-gray-300 invisible">
+                                                    • —
+                                                </li>
+                                            ))}
+                                        </ul>
+                                        {longWeekends.length > 0 && (
+                                            <div className="mt-2 pt-2 border-t border-white/5">
+                                                <p className="text-xs text-[#7d3cff] font-medium">
+                                                    Long Weekend Opportunity: {longWeekends.length} potentially
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        );
+                    })()}
+                </div>
+
+                {/* G2 & G3: Major Cities + Planning Tip - Below Month Grid */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* G2: Major Cities */}
+                    <div className="bg-[#0e0a18] border border-[#7d3cff]/30 rounded-[4px] p-5">
+                        <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+                            <MapPin className="w-4 h-4 text-[#7d3cff]" />
+                            Major Cities
+                        </h4>
+                        <p className="text-sm text-gray-400 leading-relaxed">
+                            Holiday dates are the same across {stateName === "All States/UTs" ? "all major cities" : `all cities in ${stateName}`}, including all district headquarters and major banking hubs.
+                        </p>
+                        <div className="mt-3 text-xs text-gray-500">
+                            * Branch timings may vary slightly by bank, but closure dates are uniform as per the Negotiable Instruments Act.
+                        </div>
+                    </div>
+
+                    {/* G3: Planning Tip */}
+                    <div className="bg-gradient-to-br from-[#7d3cff]/10 to-transparent border border-[#7d3cff]/20 rounded-[4px] p-5">
+                        <h4 className="font-bold text-white mb-2 flex items-center gap-2">
+                            <Calendar className="w-4 h-4 text-[#7d3cff]" />
+                            Planning Tip
+                        </h4>
+                        <p className="text-sm text-gray-300 leading-relaxed mb-3">
+                            Plan your bank visits early. 2nd and 4th Saturdays are always closed.
+                        </p>
+                        {visibleHolidays.some(h => h.date.getDay() === 1 || h.date.getDay() === 5) && (
+                            <p className="text-sm text-[#7d3cff] font-medium">
+                                Several holidays in 2026 fall on a Friday or Monday, creating long weekends. Check the list for details.
+                            </p>
+                        )}
+                    </div>
+                </div>
+            </section>
+
             {/* Browse All States - Crawlable Links for SEO */}
-            {stateName === "All States/UTs" && (
+            {stateName === "All States/UTs" ? (
                 <section className="w-full max-w-[1050px] mx-auto px-4 print:hidden">
                     <h2 className="text-lg font-bold text-white mb-4 uppercase tracking-wide">Browse State-wise Bank Holidays 2026</h2>
                     <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
@@ -402,7 +569,16 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
                         ))}
                     </div>
                 </section>
+            ) : (
+                <section className="w-full max-w-[1050px] mx-auto px-4 -mt-[13px] print:hidden">
+                    <CompareStates currentState={stateName} />
+                </section>
             )}
+
+            {/* Linking Module: Learn Guides - Visible to all */}
+            <section className="w-full max-w-[1050px] mx-auto px-4 -mt-2 print:hidden">
+                <LearnGuides />
+            </section>
 
             {/* D. Footer Content Stack - Hidden on Print */}
             <div className="w-full space-y-12 print:hidden">

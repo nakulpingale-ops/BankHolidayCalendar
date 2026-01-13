@@ -4,7 +4,43 @@ import { Metadata } from "next";
 import { INDIAN_STATES, slugToState, stateToSlug } from "@/lib/constants";
 import { StateCalendarView } from "@/components/StateCalendarView";
 
+import fs from "fs";
+import path from "path";
+import Papa from "papaparse";
+import { getCombinedHolidays, CsvHolidayRow } from "@/src/lib/holidays";
+
 const BASE_URL = "https://bankholidaycalendar.com";
+
+// Helper to load holidays server-side for Metadata
+async function getHolidayMetadata(stateName: string) {
+    try {
+        const filePath = path.join(process.cwd(), "public", "holidays2026.csv");
+        const fileContent = fs.readFileSync(filePath, "utf8");
+        const { data } = Papa.parse<CsvHolidayRow>(fileContent, {
+            header: true,
+            skipEmptyLines: true,
+        });
+
+        // Use standard merger to get accurate counts (weekends + 2nd/4th sats + csv dates)
+        const holidays = getCombinedHolidays(data, stateName, 2026);
+
+        // Count: Total closed days
+        const holidayCount = holidays.length;
+
+        // Top 3 distinct names for Description (exclude "Second Saturday"/"Fourth Saturday" to be more descriptive)
+        const topHolidays = holidays
+            .filter(h => h.type === "National" || h.type === "State")
+            .map(h => h.name)
+            // Dedupe names
+            .filter((value, index, self) => self.indexOf(value) === index)
+            .slice(0, 3);
+
+        return { holidayCount, topHolidays };
+    } catch (e) {
+        console.error("Error generating metadata:", e);
+        return { holidayCount: 0, topHolidays: [] };
+    }
+}
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
@@ -15,34 +51,44 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     const stateSlug = slug.replace("-bank-holiday-2026", "");
     let stateName = "All States";
+    const potentialName = slugToState(stateSlug);
 
-    if (stateSlug !== "all") {
-        const potentialName = slugToState(stateSlug);
-        if (potentialName) {
-            stateName = potentialName;
-        }
+    if (stateSlug !== "all" && potentialName) {
+        stateName = potentialName;
     }
 
+    // Fetch data-driven counts
+    const { holidayCount, topHolidays } = await getHolidayMetadata(stateName);
+    const holidayListStr = topHolidays.length > 0 ? `, including ${topHolidays.join(", ")}` : "";
+
     const title = stateName === "All States"
-        ? "All Bank Holidays 2026 India - Official State-wise List | HolBank"
-        : `${stateName} Bank Holidays 2026 - Official List & Dates | HolBank`;
+        ? "Official Bank Holiday Calendar 2026 - All India State-wise List"
+        : `${stateName} Bank Holidays 2026: Official List & Calendar`;
 
     const description = stateName === "All States"
-        ? "View the 2026 bank holiday list state-wise. Filter by State/UT and month, and see bank closures for holidays, Sundays, and 2nd & 4th Saturdays."
-        : `View the 2026 bank holiday list for ${stateName}. Filter by month, and see bank closures for holidays, Sundays, and 2nd & 4th Saturdays.`;
+        ? `Official Bank Holiday Calendar 2026 for all Indian States/UTs. Check bank open/closed status, RBI 2nd/4th Saturday closures, and festival holidays.`
+        : `${stateName} Bank Holidays 2026: ${holidayCount}+ official closures incl. national/state holidays and RBI 2nd/4th Saturdays. View month-wise list + calendar.`;
+
+    // Canonical strictly based on slug
+    const canonicalUrl = `${BASE_URL}/${slug}`;
 
     return {
         title,
         description,
         alternates: {
-            canonical: `${BASE_URL}/${slug}`,
+            canonical: canonicalUrl,
         },
         openGraph: {
             title,
             description,
-            url: `${BASE_URL}/${slug}`,
+            url: canonicalUrl,
             type: "website",
         },
+        twitter: {
+            card: "summary_large_image",
+            title,
+            description,
+        }
     };
 }
 
@@ -55,8 +101,11 @@ export async function generateStaticParams() {
     ];
 }
 
-export default function StateCalendarPage({ params }: { params: Promise<{ slug: string }> }) {
-    const resolvedParams = use(params);
+import { buildBreadcrumbList, buildFAQPage, buildHolidayDataset } from "@/src/lib/schema";
+import { FAQ_DATA } from "@/components/FaqSection";
+
+export default async function StateCalendarPage({ params }: { params: Promise<{ slug: string }> }) {
+    const resolvedParams = await params;
     const slugParam = resolvedParams.slug;
 
     // Validation check
@@ -76,10 +125,49 @@ export default function StateCalendarPage({ params }: { params: Promise<{ slug: 
         }
     }
 
+    // --- Schema Generation ---
+    const { holidayCount } = await getHolidayMetadata(initialStateName);
+    const canonicalUrl = `${BASE_URL}/${slugParam}`;
+    const description = initialStateName === "All States/UTs"
+        ? `Official Bank Holiday Calendar 2026 for all Indian States/UTs.`
+        : `${initialStateName} Bank Holidays 2026: ${holidayCount}+ official closures incl. national/state holidays and RBI 2nd/4th Saturdays.`;
+
+    const breadcrumbSchema = buildBreadcrumbList([
+        { name: "Home", item: BASE_URL },
+        { name: initialStateName, item: canonicalUrl },
+        { name: "2026 Calendar", item: canonicalUrl } // Self reference for simplified trail
+    ]);
+
+    const datasetSchema = buildHolidayDataset({
+        stateName: initialStateName,
+        year: 2026,
+        canonicalUrl,
+        holidayCount,
+        description
+    });
+
+    const faqSchema = buildFAQPage(FAQ_DATA);
+
     return (
-        <StateCalendarView
-            slug={slugParam}
-            initialStateName={initialStateName}
-        />
+        <>
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+            />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(datasetSchema) }}
+            />
+            {faqSchema && (
+                <script
+                    type="application/ld+json"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+                />
+            )}
+            <StateCalendarView
+                slug={slugParam}
+                initialStateName={initialStateName}
+            />
+        </>
     );
 }

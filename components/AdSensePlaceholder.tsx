@@ -38,7 +38,7 @@ export function AdSensePlaceholder() {
 
     return (
         <div
-            className="w-full max-w-[1200px] mx-auto mt-[-34px] mb-[-4px] md:mb-3 md:-mt-[98px] flex flex-col items-center px-4 transition-all duration-300"
+            className="w-full max-w-none px-4 sm:max-w-[1200px] sm:mx-auto mt-[-34px] mb-[-4px] md:mb-3 md:-mt-[98px] flex flex-col items-center transition-all duration-300"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >

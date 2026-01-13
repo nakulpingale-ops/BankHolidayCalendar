@@ -9,10 +9,10 @@ interface FaqItem {
     answer: string;
 }
 
-const FAQ_DATA: FaqItem[] = [
+export const FAQ_DATA: FaqItem[] = [
     {
         question: "Does the Bank Holiday Calendar 2026 include second and fourth Saturdays?",
-        answer: "No. As per RBI regulations, banks remain closed on the 2nd and 4th Saturdays of every month. Banks are fully operational on the 1st, 3rd, and 5th Saturdays, provided no other statutory holiday falls on that day."
+        answer: "Yes. Banks are closed on the 2nd and 4th Saturdays of every month. Banks are fully operational on the 1st, 3rd, and 5th Saturdays, provided no other statutory holiday falls on that day. \n\nQuick Reference:\n• 1st Saturday: OPEN\n• 2nd Saturday: CLOSED\n• 3rd Saturday: OPEN\n• 4th Saturday: CLOSED\n• 5th Saturday: OPEN (if applicable)"
     },
     {
         question: "Do UPI, NEFT, and RTGS work on bank holidays?",
@@ -24,7 +24,7 @@ const FAQ_DATA: FaqItem[] = [
     },
     {
         question: "How do I check state-specific dates in the Bank Holiday Calendar 2026?",
-        answer: "No. While some holidays (like Republic Day or Independence Day) are national, most are state-specific under the Negotiable Instruments Act, 1881. For example, banks in Maharashtra may be closed for Gudi Padwa, while banks in Delhi remain open."
+        answer: "Use the dropdown selector at the top of the page. While some holidays (like Republic Day or Independence Day) are national, most are state-specific. For example, banks in Maharashtra may be closed for Gudi Padwa, while banks in Delhi remain open."
     },
     {
         question: "How many holidays are listed in the Bank Holiday Calendar 2026?",
@@ -49,7 +49,7 @@ export function FaqSection() {
 
     return (
         <section className="py-12 border-t border-white/5 w-full">
-            <div className="w-full max-w-[970px] mx-auto px-4">
+            <div className="w-full max-w-none px-4 sm:max-w-[1050px] sm:mx-auto">
                 <div className="flex items-center gap-3 mb-[14px]">
                     <MessageCircleQuestion className="w-6 h-6 text-[#7d3cff]" />
                     <h3 className="text-2xl font-bold text-white tracking-tight">FAQs</h3>
@@ -62,9 +62,9 @@ export function FaqSection() {
                             <div
                                 key={index}
                                 className={cn(
-                                    "group rounded-[4px] bg-white/5 backdrop-blur-sm border border-white/10 overflow-hidden transition-all duration-300",
-                                    "hover:shadow-[0_0_15px_rgba(125,60,255,0.15)] hover:border-purple-500/30",
-                                    isOpen ? "border-purple-500/30 bg-white/10" : ""
+                                    "group rounded-[4px] bg-[#121212]/80 backdrop-blur-sm border border-[#7d3cff]/45 overflow-hidden transition-all duration-300",
+                                    "hover:shadow-[0_0_15px_rgba(125,60,255,0.15)] hover:border-[#7d3cff]",
+                                    isOpen ? "border-[#7d3cff] bg-[#121212]" : ""
                                 )}
                             >
                                 <button
