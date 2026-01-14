@@ -89,7 +89,7 @@ export function TrackerInsight() {
             <div className="w-full max-w-none px-4 sm:max-w-[1050px] sm:mx-auto">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* Card 1: Upcoming Insight (Now Left) */}
-                    <div className="relative group rounded-[4px] bg-[#1A1A1A] backdrop-blur-sm border border-[#7d3cff]/45 px-6 pt-6 pb-6 shadow-xl transition-all h-full min-h-[290px]">
+                    <div className="relative group rounded-[12px] overflow-hidden bg-[#1A1A1A] backdrop-blur-sm border border-[#7d3cff]/45 px-6 pt-6 pb-6 shadow-xl transition-all h-full min-h-[290px]">
                         <div className="flex gap-4">
                             {/* Left Column: Icon */}
                             <div className="flex-shrink-0 pt-1">
@@ -159,7 +159,7 @@ export function TrackerInsight() {
                     </div>
 
                     {/* Card 2: 2nd & 4th Saturday Tracker (Now Right) */}
-                    <div className="relative group rounded-[4px] bg-[#1A1A1A] backdrop-blur-sm border border-[#7d3cff]/45 px-6 pt-6 pb-6 shadow-xl transition-all h-full min-h-[290px] flex flex-col justify-between">
+                    <div className="relative group rounded-[12px] overflow-hidden bg-[#1A1A1A] backdrop-blur-sm border border-[#7d3cff]/45 px-6 pt-6 pb-6 shadow-xl transition-all h-full min-h-[290px] flex flex-col justify-between">
                         <div className="flex gap-4">
                             {/* Left Column: Icon */}
                             <div className="flex-shrink-0 pt-1">
