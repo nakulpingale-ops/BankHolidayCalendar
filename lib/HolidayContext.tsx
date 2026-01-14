@@ -8,7 +8,7 @@ import {
     CsvHolidayRow,
     getCombinedHolidays,
     HolidayItem,
-    normalizeStateName
+    normalizeKey // Update import
 } from "@/src/lib/holidays";
 
 import { INDIAN_STATES, stateToSlug, slugToState } from "@/lib/constants";
@@ -121,8 +121,9 @@ export function HolidayProvider({ children }: { children: React.ReactNode }) {
                 "Manipur", "Arunachal Pradesh", "Meghalaya", "Nagaland"
             ];
 
-            const normalizedState = normalizeStateName(state);
-            if (closedStates.some(s => normalizeStateName(s) === normalizedState)) {
+            const normalizedState = normalizeKey(state);
+            // Use normalizeKey for comparison
+            if (closedStates.some(s => normalizeKey(s) === normalizedState)) {
                 return { isOpen: false, reason: "New Year's Day", type: "holiday" };
             }
             // For other states, it enters normal flow (likely open unless Sunday/CSV says otherwise)
@@ -138,12 +139,12 @@ export function HolidayProvider({ children }: { children: React.ReactNode }) {
             // Note: CsvHolidayRow Date is string YYYY-MM-DD
             if (!holidayDate || isNaN(holidayDate.getTime())) return false;
 
-            const normalizedParamState = normalizeStateName(state);
-            const normalizedRowState = normalizeStateName(h.State);
+            const normalizedParamState = normalizeKey(state);
+            const normalizedRowState = h.stateKey || normalizeKey(h.State);
 
             return (
                 isSameDay(holidayDate, date) &&
-                (h.State === "All" || normalizedRowState === normalizedParamState) &&
+                (h.State === "All" || normalizedRowState === "all" || normalizedRowState === normalizedParamState) &&
                 h.Status === "Closed"
             );
         });

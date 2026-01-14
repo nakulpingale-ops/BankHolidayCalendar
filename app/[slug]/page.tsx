@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-import { use } from "react";
 import { Metadata } from "next";
 import { INDIAN_STATES, slugToState, stateToSlug } from "@/lib/constants";
 import { StateCalendarView } from "@/components/StateCalendarView";
@@ -7,12 +6,12 @@ import { StateCalendarView } from "@/components/StateCalendarView";
 import fs from "fs";
 import path from "path";
 import Papa from "papaparse";
-import { getCombinedHolidays, CsvHolidayRow } from "@/src/lib/holidays";
+import { getCombinedHolidays, CsvHolidayRow, enrichCsvData } from "@/src/lib/holidays";
 
 const BASE_URL = "https://bankholidaycalendar.com";
 
-// Helper to load holidays server-side for Metadata
-async function getHolidayMetadata(stateName: string) {
+// Helper for data loading
+function getCsvData(): CsvHolidayRow[] {
     try {
         const filePath = path.join(process.cwd(), "public", "holidays2026.csv");
         const fileContent = fs.readFileSync(filePath, "utf8");
@@ -20,9 +19,18 @@ async function getHolidayMetadata(stateName: string) {
             header: true,
             skipEmptyLines: true,
         });
+        return enrichCsvData(data);
+    } catch (e) {
+        console.error("Error reading CSV:", e);
+        return [];
+    }
+}
 
+// Helper to load holidays server-side for Metadata
+async function getHolidayMetadata(stateName: string, csvData: CsvHolidayRow[]) {
+    try {
         // Use standard merger to get accurate counts (weekends + 2nd/4th sats + csv dates)
-        const holidays = getCombinedHolidays(data, stateName, 2026);
+        const holidays = getCombinedHolidays(csvData, stateName, 2026);
 
         // Count: Total closed days
         const holidayCount = holidays.length;
@@ -57,9 +65,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         stateName = potentialName;
     }
 
+    // Load Data
+    const csvData = getCsvData();
+
     // Fetch data-driven counts
-    const { holidayCount, topHolidays } = await getHolidayMetadata(stateName);
-    const holidayListStr = topHolidays.length > 0 ? `, including ${topHolidays.join(", ")}` : "";
+    const { holidayCount, topHolidays } = await getHolidayMetadata(stateName, csvData);
 
     const title = stateName === "All States"
         ? "Official Bank Holiday Calendar 2026 - All India State-wise List"
@@ -125,8 +135,11 @@ export default async function StateCalendarPage({ params }: { params: Promise<{ 
         }
     }
 
+    // Load Data
+    const csvData = getCsvData();
+
     // --- Schema Generation ---
-    const { holidayCount } = await getHolidayMetadata(initialStateName);
+    const { holidayCount } = await getHolidayMetadata(initialStateName, csvData);
     const canonicalUrl = `${BASE_URL}/${slugParam}`;
     const description = initialStateName === "All States/UTs"
         ? `Official Bank Holiday Calendar 2026 for all Indian States/UTs.`
@@ -167,6 +180,7 @@ export default async function StateCalendarPage({ params }: { params: Promise<{ 
             <StateCalendarView
                 slug={slugParam}
                 initialStateName={initialStateName}
+                initialHolidays={csvData}
             />
         </>
     );

@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useEffect, useMemo } from "react";
-import { format, eachMonthOfInterval, isSaturday, isSunday, getWeekOfMonth } from "date-fns";
+import { format, eachMonthOfInterval, isSaturday, isSunday, isSameDay, addDays, getWeekOfMonth } from "date-fns";
 import Papa from "papaparse";
 import Link from "next/link";
 import { useHolidayData } from "@/lib/HolidayContext";
-import { normalizeCsvRow, HolidayItem, isPastDate } from "@/src/lib/holidays";
+import { normalizeCsvRow, HolidayItem, isPastDate, getCombinedHolidays, CsvHolidayRow, computeBankingHolidays } from "@/src/lib/holidays";
 import { INDIAN_STATES, stateToSlug } from "@/lib/constants";
 import { CustomSelect } from "@/components/CustomSelect";
 import { FaqSection } from "@/components/FaqSection";
@@ -13,52 +13,34 @@ import { SeoGuideSection } from "@/components/SeoGuideSection";
 import { UtilityGuideSection } from "@/components/UtilityGuideSection";
 import { BrandHeadline } from "@/components/BrandHeadline";
 import { Toast } from "@/components/Toast";
-import { Share2, CalendarPlus, Download, Printer, MapPin, Calendar } from "lucide-react";
+import { Share2, CalendarPlus, Download, Printer, MapPin, Calendar, TrendingUp, Info } from "lucide-react";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { PrintHeader } from "./PrintHeader";
 import { ADS_ENABLED } from "@/lib/adsConfig";
 import { CompareStates } from "@/components/InternalLinking/CompareStates";
 import { LearnGuides } from "@/components/InternalLinking/LearnGuides";
+import { useSaturdayToggle } from "@/lib/hooks";
 
 interface StateCalendarViewProps {
     slug: string;
     initialStateName: string;
+    initialHolidays?: CsvHolidayRow[];
 }
 
-export function StateCalendarView({ slug, initialStateName }: StateCalendarViewProps) {
-    const { getHolidays, holidays, selectedState } = useHolidayData();
+export function StateCalendarView({ slug, initialStateName, initialHolidays }: StateCalendarViewProps) {
+    const { getHolidays: contextGetHolidays, holidays: contextHolidays, selectedState: contextSelectedState, loading: contextLoading } = useHolidayData();
     const [stateName, setStateName] = useState(initialStateName);
     const [selectedMonth, setSelectedMonth] = useState<number | "all">("all");
     const [toast, setToast] = useState<{ show: boolean; message: string }>({ show: false, message: "" });
-    const [includeSaturdayClosures, setIncludeSaturdayClosures] = useState(true);
+    const { includeSaturdayClosures, setIncludeSaturdayClosures } = useSaturdayToggle();
 
-    // Persist Saturday Toggle preference
-    useEffect(() => {
-        if (typeof window !== 'undefined') {
-            const savedSatToggle = localStorage.getItem("includeSaturdayClosures");
-            if (savedSatToggle !== null) {
-                setIncludeSaturdayClosures(savedSatToggle === "true");
-            }
-        }
-    }, []);
+    // Use initialHolidays if available (Server Side), otherwise generic Context (Client Side)
+    const holidaysSource = initialHolidays && initialHolidays.length > 0 ? initialHolidays : contextHolidays;
 
-    const handleSatToggleChange = (value: boolean) => {
-        setIncludeSaturdayClosures(value);
-        if (typeof window !== 'undefined') {
-            localStorage.setItem("includeSaturdayClosures", value.toString());
-        }
-    };
+    // Check if we are waiting for client-side data
+    const isLoading = (!initialHolidays || initialHolidays.length === 0) && contextLoading;
 
-    // Sync local state when global selectedState changes
-    useEffect(() => {
-        // If we want the global context to drive this, we can sync it.
-        // However, usually the URL param determines the state.
-        // If the user navigates, the page component re-mounts or updates props.
-        if (selectedState && selectedState !== stateName && selectedState !== "All States/UTs") {
-            // Optional: Decide if global context change should override URL state
-            // For now, let's respect props/URL first.
-        }
-    }, [selectedState]);
+
 
     const showSuccessToast = (message: string) => {
         setToast({ show: true, message });
@@ -71,20 +53,29 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
     // Logic: If "All States/UTs", show global list. Else show specific state list.
     let displayedHolidays: HolidayItem[] = [];
 
+
+
     if (stateName === "All States/UTs") {
         // Convert raw CSV rows to rich HolidayItems
-        displayedHolidays = holidays
+        const csvItems = holidaysSource
             .map(row => normalizeCsvRow(row))
-            .filter((item): item is HolidayItem => item !== null)
-            .filter(h => {
-                // Month filter
-                if (selectedMonth !== "all") {
-                    return h.date.getMonth() === selectedMonth;
-                }
-                return true;
-            });
+            .filter((item): item is HolidayItem => item !== null);
+
+        // Generate Generic Saturdays (applicable to all)
+        const saturdayItems = computeBankingHolidays(2026, "All States");
+
+        // Merge
+        displayedHolidays = [...csvItems, ...saturdayItems];
+
+        // Month filter
+        if (selectedMonth !== "all") {
+            displayedHolidays = displayedHolidays.filter(h => h.date.getMonth() === selectedMonth);
+        }
     } else {
-        displayedHolidays = getHolidays(stateName, 2026); // Default year
+        // Use local helper if source is our passed prop, or context helper
+        // Actually getCombinedHolidays works with raw rows, so we can always use it directly if we have rows
+        displayedHolidays = getCombinedHolidays(holidaysSource, stateName, 2026);
+
         if (selectedMonth !== "all") {
             displayedHolidays = displayedHolidays.filter(h => h.date.getMonth() === selectedMonth);
         }
@@ -119,6 +110,46 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
         if (includeSaturdayClosures) return holidaysWithoutSundays;
         return holidaysWithoutSundays.filter(h => !h.isSaturdayClosure);
     }, [holidaysWithSatFlag, includeSaturdayClosures]);
+
+    // --- Insights Computation (Unique Content) ---
+    const insights = useMemo(() => {
+        // Use full year list for insights, independent of month filter
+        const fullYearHolidays = stateName === "All States/UTs"
+            ? holidaysSource.map(row => normalizeCsvRow(row)).filter((item): item is HolidayItem => item !== null)
+            : getCombinedHolidays(holidaysSource, stateName, 2026);
+
+        // 1. Total Count (Official vs Saturday)
+        const officialHolidays = fullYearHolidays.filter(h => !h.name.toLowerCase().includes("saturday") && h.type !== "Banking");
+        const saturdayCount = fullYearHolidays.length - officialHolidays.length; // Approximate, or count specific types
+
+        // 2. Next Upcoming Holiday
+        const today = new Date();
+        const nextHoliday = fullYearHolidays.find(h => h.date >= today);
+
+        // 3. Top 5 Holiday Months
+        const monthCounts = new Map<string, number>();
+        fullYearHolidays.forEach(h => {
+            const m = format(h.date, "MMMM");
+            monthCounts.set(m, (monthCounts.get(m) || 0) + 1);
+        });
+        const topMonths = Array.from(monthCounts.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 5)
+            .map(([month, count]) => `${month} (${count})`);
+
+        // 4. Major Named Holidays (Top 3-5 unique names)
+        const majorNames = Array.from(new Set(officialHolidays.map(h => h.name)))
+            .slice(0, 5);
+
+        return {
+            totalOfficial: officialHolidays.length,
+            totalSaturdays: saturdayCount,
+            nextHoliday: nextHoliday ? `${nextHoliday.name} on ${format(nextHoliday.date, "dd MMM")}` : "None in 2026",
+            topMonths,
+            majorNames
+        };
+    }, [holidaysSource, stateName]);
+
 
     // Dropdown options for Inner Page
     const innerStateOptions = [
@@ -219,7 +250,7 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
     const actionButtonClass = `p-2 border border-[#7d3cff]/20 rounded-[4px] text-[#7d3cff] hover:border-[#7d3cff] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-[#7d3cff]/20 print:hidden`;
 
     return (
-        <div className="flex flex-col gap-12 pt-[92px] pb-8 w-full">
+        <div className="flex flex-col gap-8 pt-[92px] pb-8 w-full">
 
             {/* Breadcrumb Navigation - Hidden on Print */}
             <div className="print:hidden">
@@ -257,6 +288,44 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
                     </div>
                 </div>
             </header>
+
+            {/* Insights Block - New Unique Content */}
+            {stateName !== "All States/UTs" && (
+                <section className="w-full max-w-[1050px] mx-auto px-4 print:hidden">
+                    <div className="bg-[#1c1c21] border border-[#7d3cff]/30 rounded-lg p-5 shadow-lg">
+                        <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-2">
+                            <TrendingUp className="w-5 h-5 text-[#7d3cff]" />
+                            <h2 className="text-lg font-bold text-white uppercase tracking-wide">
+                                State Holiday Insights (2026)
+                            </h2>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                            <div className="bg-white/5 p-3 rounded-[4px] border border-white/5">
+                                <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Total Official Holidays</div>
+                                <div className="text-2xl font-bold text-white">{insights.totalOfficial} <span className="text-sm font-normal text-gray-500">Days</span></div>
+                            </div>
+                            <div className="bg-white/5 p-3 rounded-[4px] border border-white/5">
+                                <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Upcoming Holiday</div>
+                                <div className="text-lg font-bold text-[#7d3cff]">{insights.nextHoliday}</div>
+                            </div>
+                            <div className="bg-white/5 p-3 rounded-[4px] border border-white/5">
+                                <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Busiest Month</div>
+                                <div className="text-sm font-medium text-white">{insights.topMonths[0] || "N/A"}</div>
+                            </div>
+                            <div className="bg-white/5 p-3 rounded-[4px] border border-white/5">
+                                <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Saturday Closures</div>
+                                <div className="text-xl font-bold text-white">{insights.totalSaturdays} <span className="text-sm font-normal text-gray-500">(2nd/4th)</span></div>
+                            </div>
+                        </div>
+                        <div className="mt-4 text-xs text-gray-500 flex flex-wrap gap-2">
+                            <span className="font-bold text-gray-400">Major Events:</span>
+                            {insights.majorNames.map((n, i) => (
+                                <span key={i} className="bg-white/5 px-2 py-0.5 rounded-full">{n}</span>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            )}
 
             {/* AdSense Slot - Hidden on Print */}
             {ADS_ENABLED && (
@@ -314,7 +383,7 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
                                             type="checkbox"
                                             id="saturdayToggle"
                                             checked={includeSaturdayClosures}
-                                            onChange={(e) => handleSatToggleChange(e.target.checked)}
+                                            onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
                                             className="sr-only peer"
                                         />
                                         <div className="w-8 h-4 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
@@ -414,7 +483,7 @@ export function StateCalendarView({ slug, initialStateName }: StateCalendarViewP
                                 ) : (
                                     <tr>
                                         <td colSpan={stateName === "All States/UTs" ? 5 : 4} className="p-8 text-center text-gray-500 print:text-black">
-                                            No holidays found for this selection.
+                                            {isLoading ? "Loading..." : "No holidays found for this selection."}
                                         </td>
                                     </tr>
                                 )}

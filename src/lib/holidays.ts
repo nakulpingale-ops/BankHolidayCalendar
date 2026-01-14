@@ -1,11 +1,12 @@
 import Papa from "papaparse";
-import { format, parse, isValid, isSaturday, isSameDay, getMonth, getDate, eachDayOfInterval, startOfYear, endOfYear, addDays, getYear, getDay } from "date-fns";
+import { format, parse, isValid, isSaturday, isSunday, isSameDay, getMonth, getDate, eachDayOfInterval, startOfYear, endOfYear, addDays, getYear, getDay } from "date-fns";
 
 export interface CsvHolidayRow {
     Date: string;
     Holiday: string;
     State: string;
     Status: string;
+    stateKey?: string; // Derived for matching
 }
 
 export type HolidayType = "National" | "State" | "Banking" | "Weekend" | "Holiday";
@@ -19,14 +20,56 @@ export interface HolidayItem {
     dayOfWeek: string; // Mon, Tue...
 }
 
+// Map common variations to canonical keys
+const STATE_ALIASES: Record<string, string> = {
+    "nct of delhi": "delhi",
+    "odisha": "orissa", // if orissa is the canonical key in data, or vice versa. Assuming 'odisha' is modern.
+    "orissa": "odisha",
+    "puducherry": "pondicherry",
+    "pondicherry": "puducherry",
+    "jammu and kashmir": "jammu kashmir",
+    "jammu & kashmir": "jammu kashmir",
+    "andaman and nicobar islands": "andaman nicobar",
+    "andaman & nicobar islands": "andaman nicobar"
+};
+
 // Helper: Normalize state names for robust matching
-export function normalizeStateName(name: string): string {
+// Rules: trim, lower, replace &, collapse spaces, strip symbols
+export function normalizeKey(name: string): string {
     if (!name) return "";
-    return name
-        .trim()
-        .toLowerCase()
-        .replace(/&/g, "and")
-        .replace(/\s+/g, " ");
+    let s = name.trim().toLowerCase();
+
+    // Replace symbol variants
+    s = s.replace(/&/g, "and");
+
+    // Strip punctuation/symbols except letters, numbers, spaces
+    // Keeping simple: remove anything that isn't a-z, 0-9, or space
+    s = s.replace(/[^a-z0-9\s]/g, "");
+
+    // Collapse multiple spaces
+    s = s.replace(/\s+/g, " ");
+
+    s = s.trim();
+
+    // Check aliases
+    if (STATE_ALIASES[s]) {
+        return STATE_ALIASES[s];
+    }
+
+    // Special check for "andaman" specific simplification if strictly needed, but alias handles it.
+
+    return s;
+}
+
+// Deprecated old helper, mapped to new one for backward compat if needed
+export const normalizeStateName = normalizeKey;
+
+// Helper to enrich raw rows
+export function enrichCsvData(data: CsvHolidayRow[]): CsvHolidayRow[] {
+    return data.map(row => ({
+        ...row,
+        stateKey: normalizeKey(row.State)
+    }));
 }
 
 // 1. Fetch and Parse CSV
@@ -42,7 +85,8 @@ export async function fetchHolidaysCsv(): Promise<CsvHolidayRow[]> {
             header: true,
             skipEmptyLines: true,
         });
-        return data;
+
+        return enrichCsvData(data); // Add stateKey
     } catch (error) {
         console.error("Error loading holidays:", error);
         return [];
@@ -83,7 +127,6 @@ export function normalizeCsvRow(row: CsvHolidayRow): HolidayItem | null {
 
     // Parse date safely. Assuming CSV format is YYYY-MM-DD based on file view
     // If format is different, adjust parsing structure.
-    // The previous file view showed "2026-01-26", so it is standard ISO-like.
     let parsedDate = parse(row.Date, "yyyy-MM-dd", new Date());
 
     // Fallback if generic parse fails
@@ -117,13 +160,16 @@ export function normalizeCsvRow(row: CsvHolidayRow): HolidayItem | null {
 
 // 4. Main Merger Function
 export function getCombinedHolidays(csvData: CsvHolidayRow[], selectedState: string, year: number = 2026): HolidayItem[] {
-    const normalizedState = normalizeStateName(selectedState);
+    const selectedStateKey = normalizeKey(selectedState);
+    const isAll = selectedStateKey === "all" || selectedStateKey === "all statesuts" || selectedStateKey === "all states";
 
     // A. Filter CSV rows for this state (or All) and convert
     const csvHolidays: HolidayItem[] = [];
     csvData.forEach(row => {
-        const rowState = normalizeStateName(row.State);
-        if (rowState === "all" || rowState === normalizedState) {
+        // Ensure stateKey exists (in case data came from somewhere else not enriched)
+        const rowKey = row.stateKey || normalizeKey(row.State);
+
+        if (isAll || rowKey === "all" || rowKey === selectedStateKey) {
             const item = normalizeCsvRow(row);
             if (item && getYear(item.date) === year) {
                 csvHolidays.push(item);
@@ -165,7 +211,8 @@ export function getCombinedHolidays(csvData: CsvHolidayRow[], selectedState: str
         "tamil nadu", "west bengal", "sikkim", "mizoram",
         "manipur", "arunachal pradesh", "meghalaya", "nagaland"
     ];
-    if (jan1States.includes(normalizedState)) {
+    // Check using Key
+    if (jan1States.map(normalizeKey).includes(selectedStateKey)) {
         const jan1Date = new Date(year, 0, 1);
         const jan1ISO = format(jan1Date, "yyyy-MM-dd");
         if (!holidayMap.has(jan1ISO)) {

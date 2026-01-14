@@ -51,8 +51,11 @@ function FooterContent() {
                         <h3 className="text-[12px] font-bold text-[#7d3cff] uppercase tracking-widest">RESOURCES</h3>
                         <div className="flex flex-col gap-3">
                             <Link href="/about" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">About Us</Link>
+                            <Link href="/contact" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Contact</Link>
+                            <Link href="/sources-methodology" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Sources & Methodology</Link>
                             <Link href="/privacy-policy" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Privacy Policy</Link>
                             <Link href="/terms" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Terms of Service</Link>
+                            <Link href="/disclaimer" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Disclaimer</Link>
                         </div>
                     </div>
 

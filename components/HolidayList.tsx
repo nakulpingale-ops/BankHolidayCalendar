@@ -8,6 +8,7 @@ import { isPastDate, isTodayDate } from "@/src/lib/holidays";
 import { List, CalendarDays, ChevronLeft, ChevronRight, Share2, CalendarPlus, Download, Printer } from "lucide-react";
 import { Toast } from "@/components/Toast";
 import { PrintHeader } from "./PrintHeader";
+import { useSaturdayToggle } from "@/lib/hooks";
 
 export function HolidayList() {
     const { selectedState, getHolidays, isBankOpen } = useHolidayData();
@@ -26,28 +27,17 @@ export function HolidayList() {
     const [checkDate, setCheckDate] = useState("");
     const [dateCheckResult, setDateCheckResult] = useState<{ date: Date; status: any } | null>(null);
 
-    const [includeSaturdayClosures, setIncludeSaturdayClosures] = useState(true);
+    const { includeSaturdayClosures, setIncludeSaturdayClosures } = useSaturdayToggle();
 
-    // Persist View Mode and Saturday Toggle
+    // Persist View Mode
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const savedMode = localStorage.getItem("viewMode");
             if (savedMode === "list" || savedMode === "calendar") {
                 setViewMode(savedMode);
             }
-            const savedSatToggle = localStorage.getItem("includeSaturdayClosures");
-            if (savedSatToggle !== null) {
-                setIncludeSaturdayClosures(savedSatToggle === "true");
-            }
         }
     }, []);
-
-    const handleSatToggleChange = (value: boolean) => {
-        setIncludeSaturdayClosures(value);
-        if (typeof window !== 'undefined') {
-            localStorage.setItem("includeSaturdayClosures", value.toString());
-        }
-    };
 
     const handleViewChange = (mode: "list" | "calendar") => {
         setViewMode(mode);
@@ -75,7 +65,7 @@ export function HolidayList() {
     }, [selectedState, getHolidays, year]);
 
     // 2. Month Filtering (Control Bar)
-    const [selectedMonth, setSelectedMonth] = useState<number | "All">(() => new Date().getMonth());
+    const [selectedMonth, setSelectedMonth] = useState<number | "All">("All");
 
     // Reset to current month when state changes, unless date check is active
     useEffect(() => {
@@ -382,7 +372,7 @@ export function HolidayList() {
                                             <input
                                                 type="checkbox"
                                                 checked={includeSaturdayClosures}
-                                                onChange={(e) => handleSatToggleChange(e.target.checked)}
+                                                onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
                                                 className="sr-only peer"
                                             />
                                             <div className="w-8 h-4 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
@@ -426,7 +416,7 @@ export function HolidayList() {
                                     <input
                                         type="checkbox"
                                         checked={includeSaturdayClosures}
-                                        onChange={(e) => handleSatToggleChange(e.target.checked)}
+                                        onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
                                         className="sr-only peer"
                                     />
                                     <div className="w-7 h-3.5 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
