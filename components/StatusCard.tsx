@@ -73,9 +73,9 @@ export function StatusCard({ label, date, state, status, headingLevel = "h2" }: 
 
     return (
         <div
-            className={`w-full flex flex-col h-full rounded-[4px] border-[0.5px] px-4 sm:px-6 pt-3 pb-5 sm:py-5 relative overflow-hidden transition-all duration-300 group/card ${flash
+            className={`w-full flex flex-col h-full rounded-[4px] border-[0.5px] px-4 sm:px-6 pt-3 pb-5 sm:py-5 relative overflow-hidden transition-colors duration-150 group/card ${flash
                 ? "border-[#7d3cff] bg-[#7d3cff]/10 shadow-[0_0_30px_rgba(125,60,255,0.3)]"
-                : "border-[#7d3cff]/45 bg-[#121212]/80 backdrop-blur-sm shadow-xl"
+                : `${status.isOpen ? "border-[#14a900]" : "border-[#850000]"} bg-[#1A1A1A] backdrop-blur-sm shadow-xl`
                 } min-h-[220px] md:min-h-0`}
         >
             {/* Header Area - Refactored for Mobile 2-Row Layout */}

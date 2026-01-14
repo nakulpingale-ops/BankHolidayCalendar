@@ -273,7 +273,7 @@ export function HolidayList() {
         <section id="state-holidays-complete-list" className="w-full pt-0 -mt-[24px] pb-0 mb-8 text-white relative z-20">
             <div className="w-full max-w-none px-4 sm:max-w-[1050px] sm:mx-auto">
                 {/* LIST BOX WRAPPER */}
-                <div className="w-full flex flex-col sm:rounded-[4px] sm:border sm:border-[#7d3cff]/45 sm:bg-[#121212]/80 sm:shadow-2xl">
+                <div className="w-full flex flex-col border border-[#7d3cff] sm:rounded-[4px] sm:border sm:border-[#7d3cff]/45 sm:bg-[#121212]/80 sm:shadow-2xl">
                     <div className="w-full mb-0 sticky top-20 z-30 p-2 sm:p-2 border-b-0 sm:border-b sm:border-white/10 bg-transparent sm:bg-[#0e0a18]/95 sm:backdrop-blur-md sm:rounded-t-[4px] print:hidden">
 
                         {/* Unified Header: Dropdown + Date Check + View Toggle */}
@@ -310,21 +310,29 @@ export function HolidayList() {
 
                                 {/* Custom Date Input + Helper */}
                                 <div className="relative shrink flex flex-col">
-                                    <div className="flex items-center gap-2">
-                                        <input
-                                            type="date"
-                                            value={checkDate}
-                                            onChange={(e) => setCheckDate(e.target.value)}
-                                            className="h-9 w-auto min-w-[128px] sm:w-auto rounded-[4px] border px-2 sm:px-3 text-sm outline-none transition-colors uppercase appearance-none shrink
-                                                text-[rgba(255,255,255,0.92)] sm:text-white/90
-                                                bg-[rgba(255,255,255,0.06)] sm:bg-black/20
-                                                border-[rgba(255,255,255,0.14)] sm:border-white/10
-                                                caret-[rgba(255,255,255,0.92)] sm:caret-current
-                                                placeholder:text-[rgba(255,255,255,0.45)] placeholder:opacity-100
-                                                focus:border-[rgba(125,60,255,0.6)] focus:shadow-[0_0_0_2px_rgba(125,60,255,0.25)]
-                                                hover:border-[#7d3cff]/30"
-                                            placeholder="DD-MM-YYYY"
-                                        />
+                                    <div className="relative flex items-center gap-2">
+                                        <div className="relative">
+                                            <input
+                                                type="date"
+                                                value={checkDate}
+                                                onChange={(e) => setCheckDate(e.target.value)}
+                                                className="h-9 w-auto min-w-[128px] sm:w-auto rounded-[4px] border px-2 sm:px-3 text-sm outline-none transition-colors uppercase appearance-none shrink
+                                                    text-[rgba(255,255,255,0.92)] sm:text-white/90
+                                                    bg-[rgba(255,255,255,0.06)] sm:bg-black/20
+                                                    border-[rgba(255,255,255,0.14)] sm:border-white/10
+                                                    caret-[rgba(255,255,255,0.92)] sm:caret-current
+                                                    placeholder:text-[rgba(255,255,255,0.45)] placeholder:opacity-100
+                                                    focus:border-[rgba(125,60,255,0.6)] focus:shadow-[0_0_0_2px_rgba(125,60,255,0.25)]
+                                                    hover:border-[#7d3cff]/30"
+                                                placeholder="DD-MM-YYYY"
+                                            />
+                                            {/* Mobile-only overlay placeholder */}
+                                            {!checkDate && (
+                                                <span className="md:hidden absolute left-2 top-1/2 -translate-y-1/2 text-sm text-[rgba(255,255,255,0.45)] pointer-events-none uppercase select-none">
+                                                    dd-mm-yyyy
+                                                </span>
+                                            )}
+                                        </div>
                                         {checkDate && (
                                             <button
                                                 onClick={() => setCheckDate("")}
