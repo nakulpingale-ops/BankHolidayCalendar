@@ -43,7 +43,7 @@ export function AdSensePlaceholder() {
             onMouseLeave={() => setIsHovered(false)}
         >
             {/* Mobile Slot (300x250) - Visible on small screens, hidden on md+ */}
-            <div className="md:hidden w-[300px] min-h-[250px] bg-[#0f0f12] rounded-md relative overflow-hidden flex flex-col items-center justify-center group">
+            <div className="md:hidden w-[300px] min-h-[250px] bg-[#0f0f12] rounded-[4px] relative overflow-hidden flex flex-col items-center justify-center group">
                 {/* Empty container ready for AdSense injection */}
 
                 {/* Close Button - Mobile */}
@@ -58,7 +58,7 @@ export function AdSensePlaceholder() {
             </div>
 
             {/* Desktop Slot (728x90) - Hidden on small screens, visible on md+ */}
-            <div className="hidden md:flex w-[728px] max-w-full min-h-[90px] bg-[#0f0f12] relative overflow-hidden flex-col items-center justify-center rounded-md group">
+            <div className="hidden md:flex w-[728px] max-w-full min-h-[90px] bg-[#0f0f12] relative overflow-hidden flex-col items-center justify-center rounded-[4px] group">
                 {/* Empty container ready for AdSense injection */}
 
                 {/* Close Button - Desktop */}

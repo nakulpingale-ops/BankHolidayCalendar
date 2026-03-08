@@ -40,7 +40,7 @@ export function DayView({ mode, hideHeader = false }: DayViewProps) {
         setIsDetecting(false);
     };
 
-    if (!mounted) return <div className="h-[400px] w-full animate-pulse bg-gray-900/20 rounded-lg"></div>;
+    if (!mounted) return <div className="h-[400px] w-full animate-pulse bg-gray-900/20 rounded-[4px]"></div>;
 
     const targetDate = mode === "today" ? todayDate : addDays(todayDate, 1);
     const status = isBankOpen(targetDate, selectedState);

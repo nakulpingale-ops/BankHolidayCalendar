@@ -73,7 +73,7 @@ export function StatusCard({ label, date, state, status, headingLevel = "h2" }: 
 
     return (
         <div
-            className={`w-full flex flex-col h-full rounded-[12px] border-[0.5px] px-4 sm:px-6 pt-3 pb-5 sm:py-5 relative overflow-hidden transition-colors duration-150 group/card ${flash
+            className={`w-full flex flex-col h-full rounded-[4px] border-[0.5px] px-4 sm:px-6 pt-3 pb-5 sm:py-5 relative overflow-hidden transition-colors duration-150 group/card ${flash
                 ? "border-[#7d3cff] bg-[#7d3cff]/10 shadow-[0_0_30px_rgba(125,60,255,0.3)]"
                 : `${status.isOpen ? "border-[#14a900]" : "border-[#850000]"} bg-[#1A1A1A] backdrop-blur-sm shadow-xl`
                 } min-h-[220px] md:min-h-0`}
@@ -134,7 +134,7 @@ export function StatusCard({ label, date, state, status, headingLevel = "h2" }: 
                     {!status.isOpen && (
                         <div className="relative group/info shrink-0">
                             <Info className="w-4 h-4 text-white hover:text-white/80 cursor-pointer transition-colors" />
-                            <div className="fixed inset-x-4 top-1/2 -translate-y-1/2 md:absolute md:inset-auto md:bottom-full md:left-1/2 md:-translate-x-1/2 mb-0 md:mb-3 w-auto md:w-max max-w-[calc(100vw-32px)] md:max-w-[200px] px-3 py-2 bg-[#1e293b] border border-white/10 rounded-[6px] shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all duration-200 z-50 pointer-events-none transform md:translate-y-1 group-hover/info:translate-y-0 text-center md:text-left">
+                            <div className="fixed inset-x-4 top-1/2 -translate-y-1/2 md:absolute md:inset-auto md:bottom-full md:left-1/2 md:-translate-x-1/2 mb-0 md:mb-3 w-auto md:w-max max-w-[calc(100vw-32px)] md:max-w-[200px] px-3 py-2 bg-[#1e293b] border border-white/10 rounded-[4px] shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all duration-200 z-50 pointer-events-none transform md:translate-y-1 group-hover/info:translate-y-0 text-center md:text-left">
                                 <span className="text-[11px] text-white font-medium block leading-tight whitespace-normal">
                                     {getTooltipText()}
                                 </span>

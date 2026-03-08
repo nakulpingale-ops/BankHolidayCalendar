@@ -6,7 +6,7 @@ import { ArrowLeft, Calendar } from "lucide-react";
 export default function BankHolidays2025Page() {
     return (
         <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4 pt-[120px]">
-            <div className="bg-white/5 border border-[#7d3cff]/30 rounded-lg p-8 max-w-md w-full">
+            <div className="bg-white/5 border border-[#7d3cff]/30 rounded-[4px] p-8 max-w-md w-full">
                 <Calendar className="w-16 h-16 text-[#7d3cff] mx-auto mb-6" />
                 <h1 className="text-3xl font-bold text-white mb-4">
                     Bank Holidays 2025

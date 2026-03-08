@@ -12,7 +12,7 @@ export default function SourcesMethodologyPage() {
     const lastUpdated = new Date().toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' });
 
     return (
-        <main className="w-full max-w-[800px] mx-auto px-4 py-12 text-gray-300">
+        <main className="w-full max-w-[800px] mx-auto px-4 pt-[93px] pb-12 text-gray-300">
             <h1 className="text-3xl md:text-4xl font-black text-white mb-2">Sources & Methodology</h1>
             <p className="text-sm text-gray-500 mb-8">Last verified: {lastUpdated}</p>
 

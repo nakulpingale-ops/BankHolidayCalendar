@@ -24,7 +24,7 @@ export default function PaymentSystemsPage() {
 
                         <section className="space-y-4">
                             <h2 className="text-[16px] font-bold text-white uppercase tracking-widest pl-1">QUICK REFERENCE TABLE</h2>
-                            <div className="overflow-x-auto border border-white/10 rounded-lg">
+                            <div className="overflow-x-auto border border-white/10 rounded-[4px]">
                                 <table className="w-full text-left text-sm text-gray-400">
                                     <thead className="bg-white/5 text-white uppercase font-bold text-xs tracking-wider">
                                         <tr>

@@ -3,7 +3,6 @@ import { HolidayList } from "@/components/HolidayList";
 
 
 import { CalendarEntrySection } from "@/components/CalendarEntrySection";
-import { TrackerInsight } from "@/components/TrackerInsight";
 import { AdSensePlaceholder } from "@/components/AdSensePlaceholder";
 import { SeoArticle } from "@/components/SeoArticle";
 import { FaqSection } from "@/components/FaqSection";
@@ -58,11 +57,6 @@ export default function Home() {
 
             <div className="print:hidden">
                 <AdSensePlaceholder />
-            </div>
-
-            {/* Tracker & Insight Section */}
-            <div className="print:hidden">
-                <TrackerInsight />
             </div>
 
             {/* Calendar Entry Section */}

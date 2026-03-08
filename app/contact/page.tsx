@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function ContactPage() {
     return (
-        <main className="w-full max-w-[800px] mx-auto px-4 py-12 text-gray-300">
+        <main className="w-full max-w-[800px] mx-auto px-4 pt-[93px] pb-12 text-gray-300">
             <h1 className="text-3xl md:text-4xl font-black text-white mb-8">Contact Us</h1>
 
             <section className="mb-10 space-y-4">
@@ -24,9 +24,9 @@ export default function ContactPage() {
                 <p>
                     For all inquiries, please email us at:
                 </p>
-                <div className="bg-[#1c1c21] border border-white/10 p-6 rounded-lg inline-block">
-                    <a href="mailto:support@bankholidaycalendar.com" className="text-xl font-bold text-white hover:text-[#7d3cff] transition-colors">
-                        support@bankholidaycalendar.com
+                <div className="bg-[#1c1c21] border border-white/10 p-6 rounded-[4px] inline-block">
+                    <a href="mailto:support@holbank.com" className="text-xl font-bold text-white hover:text-[#7d3cff] transition-colors">
+                        support@holbank.com
                     </a>
                 </div>
                 <p className="text-sm text-gray-500 mt-4">

@@ -78,7 +78,7 @@ export function SeoGuideSection({ stateName }: SeoGuideSectionProps) {
                         ))}
                     </div>
 
-                    <div className="bg-gradient-to-r from-[#7d3cff]/10 to-blue-900/10 border-l-4 border-[#7d3cff] p-6 my-8 rounded-r-lg">
+                    <div className="bg-gradient-to-r from-[#7d3cff]/10 to-blue-900/10 border-l-4 border-[#7d3cff] p-6 my-8 rounded-[4px]">
                         <p className="font-bold text-purple-200 mb-2 font-display uppercase tracking-widest text-sm">Pro Tip</p>
                         <p className="text-gray-300 m-0">Always confirm high-value dates with the <strong>Bank Holiday Calendar 2026</strong> to avoid clearing delays.</p>
                     </div>

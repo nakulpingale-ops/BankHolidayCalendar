@@ -40,6 +40,12 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
     // Check if we are waiting for client-side data
     const isLoading = (!initialHolidays || initialHolidays.length === 0) && contextLoading;
 
+    const formatType = (type: string) => {
+        if (!type) return "N/A";
+        if (type === "weekend") return "Weekend";
+        return type;
+    };
+
 
 
     const showSuccessToast = (message: string) => {
@@ -194,7 +200,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
             Day: h.dayOfWeek,
             Holiday: h.name,
             State: h.state,
-            Type: h.type
+            Type: formatType(h.type)
         }));
 
         const csv = Papa.unparse(dataToExport);
@@ -223,8 +229,8 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
             icsContent += "BEGIN:VEVENT\n";
             icsContent += `UID:${uid}\n`;
             icsContent += `DTSTART;VALUE=DATE:${dateStr}\n`;
-            icsContent += `SUMMARY:${h.name} (${h.type})\n`;
-            icsContent += `DESCRIPTION:Bank Holiday in ${h.state}. Type: ${h.type}\n`;
+            icsContent += `SUMMARY:${h.name} (${formatType(h.type)})\n`;
+            icsContent += `DESCRIPTION:Bank Holiday in ${h.state}. Type: ${formatType(h.type)}\n`;
             icsContent += "END:VEVENT\n";
         });
 
@@ -292,7 +298,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
             {/* Insights Block - New Unique Content */}
             {stateName !== "All States/UTs" && (
                 <section className="w-full max-w-[1050px] mx-auto px-4 print:hidden">
-                    <div className="bg-[#1c1c21] border border-[#7d3cff]/30 rounded-lg p-5 shadow-lg">
+                    <div className="bg-[#1c1c21] border border-[#7d3cff]/30 rounded-[4px] p-5 shadow-lg">
                         <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-2">
                             <TrendingUp className="w-5 h-5 text-[#7d3cff]" />
                             <h2 className="text-lg font-bold text-white uppercase tracking-wide">
@@ -378,6 +384,9 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                             {/* Saturday Toggle - inline with dropdowns */}
                             <div className="flex items-center w-full sm:w-auto sm:self-end sm:pb-[6px]">
                                 <label className="flex items-center gap-2 cursor-pointer group">
+                                    <span className="text-xs text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
+                                        Include 2nd/4th Saturdays and Sundays
+                                    </span>
                                     <div className="relative flex items-center">
                                         <input
                                             type="checkbox"
@@ -389,9 +398,6 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                         <div className="w-8 h-4 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
                                         <div className="absolute left-0.5 w-3 h-3 bg-white/60 rounded-full peer-checked:translate-x-4 transition-transform peer-checked:bg-white"></div>
                                     </div>
-                                    <span className="text-xs text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
-                                        Include 2nd and 4th Saturdays
-                                    </span>
                                 </label>
                             </div>
 
@@ -474,7 +480,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                                 )}
                                                 <td className="p-4 print:p-2">
                                                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium print:border print:border-black print:px-2 print:py-1 border border-red-500/20 print:text-black print:bg-transparent print:font-bold ${isPast ? 'bg-red-900/20 text-red-200/50 opacity-70' : 'bg-red-900/40 text-red-200'}`}>
-                                                        Closed ({h.type})
+                                                        Closed ({formatType(h.type)})
                                                     </span>
                                                 </td>
                                             </tr>
@@ -564,13 +570,13 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                             {/* Render all holidays */}
                                             {mHolidays.map((h, hIdx) => (
                                                 <li key={hIdx} className="text-sm text-gray-300 truncate">
-                                                    • {h.name}
+                                                    â€¢ {h.name}
                                                 </li>
                                             ))}
                                             {/* Placeholder rows for equal height */}
                                             {Array.from({ length: maxItems - mHolidays.length }).map((_, pIdx) => (
                                                 <li key={`placeholder-${pIdx}`} className="text-sm text-gray-300 invisible">
-                                                    • —
+                                                    â€¢ â€”
                                                 </li>
                                             ))}
                                         </ul>

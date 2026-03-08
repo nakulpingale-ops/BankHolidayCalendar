@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useMemo, useEffect, useRef } from "react";
-import { format, getMonth, parseISO, isSameDay, isSaturday, getWeekOfMonth } from "date-fns";
+import { format, getMonth, parseISO, isSameDay, isSaturday, getWeekOfMonth, isSunday, eachDayOfInterval } from "date-fns";
 import Papa from "papaparse";
 import { useHolidayData, HolidayItem } from "@/lib/HolidayContext";
 import { isPastDate, isTodayDate } from "@/src/lib/holidays";
-import { List, CalendarDays, ChevronLeft, ChevronRight, Share2, CalendarPlus, Download, Printer } from "lucide-react";
+import { List, Calendar, CalendarDays, ChevronLeft, ChevronRight, Share2, CalendarPlus, Download, Printer } from "lucide-react";
 import { Toast } from "@/components/Toast";
 import { PrintHeader } from "./PrintHeader";
 import { useSaturdayToggle } from "@/lib/hooks";
@@ -49,7 +49,28 @@ export function HolidayList() {
     // 1. Get Full List
     const allHolidays = useMemo(() => {
         const rawHolidays = getHolidays(selectedState, year);
-        return rawHolidays.map(h => {
+
+        const start = new Date(year, 0, 1);
+        const end = new Date(year, 11, 31);
+        const days = eachDayOfInterval({ start, end });
+        const sundays = days.filter((d: Date) => isSunday(d));
+
+        const existingDates = new Set(rawHolidays.map((h: HolidayItem) => h.dateISO));
+
+        const sundayHolidays = sundays
+            .filter((d: Date) => !existingDates.has(format(d, "yyyy-MM-dd")))
+            .map((d: Date) => ({
+                date: d,
+                dateISO: format(d, "yyyy-MM-dd"),
+                name: "Sunday",
+                state: selectedState,
+                type: "weekend" as const,
+                dayOfWeek: format(d, "EEE"),
+                isSaturdayClosure: false,
+                isSundayClosure: true
+            }));
+
+        const combined = [...rawHolidays.map((h: HolidayItem) => {
             const dateObj = h.date;
             const weekOfMonth = getWeekOfMonth(dateObj);
             const isSat = isSaturday(dateObj);
@@ -60,8 +81,11 @@ export function HolidayList() {
                 nameLower.includes("fourth saturday") ||
                 (isSat && h.type === "Banking" && (weekOfMonth === 2 || weekOfMonth === 4));
 
-            return { ...h, isSaturdayClosure };
-        });
+            return { ...h, isSaturdayClosure, isSundayClosure: false };
+        }), ...sundayHolidays];
+
+        combined.sort((a, b) => a.date.getTime() - b.date.getTime());
+        return combined as (HolidayItem & { isSaturdayClosure: boolean; isSundayClosure: boolean })[];
     }, [selectedState, getHolidays, year]);
 
     // 2. Month Filtering (Control Bar)
@@ -106,7 +130,7 @@ export function HolidayList() {
 
 
     const filteredHolidays = useMemo(() => {
-        let list = includeSaturdayClosures ? allHolidays : allHolidays.filter(h => !h.isSaturdayClosure);
+        let list = includeSaturdayClosures ? allHolidays : allHolidays.filter(h => !h.isSaturdayClosure && !h.isSundayClosure);
         if (selectedMonth === "All") return list;
         return list.filter(h => getMonth(h.date) === selectedMonth);
     }, [allHolidays, selectedMonth, includeSaturdayClosures]);
@@ -133,8 +157,8 @@ export function HolidayList() {
     }, [calendarMonth, year]);
 
     const holidaysInCalendarMonth = useMemo(() => {
-        return allHolidays.filter(h => getMonth(h.date) === calendarMonth);
-    }, [allHolidays, calendarMonth]);
+        return filteredHolidays.filter(h => getMonth(h.date) === calendarMonth);
+    }, [filteredHolidays, calendarMonth]);
 
     const getHolidaysForDate = (date: Date) => {
         return holidaysInCalendarMonth.filter(h => format(h.date, "yyyy-MM-dd") === format(date, "yyyy-MM-dd"));
@@ -185,7 +209,7 @@ export function HolidayList() {
             Day: h.dayOfWeek,
             Holiday: h.name,
             State: h.state,
-            Type: h.type,
+            Type: formatType(h.type),
             Status: "Closed"
         }));
 
@@ -213,8 +237,8 @@ export function HolidayList() {
             icsContent += "BEGIN:VEVENT\n";
             icsContent += `UID:${uid}\n`;
             icsContent += `DTSTART;VALUE=DATE:${dateStr}\n`;
-            icsContent += `SUMMARY:${h.name} (${h.type})\n`;
-            icsContent += `DESCRIPTION:Bank Holiday in ${h.state}. Type: ${h.type}\n`;
+            icsContent += `SUMMARY:${h.name} (${formatType(h.type)})\n`;
+            icsContent += `DESCRIPTION:Bank Holiday in ${h.state}. Type: ${formatType(h.type)}\n`;
             icsContent += "END:VEVENT\n";
         });
 
@@ -243,23 +267,45 @@ export function HolidayList() {
     // Helper for Type Badge/Color
     const getTypeColor = (type: string) => {
         switch (type) {
-            case "National": return "text-orange-400 bg-orange-400/10 border-orange-400/20";
-            case "Banking": return "text-blue-400 bg-blue-400/10 border-blue-400/20";
-            case "State": return "text-[#7d3cff] bg-[#7d3cff]/10 border-[#7d3cff]/20";
-            case "weekend": return "text-red-400 bg-red-400/10 border-red-400/20";
-            case "holiday": return "text-orange-400 bg-orange-400/10 border-orange-400/20";
-            default: return "text-gray-400 bg-gray-500/10 border-gray-500/20";
+            case "National": return "text-orange-400";
+            case "Banking": return "text-blue-400";
+            case "State": return "text-[#7d3cff]";
+            case "weekend": return "text-red-400";
+            case "holiday": return "text-orange-400";
+            default: return "text-gray-400";
         }
+    };
+
+    const formatType = (type: string) => {
+        if (!type) return "N/A";
+        if (type === "weekend") return "Weekend";
+        return type;
     };
 
     // Helper for Status Badge
     const getStatusBadge = (isOpen: boolean, isPast: boolean = false) => {
         if (isOpen) {
-            const style = isPast ? "text-green-400/50 bg-green-400/5 border-green-400/10" : "text-green-400 bg-green-400/10 border-green-400/20";
-            return <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border print:border-black print:text-black print:bg-transparent print:font-bold ${style}`}>Open</span>;
+            const style = isPast ? "text-green-400/50" : "text-green-400";
+            return <span className={`text-sm print:text-black ${style}`}>Open</span>;
         }
-        const style = isPast ? "text-red-400/50 bg-red-400/5 border-red-400/10" : "text-red-400 bg-red-400/10 border-red-400/20";
-        return <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border print:border-black print:text-black print:bg-transparent print:font-bold ${style}`}>Closed</span>;
+        const style = isPast ? "text-red-400/50" : "text-red-400";
+        return <span className={`text-sm print:text-black ${style}`}>Closed</span>;
+    };
+
+    // Helper for Days Away Indicator
+    const getDaysAwayText = (date: Date) => {
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const target = new Date(date);
+        target.setHours(0, 0, 0, 0);
+
+        const diffTime = target.getTime() - today.getTime();
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+        if (diffDays < 0) return null;
+        if (diffDays === 0) return "Today";
+        if (diffDays === 1) return "1 day";
+        return `${diffDays} days`;
     };
 
     return (
@@ -285,12 +331,12 @@ export function HolidayList() {
                                             setSelectedMonth(e.target.value === "All" ? "All" : Number(e.target.value));
                                         }}
                                         disabled={!!checkDate}
-                                        className="h-9 w-auto min-w-[192px] sm:min-w-[140px] lg:w-[210px] rounded-[4px] bg-[#7d3cff] border-white/20 px-2 sm:px-3 text-sm text-white font-medium outline-none appearance-none hover:bg-[#8b52ff] focus:ring-[0.5px] focus:ring-white/30 shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="h-9 w-auto min-w-[128px] rounded-[4px] border border-white/20 bg-[#7d3cff] px-2 sm:px-3 text-sm text-white font-medium outline-none appearance-none hover:bg-[#8b52ff] focus:ring-[0.5px] focus:ring-white/30 shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                         title={checkDate ? "Clear date to browse months" : "Select Month"}
                                     >
                                         <option value="All" className="bg-[#0e0a18] text-white">All months</option>
                                         {months.map((m, idx) => (
-                                            <option key={m} value={idx} className="bg-[#0e0a18] text-white">{m}</option>
+                                            <option key={m} value={idx} className="bg-[#0e0a18] text-white">{m} {year}</option>
                                         ))}
                                     </select>
                                     <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-white">
@@ -300,7 +346,7 @@ export function HolidayList() {
 
 
                                 <span className="md:hidden text-[10px] text-white/50 whitespace-nowrap">or</span>
-                                <span className="hidden md:inline text-xs text-white/50 whitespace-nowrap">or check a custom date</span>
+                                <span className="hidden md:inline text-xs text-white/50 whitespace-nowrap">or</span>
 
                                 {/* Unified date input: visible on desktop, hidden on mobile */}
                                 <input
@@ -365,9 +411,17 @@ export function HolidayList() {
                                     </button>
                                 )}
 
-                                {/* Desktop Saturday Toggle - placed right after date selector */}
-                                <div className="hidden lg:flex items-center ml-2">
+                                {/* Desktop Saturday Toggle - MOVED TO Right Group */}
+                            </div>
+
+                            {/* Right Group: View Toggle & Filters */}
+                            <div className="flex items-center gap-3 sm:gap-4 shrink-0 ml-auto sm:ml-auto">
+                                {/* Desktop Saturday Toggle - placed right before view toggles */}
+                                <div className="hidden lg:flex items-center">
                                     <label className="flex items-center gap-2 cursor-pointer group">
+                                        <span className="text-xs text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
+                                            Include 2nd/4th Saturdays and Sundays
+                                        </span>
                                         <div className="relative flex items-center">
                                             <input
                                                 type="checkbox"
@@ -378,41 +432,40 @@ export function HolidayList() {
                                             <div className="w-8 h-4 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
                                             <div className="absolute left-0.5 w-3 h-3 bg-white/60 rounded-full peer-checked:translate-x-4 transition-transform peer-checked:bg-white"></div>
                                         </div>
-                                        <span className="text-xs text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
-                                            Include 2nd and 4th Saturdays
-                                        </span>
                                     </label>
                                 </div>
-                            </div>
-
-                            {/* Right Group: View Toggle */}
-                            <div className="flex items-center gap-1 shrink-0 ml-auto sm:ml-0">
-                                <button
-                                    onClick={() => handleViewChange("list")}
-                                    className={`p-1.5 rounded-[4px] transition-all ${viewMode === "list" ? "bg-[#7d3cff]/20 text-[#7d3cff] ring-1 ring-[#7d3cff]/50" : "text-gray-400 hover:text-white"}`}
-                                    aria-label="List View"
-                                    aria-pressed={viewMode === "list"}
-                                >
-                                    <List className="w-4 h-4" />
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        if (checkDate) setCheckDate(""); // Switch out of date mode
-                                        handleViewChange("calendar");
-                                    }}
-                                    className={`p-1.5 rounded-[4px] transition-all ${viewMode === "calendar" ? "bg-[#7d3cff]/20 text-[#7d3cff] ring-1 ring-[#7d3cff]/50" : "text-gray-400 hover:text-white"}`}
-                                    aria-label="Calendar View"
-                                    aria-pressed={viewMode === "calendar"}
-                                >
-                                    <CalendarDays className="w-4 h-4" />
-                                </button>
+                                <div className="h-5 w-px bg-white/10 hidden lg:block mx-1"></div>
+                                <div className="flex items-center gap-3 shrink-0">
+                                    <button
+                                        onClick={() => handleViewChange("list")}
+                                        className={`p-1.5 rounded-[4px] transition-all ${viewMode === "list" ? "bg-[#7d3cff]/20 text-[#7d3cff] ring-1 ring-[#7d3cff]/50" : "text-gray-400 hover:text-white"}`}
+                                        aria-label="List View"
+                                        aria-pressed={viewMode === "list"}
+                                    >
+                                        <List className="w-4 h-4" />
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            if (checkDate) setCheckDate(""); // Switch out of date mode
+                                            handleViewChange("calendar");
+                                        }}
+                                        className={`p-1.5 rounded-[4px] transition-all ${viewMode === "calendar" ? "bg-[#7d3cff]/20 text-[#7d3cff] ring-1 ring-[#7d3cff]/50" : "text-gray-400 hover:text-white"}`}
+                                        aria-label="Calendar View"
+                                        aria-pressed={viewMode === "calendar"}
+                                    >
+                                        <Calendar className="w-4 h-4" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
 
                         {/* Mobile Saturday Toggle */}
                         <div className="flex lg:hidden items-center justify-start pl-0 pr-2 py-1 mt-[5px]">
                             <label className="flex items-center gap-4 cursor-pointer group">
-                                <div className="relative flex items-center scale-[1.35] origin-left">
+                                <span className="text-[14px] text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
+                                    Include 2nd/4th Saturdays and Sundays
+                                </span>
+                                <div className="relative flex items-center scale-[1.35] origin-right ml-1">
                                     <input
                                         type="checkbox"
                                         checked={includeSaturdayClosures}
@@ -422,9 +475,6 @@ export function HolidayList() {
                                     <div className="w-7 h-3.5 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
                                     <div className="absolute left-0.5 w-2.5 h-2.5 bg-white/60 rounded-full peer-checked:translate-x-3.5 transition-transform peer-checked:bg-white"></div>
                                 </div>
-                                <span className="text-[14px] text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
-                                    Include 2nd and 4th Saturdays
-                                </span>
                             </label>
                         </div>
                     </div>
@@ -445,22 +495,22 @@ export function HolidayList() {
 
                                     {/* Result Table (Desktop) */}
                                     <div className="hidden sm:block overflow-hidden rounded-b-[4px] print:block print:rounded-none">
-                                        <table className="w-full text-left border-collapse print:w-full">
+                                        <table className="w-full table-fixed text-left border-collapse print:w-full">
                                             <thead>
                                                 <tr className="bg-white/5 border-b border-white/10 print:bg-gray-100">
-                                                    <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[180px] print:text-black print:p-2 print:border-b print:border-black">Date</th>
-                                                    <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[100px] print:text-black print:p-2 print:border-b print:border-black">Day</th>
+                                                    <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[120px] print:text-black print:p-2 print:border-b print:border-black whitespace-nowrap">Date</th>
+                                                    <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[80px] print:text-black print:p-2 print:border-b print:border-black">Day</th>
                                                     <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider print:text-black print:p-2 print:border-b print:border-black">Holiday Name</th>
-                                                    <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[100px] print:text-black print:p-2 print:border-b print:border-black">Status</th>
-                                                    <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[150px] print:text-black print:p-2 print:border-b print:border-black">Type</th>
+                                                    <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[110px] print:text-black print:p-2 print:border-b print:border-black">Status</th>
+                                                    <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[110px] print:text-black print:p-2 print:border-b print:border-black">Type</th>
                                                 </tr>
                                             </thead>
                                             <tbody className="divide-y divide-white/5 print:divide-black">
                                                 <tr className="hover:bg-white/5 transition-colors print:break-inside-avoid">
-                                                    <td className="p-4 text-sm font-medium text-white print:text-black print:p-2">
+                                                    <td className="p-4 text-sm font-medium text-white print:text-black print:p-2 whitespace-nowrap">
                                                         {format(dateCheckResult.date, "dd MMM yyyy")}
                                                     </td>
-                                                    <td className="p-4 text-sm text-gray-400 print:text-black print:p-2">
+                                                    <td className="p-4 text-sm text-white print:text-black print:p-2 whitespace-nowrap">
                                                         {format(dateCheckResult.date, "EEE")}
                                                     </td>
                                                     <td className="p-4 text-sm font-semibold text-white print:text-black print:p-2">
@@ -471,8 +521,8 @@ export function HolidayList() {
                                                     </td>
                                                     <td className="p-4 print:p-2">
                                                         {dateCheckResult.status.isOpen ? "—" : (
-                                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border print:border-black print:text-black print:bg-transparent print:font-bold ${getTypeColor(dateCheckResult.status.type)}`}>
-                                                                {dateCheckResult.status.type || "N/A"}
+                                                            <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border print:border-black print:text-black print:bg-transparent print:font-bold text-white`}>
+                                                                {formatType(dateCheckResult.status.type)}
                                                             </span>
                                                         )}
                                                     </td>
@@ -486,7 +536,7 @@ export function HolidayList() {
                                         <div className="bg-[#0e0a18]/80 border border-white/10 rounded-[4px] p-4 shadow-lg active:scale-[0.99] transition-transform">
                                             <div className="flex justify-between items-start mb-2">
                                                 <div className="flex flex-col">
-                                                    <span className="text-xs font-bold uppercase tracking-widest text-gray-500">{format(dateCheckResult.date, "EEE")}</span>
+                                                    <span className="text-xs font-bold uppercase tracking-widest text-white">{format(dateCheckResult.date, "EEE")}</span>
                                                     <span className="text-lg font-bold text-white">{format(dateCheckResult.date, "dd MMM yyyy")}</span>
                                                 </div>
                                                 {getStatusBadge(dateCheckResult.status.isOpen)}
@@ -496,8 +546,8 @@ export function HolidayList() {
                                                 {dateCheckResult.status.isOpen ? "Normal Working Day" : dateCheckResult.status.reason}
                                             </h3>
                                             {!dateCheckResult.status.isOpen && (
-                                                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold border uppercase tracking-wide ${getTypeColor(dateCheckResult.status.type)}`}>
-                                                    {dateCheckResult.status.type}
+                                                <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold border uppercase tracking-wide text-white`}>
+                                                    {formatType(dateCheckResult.status.type)}
                                                 </span>
                                             )}
                                         </div>
@@ -513,36 +563,47 @@ export function HolidayList() {
                                     <>
                                         {/* Desktop Table View */}
                                         <div className="hidden sm:block overflow-hidden rounded-b-[4px] print:block print:rounded-none">
-                                            <table className="w-full text-left border-collapse print:w-full">
+                                            <table className="w-full table-fixed text-left border-collapse print:w-full">
                                                 <thead>
                                                     <tr className="bg-white/5 border-b border-white/10 print:bg-gray-100">
-                                                        <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[180px] print:text-black print:p-2 print:border-b print:border-black">Date</th>
-                                                        <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[100px] print:text-black print:p-2 print:border-b print:border-black">Day</th>
+                                                        <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[80px] print:text-black print:p-2 print:border-b print:border-black whitespace-nowrap">Date</th>
+                                                        <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[80px] print:text-black print:p-2 print:border-b print:border-black">Day</th>
                                                         <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider print:text-black print:p-2 print:border-b print:border-black">Holiday Name</th>
-                                                        <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[100px] print:text-black print:p-2 print:border-b print:border-black">Status</th>
-                                                        <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[150px] print:text-black print:p-2 print:border-b print:border-black">Type</th>
+                                                        <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[140px] print:text-black print:p-2 print:border-b print:border-black whitespace-nowrap">Days Remaining</th>
+                                                        <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[110px] print:text-black print:p-2 print:border-b print:border-black">Status</th>
+                                                        <th className="p-4 text-xs font-bold text-gray-500 uppercase tracking-wider w-[110px] print:text-black print:p-2 print:border-b print:border-black">Type</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody className="divide-y divide-white/5 print:divide-black">
                                                     {filteredHolidays.map((h, idx) => {
                                                         const isPast = isPastDate(h.dateISO);
+                                                        const isActualHoliday = !h.isSaturdayClosure && !h.isSundayClosure;
                                                         return (
                                                             <tr key={`${h.dateISO}-${idx}`} className={`hover:bg-white/5 transition-colors print:break-inside-avoid ${isPast ? 'opacity-60' : ''}`}>
-                                                                <td className={`p-4 text-sm font-medium print:text-black print:p-2 ${h.date.getDay() === 0 ? (isPast ? 'text-red-400/50' : 'text-red-400') : (isPast ? 'text-white/50' : 'text-white')}`}>
-                                                                    {format(h.date, "dd MMM yyyy")}
+                                                                <td className={`p-4 text-sm font-medium print:text-black print:p-2 whitespace-nowrap ${isPast ? 'text-white/50' : 'text-white'}`}>
+                                                                    {format(h.date, "dd MMM")}
                                                                 </td>
-                                                                <td className={`p-4 text-sm print:text-black print:p-2 ${h.date.getDay() === 0 ? (isPast ? 'text-red-400/40' : 'text-red-400/70') : (isPast ? 'text-gray-500/50' : 'text-gray-400')}`}>
+                                                                <td className={`p-4 text-sm print:text-black print:p-2 whitespace-nowrap ${isPast ? 'text-white/50' : 'text-white'}`}>
                                                                     {h.dayOfWeek}
                                                                 </td>
                                                                 <td className={`p-4 text-sm font-semibold print:text-black print:p-2 ${isPast ? 'text-white/50' : 'text-white'}`}>
                                                                     {h.name}
                                                                 </td>
+                                                                <td className="p-4 print:p-2 whitespace-nowrap">
+                                                                    {!isPast ? (
+                                                                        <span className="text-sm text-red-400">
+                                                                            {getDaysAwayText(h.date)}
+                                                                        </span>
+                                                                    ) : (
+                                                                        <span className="text-sm text-white/40">-</span>
+                                                                    )}
+                                                                </td>
                                                                 <td className="p-4 print:p-2">
                                                                     {getStatusBadge(false, isPast)}
                                                                 </td>
                                                                 <td className="p-4 print:p-2">
-                                                                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border print:border-black print:text-black print:bg-transparent print:font-bold ${getTypeColor(h.type)} ${isPast ? 'opacity-70' : ''}`}>
-                                                                        {h.type}
+                                                                    <span className={`text-sm print:text-black text-white ${isPast ? 'opacity-70' : ''}`}>
+                                                                        {formatType(h.type)}
                                                                     </span>
                                                                 </td>
                                                             </tr>
@@ -556,21 +617,29 @@ export function HolidayList() {
                                         <div className="sm:hidden flex flex-col gap-3 p-4 pt-2">
                                             {filteredHolidays.map((h, idx) => {
                                                 const isPast = isPastDate(h.dateISO);
+                                                const isActualHoliday = !h.isSaturdayClosure && !h.isSundayClosure;
                                                 return (
                                                     <div key={`${h.dateISO}-${idx}-mob`} className={`bg-[#0e0a18]/80 border border-[#7d3cff]/55 rounded-[4px] p-4 shadow-lg active:scale-[0.99] transition-transform ${isPast ? 'opacity-70' : ''}`}>
                                                         <div className="flex justify-between items-start mb-2">
                                                             <div className="flex flex-col">
-                                                                <span className={`text-xs font-bold uppercase tracking-widest ${h.dayOfWeek === 'Sun' ? (isPast ? 'text-red-400/40' : 'text-red-400/70') : (isPast ? 'text-gray-500/60' : 'text-gray-500')}`}>{h.dayOfWeek}</span>
-                                                                <span className={`text-lg font-bold ${isPast ? 'text-white/60' : 'text-white group-hover:text-[#ef4444]'}`}>{format(h.date, "dd MMM yyyy")}</span>
+                                                                <span className={`text-xs font-bold uppercase tracking-widest ${isPast ? 'text-white/50' : 'text-white'}`}>{h.dayOfWeek}</span>
+                                                                <span className={`text-lg font-bold ${isPast ? 'text-white/60' : 'text-white'}`}>{format(h.date, "dd MMM")}</span>
                                                             </div>
                                                             {getStatusBadge(false, isPast)}
                                                         </div>
                                                         <div className={`h-px w-full my-2 ${isPast ? 'bg-white/5' : 'bg-white/5'}`}></div>
-                                                        <h3 className={`text-base font-semibold leading-tight mb-2 ${isPast ? 'text-white/60' : 'text-white'}`}>
-                                                            {h.name}
-                                                        </h3>
-                                                        <span className={`inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-bold border uppercase tracking-wide ${getTypeColor(h.type)} ${isPast ? 'opacity-70' : ''}`}>
-                                                            {h.type}
+                                                        <div className="flex items-center flex-wrap gap-2 mb-2">
+                                                            <h3 className={`text-base font-semibold leading-tight ${isPast ? 'text-white/60' : 'text-white'}`}>
+                                                                {h.name}
+                                                            </h3>
+                                                            {!isPast && (
+                                                                <span className="text-[12px] text-red-400 whitespace-nowrap">
+                                                                    {getDaysAwayText(h.date)}
+                                                                </span>
+                                                            )}
+                                                        </div>
+                                                        <span className={`text-[12px] tracking-wide text-white ${isPast ? 'opacity-70' : ''}`}>
+                                                            {formatType(h.type)}
                                                         </span>
                                                     </div>
                                                 );
@@ -710,7 +779,7 @@ export function HolidayList() {
                                                 <div key={idx} className="flex flex-col gap-1 p-2 rounded bg-black/20">
                                                     <div className="flex justify-between items-start">
                                                         <span className="font-medium text-gray-200">{h.name}</span>
-                                                        <span className={`text-[10px] px-2 py-0.5 rounded-full border ${getTypeColor(h.type)}`}>{h.type}</span>
+                                                        <span className={`text-[10px] px-2 py-0.5 rounded-full border ${getTypeColor(h.type)}`}>{formatType(h.type)}</span>
                                                     </div>
                                                 </div>
                                             ))}

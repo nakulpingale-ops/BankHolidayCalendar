@@ -36,7 +36,7 @@ export function HomeVerificationLines() {
             {/* 1. Merged Subtitle */}
             <div className="flex items-center justify-center px-4 mb-4 w-full">
                 <p className="text-gray-400 text-[12px] text-center whitespace-normal break-words line-clamp-3 lg:line-clamp-none">
-                    <CheckCircle className="inline w-3 h-3 text-[#14A900] shrink-0 -mt-[2px] mr-1" /> Official RBI holiday list for all States/UTs • Includes 2nd & 4th Saturday closures • Updated regularly <span className="block sm:inline whitespace-nowrap sm:whitespace-normal"><Info className="inline w-3 h-3 text-yellow-500 -mt-[2px] mr-0.5" /> Branch services available during operational hours.</span>
+                    <CheckCircle className="inline w-3 h-3 text-[#14A900] shrink-0 -mt-[2px] mr-1" /> Official RBI holiday list for all States/UTs • Includes 2nd & 4th Saturday closures • Updated regularly &nbsp;&nbsp;<span className="block sm:inline whitespace-nowrap sm:whitespace-normal"><Info className="inline w-3 h-3 text-yellow-500 -mt-[2px] mr-0.5" /> Branch services available during operational hours.</span>
                 </p>
             </div>
 

@@ -17,7 +17,7 @@ export function Hero() {
         setToday(new Date());
     }, []);
 
-    if (!mounted) return <div className="h-[400px] w-full animate-pulse bg-gray-900/20 rounded-lg"></div>;
+    if (!mounted) return <div className="h-[400px] w-full animate-pulse bg-gray-900/20 rounded-[4px]"></div>;
 
     const tomorrow = addDays(today, 1);
     const statusToday = isBankOpen(today, selectedState);
