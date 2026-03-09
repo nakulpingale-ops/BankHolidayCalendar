@@ -71,43 +71,59 @@ export function BankHelplinesClient() {
                 borderColor: "rgba(125, 60, 255, 0.45)"
                }}
             >
-              <div className="flex items-center gap-4">
-                  <Image
-                    src={bank.logo}
-                    alt={bank.name}
-                    width={40}
-                    height={40}
-                    className="w-10 h-10 object-contain"
-                  />
-                  <div className="flex flex-col">
+              <div className="flex flex-col gap-2 w-full">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-4">
+                    <Image
+                      src={bank.logo}
+                      alt={bank.name}
+                      width={40}
+                      height={40}
+                      className="w-10 h-10 object-contain"
+                    />
                     <span className="font-semibold text-gray-200">
-                        {bank.name}
-                    </span>
-                    <span className="text-white text-sm">
-                        {bank.numbers && bank.numbers.length > 0 ? bank.numbers.join(" • ") : "No number"}
+                      {bank.name}
                     </span>
                   </div>
-              </div>
-
-              <div className="flex justify-end">
                   <button
                     onClick={() => {
-                        const text = `${bank.name} Helpline: ${bank.numbers ? bank.numbers.join(", ") : ""}`;
-                        if (navigator.share) {
-                            navigator.share({
-                                title: "Bank Helpline",
-                                text: text
-                            }).catch(console.error);
-                        } else {
-                            navigator.clipboard.writeText(text);
-                            alert("Copied to clipboard!");
-                        }
+                      const text = `${bank.name} Helpline: ${bank.numbers ? bank.numbers.join(", ") : ""}`;
+                      if (navigator.share) {
+                        navigator.share({
+                          title: "Bank Helpline",
+                          text: text
+                        }).catch(console.error);
+                      } else {
+                        navigator.clipboard.writeText(text);
+                        alert("Copied to clipboard!");
+                      }
                     }}
                     className="text-[#7d3cff] hover:text-[#8b52ff] transition-colors p-2"
                     aria-label={`Share ${bank.name} helpline`}
                   >
-                      <Share2 size={18} />
+                    <Share2 size={18} />
                   </button>
+                </div>
+
+                <div className="-mt-3 pl-[56px] flex flex-wrap gap-x-2 gap-y-1">
+                  {bank.numbers && bank.numbers.length > 0 ? (
+                    bank.numbers.map((num, i) => (
+                      <React.Fragment key={i}>
+                        <a 
+                          href={`tel:${num.replace(/\s+/g, '')}`}
+                          className="text-white text-sm hover:text-[#7d3cff] transition-colors underline decoration-white/20 underline-offset-4"
+                        >
+                          {num}
+                        </a>
+                        {i < bank.numbers.length - 1 && (
+                          <span className="text-gray-500 text-sm self-center"> • </span>
+                        )}
+                      </React.Fragment>
+                    ))
+                  ) : (
+                    <span className="text-white text-sm">No number</span>
+                  )}
+                </div>
               </div>
             </div>
           ))}

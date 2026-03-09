@@ -370,9 +370,9 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                         {/* Actions */}
                         <div className="flex items-center gap-3" style={{ marginTop: '-3px', marginLeft: '2px' }}>
                             {/* Saturday Toggle - right aligned next to share */}
-                            <label className="flex items-center gap-2 cursor-pointer group mr-2">
-                                <span className="text-xs text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
-                                    Include 2nd/4th Saturdays and Sundays
+                            <label className="flex items-center gap-2 cursor-pointer group">
+                                <span className="text-xs text-white/70 group-hover:text-white transition-colors select-none leading-tight">
+                                    2nd/4th Sat <br /> and Sundays
                                 </span>
                                 <div className="relative flex items-center">
                                     <input
@@ -386,7 +386,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                     <div className="absolute left-0.5 w-3 h-3 bg-white/60 rounded-full peer-checked:translate-x-4 transition-transform peer-checked:bg-white"></div>
                                 </div>
                             </label>
-                            <div className="h-5 w-px bg-white/10"></div>
+
                             <button
                                 onClick={handleShare}
                                 disabled={isActionDisabled}

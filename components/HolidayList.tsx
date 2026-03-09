@@ -419,8 +419,8 @@ export function HolidayList() {
                                 {/* Desktop Saturday Toggle - placed right before view toggles */}
                                 <div className="hidden lg:flex items-center">
                                     <label className="flex items-center gap-2 cursor-pointer group">
-                                        <span className="text-xs text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
-                                            Include 2nd/4th Saturdays and Sundays
+                                        <span className="text-xs text-white/70 group-hover:text-white transition-colors select-none leading-tight">
+                                            2nd/4th Sat <br /> and Sundays
                                         </span>
                                         <div className="relative flex items-center">
                                             <input
@@ -462,8 +462,8 @@ export function HolidayList() {
                         {/* Mobile Saturday Toggle */}
                         <div className="flex lg:hidden items-center justify-start pl-0 pr-2 py-1 mt-[5px]">
                             <label className="flex items-center gap-4 cursor-pointer group">
-                                <span className="text-[14px] text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
-                                    Include 2nd/4th Saturdays and Sundays
+                                <span className="text-[14px] text-white/70 group-hover:text-white transition-colors select-none leading-tight">
+                                    2nd/4th Sat <br /> and Sundays
                                 </span>
                                 <div className="relative flex items-center scale-[1.35] origin-right ml-1">
                                     <input
