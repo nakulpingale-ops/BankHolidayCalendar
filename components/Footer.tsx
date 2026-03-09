@@ -18,7 +18,7 @@ function FooterContent() {
     return (
         <footer className="w-full py-16 mt-20 bg-[#050505] border-t border-white/5 print:hidden">
             <div className="w-full max-w-none px-4 sm:max-w-[1200px] sm:mx-auto">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8 items-start">
+                <div className="grid grid-cols-1 md:grid-cols-5 gap-12 md:gap-8 items-start">
 
                     {/* Task 1: HOLBANK GLOBAL NETWORK */}
                     <div className="space-y-3">
@@ -56,6 +56,18 @@ function FooterContent() {
                             <Link href="/privacy-policy" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Privacy Policy</Link>
                             <Link href="/terms" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Terms of Service</Link>
                             <Link href="/disclaimer" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Disclaimer</Link>
+                        </div>
+                    </div>
+
+                    {/* BANK SUPPORT */}
+                    <div className="flex flex-col gap-4">
+                        <h3 className="text-[12px] font-bold text-[#7d3cff] uppercase tracking-widest">BANK SUPPORT</h3>
+                        <div className="flex flex-col gap-3">
+                            <Link href="/bank-helplines" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Bank Helplines</Link>
+                            <Link href="/bank-helplines" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">HDFC Bank Helpline</Link>
+                            <Link href="/bank-helplines" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">SBI Customer Care</Link>
+                            <Link href="/bank-helplines" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">ICICI Bank Helpline</Link>
+                            <Link href="/bank-helplines" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Axis Bank Helpline</Link>
                         </div>
                     </div>
 

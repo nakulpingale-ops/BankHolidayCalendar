@@ -579,14 +579,14 @@ export function HolidayList() {
                                                         const isPast = isPastDate(h.dateISO);
                                                         const isActualHoliday = !h.isSaturdayClosure && !h.isSundayClosure;
                                                         return (
-                                                            <tr key={`${h.dateISO}-${idx}`} className={`hover:bg-white/5 transition-colors print:break-inside-avoid ${isPast ? 'opacity-60' : ''}`}>
-                                                                <td className={`p-4 text-sm font-medium print:text-black print:p-2 whitespace-nowrap ${isPast ? 'text-white/50' : 'text-white'}`}>
+                                                            <tr key={`${h.dateISO}-${idx}`} className={`hover:bg-white/5 transition-colors print:break-inside-avoid`}>
+                                                                <td className={`p-4 text-sm font-medium print:text-black print:p-2 whitespace-nowrap text-white`}>
                                                                     {format(h.date, "dd MMM")}
                                                                 </td>
-                                                                <td className={`p-4 text-sm print:text-black print:p-2 whitespace-nowrap ${isPast ? 'text-white/50' : 'text-white'}`}>
+                                                                <td className={`p-4 text-sm print:text-black print:p-2 whitespace-nowrap text-white`}>
                                                                     {h.dayOfWeek}
                                                                 </td>
-                                                                <td className={`p-4 text-sm font-semibold print:text-black print:p-2 ${isPast ? 'text-white/50' : 'text-white'}`}>
+                                                                <td className={`p-4 text-sm font-semibold print:text-black print:p-2 text-white`}>
                                                                     {h.name}
                                                                 </td>
                                                                 <td className="p-4 print:p-2 whitespace-nowrap">
@@ -602,7 +602,7 @@ export function HolidayList() {
                                                                     {getStatusBadge(false, isPast)}
                                                                 </td>
                                                                 <td className="p-4 print:p-2">
-                                                                    <span className={`text-sm print:text-black text-white ${isPast ? 'opacity-70' : ''}`}>
+                                                                    <span className={`text-sm print:text-black text-white`}>
                                                                         {formatType(h.type)}
                                                                     </span>
                                                                 </td>
@@ -619,17 +619,17 @@ export function HolidayList() {
                                                 const isPast = isPastDate(h.dateISO);
                                                 const isActualHoliday = !h.isSaturdayClosure && !h.isSundayClosure;
                                                 return (
-                                                    <div key={`${h.dateISO}-${idx}-mob`} className={`bg-[#0e0a18]/80 border border-[#7d3cff]/55 rounded-[4px] p-4 shadow-lg active:scale-[0.99] transition-transform ${isPast ? 'opacity-70' : ''}`}>
+                                                    <div key={`${h.dateISO}-${idx}-mob`} className={`bg-[#0e0a18]/80 border border-[#7d3cff]/55 rounded-[4px] p-4 shadow-lg active:scale-[0.99] transition-transform`}>
                                                         <div className="flex justify-between items-start mb-2">
                                                             <div className="flex flex-col">
-                                                                <span className={`text-xs font-bold uppercase tracking-widest ${isPast ? 'text-white/50' : 'text-white'}`}>{h.dayOfWeek}</span>
-                                                                <span className={`text-lg font-bold ${isPast ? 'text-white/60' : 'text-white'}`}>{format(h.date, "dd MMM")}</span>
+                                                                <span className={`text-xs font-bold uppercase tracking-widest text-white`}>{h.dayOfWeek}</span>
+                                                                <span className={`text-lg font-bold text-white`}>{format(h.date, "dd MMM")}</span>
                                                             </div>
                                                             {getStatusBadge(false, isPast)}
                                                         </div>
                                                         <div className={`h-px w-full my-2 ${isPast ? 'bg-white/5' : 'bg-white/5'}`}></div>
                                                         <div className="flex items-center flex-wrap gap-2 mb-2">
-                                                            <h3 className={`text-base font-semibold leading-tight ${isPast ? 'text-white/60' : 'text-white'}`}>
+                                                            <h3 className={`text-base font-semibold leading-tight text-white`}>
                                                                 {h.name}
                                                             </h3>
                                                             {!isPast && (
@@ -638,7 +638,7 @@ export function HolidayList() {
                                                                 </span>
                                                             )}
                                                         </div>
-                                                        <span className={`text-[12px] tracking-wide text-white ${isPast ? 'opacity-70' : ''}`}>
+                                                        <span className={`text-[12px] tracking-wide text-white`}>
                                                             {formatType(h.type)}
                                                         </span>
                                                     </div>

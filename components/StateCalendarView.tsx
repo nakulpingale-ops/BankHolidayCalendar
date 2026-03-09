@@ -275,24 +275,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                     </span>
                     <span className="block mt-[3px] md:-mt-1 text-[#7d3cff] text-[24px] md:text-[42px]">{stateName === "All States/UTs" ? "ALL INDIA" : stateName}</span>
                 </h1>
-                <div className="flex flex-wrap items-center justify-center gap-[5px] md:gap-6 text-[12px] uppercase tracking-widest font-medium">
-                    <div className="flex items-center gap-2">
-                        <div className="w-2.5 h-2.5 rounded-full liveGlow transition-colors duration-300 bg-green-500" data-status="open"></div>
-                        <span className="text-white">RTGS / NEFT</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <div className="w-2.5 h-2.5 rounded-full liveGlow transition-colors duration-300 bg-green-500" data-status="open"></div>
-                        <span className="text-white">UPI / IMPS</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <div className="w-2.5 h-2.5 rounded-full liveGlow transition-colors duration-300 bg-red-600/50" data-status="closed"></div>
-                        <span className="text-white/40">Cheque Clearing</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                        <div className="w-2.5 h-2.5 rounded-full liveGlow transition-colors duration-300 bg-red-600/50" data-status="closed"></div>
-                        <span className="text-white/40">Forex Windows</span>
-                    </div>
-                </div>
+
             </header>
 
             {/* Insights Block - New Unique Content */}
@@ -381,30 +364,29 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                 />
                             </div>
 
-                            {/* Saturday Toggle - inline with dropdowns */}
-                            <div className="flex items-center w-full sm:w-auto sm:self-end sm:pb-[6px]">
-                                <label className="flex items-center gap-2 cursor-pointer group">
-                                    <span className="text-xs text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
-                                        Include 2nd/4th Saturdays and Sundays
-                                    </span>
-                                    <div className="relative flex items-center">
-                                        <input
-                                            type="checkbox"
-                                            id="saturdayToggle"
-                                            checked={includeSaturdayClosures}
-                                            onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
-                                            className="sr-only peer"
-                                        />
-                                        <div className="w-8 h-4 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
-                                        <div className="absolute left-0.5 w-3 h-3 bg-white/60 rounded-full peer-checked:translate-x-4 transition-transform peer-checked:bg-white"></div>
-                                    </div>
-                                </label>
-                            </div>
 
                         </div>
 
                         {/* Actions */}
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-3" style={{ marginTop: '-3px', marginLeft: '2px' }}>
+                            {/* Saturday Toggle - right aligned next to share */}
+                            <label className="flex items-center gap-2 cursor-pointer group mr-2">
+                                <span className="text-xs text-white/70 group-hover:text-white transition-colors whitespace-nowrap select-none">
+                                    Include 2nd/4th Saturdays and Sundays
+                                </span>
+                                <div className="relative flex items-center">
+                                    <input
+                                        type="checkbox"
+                                        id="saturdayToggle"
+                                        checked={includeSaturdayClosures}
+                                        onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
+                                        className="sr-only peer"
+                                    />
+                                    <div className="w-8 h-4 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
+                                    <div className="absolute left-0.5 w-3 h-3 bg-white/60 rounded-full peer-checked:translate-x-4 transition-transform peer-checked:bg-white"></div>
+                                </div>
+                            </label>
+                            <div className="h-5 w-px bg-white/10"></div>
                             <button
                                 onClick={handleShare}
                                 disabled={isActionDisabled}
@@ -463,23 +445,23 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                     visibleHolidays.map((h, idx) => {
                                         const isPast = isPastDate(h.dateISO);
                                         return (
-                                            <tr key={idx} className={`hover:bg-white/5 transition-colors print:break-inside-avoid ${isPast ? 'opacity-60' : ''}`}>
-                                                <td className={`p-4 font-medium whitespace-nowrap print:text-black print:p-2 ${h.date.getDay() === 0 ? (isPast ? 'text-red-400/50' : 'text-red-400') : (isPast ? 'text-white/50' : 'text-white')}`}>
+                                            <tr key={idx} className={`hover:bg-white/5 transition-colors print:break-inside-avoid`}>
+                                                <td className={`p-4 font-medium whitespace-nowrap print:text-black print:p-2 ${h.date.getDay() === 0 ? 'text-red-400' : 'text-white'}`}>
                                                     {format(h.date, "dd MMM yyyy")}
                                                 </td>
-                                                <td className={`p-4 print:text-black print:p-2 ${h.date.getDay() === 0 ? (isPast ? 'text-red-400/40' : 'text-red-400/70') : (isPast ? 'text-gray-500/50' : 'text-gray-400')}`}>
+                                                <td className={`p-4 print:text-black print:p-2 ${h.date.getDay() === 0 ? 'text-red-400/70' : 'text-gray-400'}`}>
                                                     {format(h.date, "EEEE")}
                                                 </td>
-                                                <td className={`p-4 font-medium print:text-black print:p-2 ${isPast ? 'text-white/50' : 'text-white'}`}>
+                                                <td className={`p-4 font-medium print:text-black print:p-2 text-white`}>
                                                     {h.name}
                                                 </td>
                                                 {stateName === "All States/UTs" && (
-                                                    <td className={`p-4 text-xs print:text-black print:p-2 ${isPast ? 'text-gray-500/50' : 'text-gray-400'}`}>
+                                                    <td className={`p-4 text-xs print:text-black print:p-2 text-gray-400`}>
                                                         {h.state}
                                                     </td>
                                                 )}
                                                 <td className="p-4 print:p-2">
-                                                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium print:border print:border-black print:px-2 print:py-1 border border-red-500/20 print:text-black print:bg-transparent print:font-bold ${isPast ? 'bg-red-900/20 text-red-200/50 opacity-70' : 'bg-red-900/40 text-red-200'}`}>
+                                                    <span className="text-sm text-red-400 print:text-black font-medium">
                                                         Closed ({formatType(h.type)})
                                                     </span>
                                                 </td>
@@ -538,61 +520,6 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
 
             {/* G: State Page Content Upgrades (Month-wise & Insights) - Restructured */}
             <section className="w-full max-w-[1050px] mx-auto px-4 mb-3 print:hidden">
-
-                {/* G1: Month-by-month Breakdown - Full Width */}
-                <div className="space-y-6 mb-8">
-                    <h3 className="text-xl font-bold text-white uppercase tracking-wide border-b border-white/10 pb-2">
-                        Month-by-Month Breakdown
-                    </h3>
-                    {(() => {
-                        // Compute holidays per month using visibleHolidays (excludes Sundays, respects Saturday toggle)
-                        const monthData = months.map((m, mIdx) => {
-                            const mHolidays = visibleHolidays.filter(h => h.date.getMonth() === m.getMonth());
-                            const longWeekends = mHolidays.filter(h => {
-                                const day = h.date.getDay();
-                                return day === 1 || day === 5;
-                            });
-                            return { month: m, mIdx, mHolidays, longWeekends };
-                        }).filter(md => md.mHolidays.length > 0);
-
-                        // Compute max items for equal height
-                        const maxItems = Math.max(...monthData.map(md => md.mHolidays.length), 0);
-
-                        return (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                                {monthData.map(({ month, mIdx, mHolidays, longWeekends }) => (
-                                    <div key={mIdx} className="bg-white/5 border border-white/10 rounded-[4px] p-4 flex flex-col">
-                                        <div className="flex justify-between items-baseline mb-2">
-                                            <h4 className="font-bold text-white">{format(month, "MMMM")}</h4>
-                                            <span className="text-xs text-gray-400 font-medium">{mHolidays.length} Day{mHolidays.length !== 1 ? 's' : ''} Closed</span>
-                                        </div>
-                                        <ul className="space-y-1 mb-3 flex-1">
-                                            {/* Render all holidays */}
-                                            {mHolidays.map((h, hIdx) => (
-                                                <li key={hIdx} className="text-sm text-gray-300 truncate">
-                                                    â€¢ {h.name}
-                                                </li>
-                                            ))}
-                                            {/* Placeholder rows for equal height */}
-                                            {Array.from({ length: maxItems - mHolidays.length }).map((_, pIdx) => (
-                                                <li key={`placeholder-${pIdx}`} className="text-sm text-gray-300 invisible">
-                                                    â€¢ â€”
-                                                </li>
-                                            ))}
-                                        </ul>
-                                        {longWeekends.length > 0 && (
-                                            <div className="mt-2 pt-2 border-t border-white/5">
-                                                <p className="text-xs text-[#7d3cff] font-medium">
-                                                    Long Weekend Opportunity: {longWeekends.length} potentially
-                                                </p>
-                                            </div>
-                                        )}
-                                    </div>
-                                ))}
-                            </div>
-                        );
-                    })()}
-                </div>
 
                 {/* G2 & G3: Major Cities + Planning Tip - Below Month Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

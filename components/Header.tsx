@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { Phone } from "lucide-react";
 
 export function Header() {
     return (
@@ -18,12 +19,15 @@ export function Header() {
                             className="h-[32px] md:h-[38px] w-auto"
                         />
                     </Link>
+                    <span className="text-[10px] text-white pl-[34px] leading-none mt-[-4px] tracking-wide">
+                        a <span className="text-[#7d3cff] font-semibold">HOLBANK</span> product
+                    </span>
                 </div>
 
-                <div className="flex items-center gap-2 md:gap-6 min-w-0 flex-shrink">
+                <div className="flex items-center gap-4 md:gap-8 min-w-0 flex-shrink">
                     <Link
                         href="/all-bank-holiday-2026"
-                        className="flex items-center gap-1 md:gap-2 text-xs font-medium text-gray-300 hover:text-white transition-colors group flex-shrink-0"
+                        className="flex items-center gap-1 md:gap-2 text-xs font-medium text-gray-300 hover:text-[#7d3cff] transition-colors group flex-shrink-0"
                         onClick={(e) => {
                             // Scroll to top when clicking, especially for same-page navigation
                             setTimeout(() => {
@@ -44,8 +48,21 @@ export function Header() {
                                 WebkitMaskPosition: 'center'
                             }}
                         />
-                        <span className="md:hidden text-[#ffc61c] text-xs font-bold">2026 List</span>
-                        <span className="hidden md:inline">Complete Bank Holiday List 2026</span>
+                        <span className="md:hidden text-[#ffc61c] text-xs font-bold whitespace-nowrap">2026 List</span>
+                        <span className="hidden md:inline whitespace-nowrap">Complete Bank Holiday List 2026</span>
+                    </Link>
+                    <Link
+                        href="/bank-helplines"
+                        className="flex items-center gap-1 md:gap-2 text-xs font-medium text-gray-300 hover:text-[#7d3cff] transition-colors group flex-shrink-0 border-l border-white/10 pl-4"
+                        onClick={() => {
+                            setTimeout(() => {
+                                window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                            }, 100);
+                        }}
+                    >
+                        <Phone className="w-3.5 h-3.5 text-[#7d3cff] flex-shrink-0" />
+                        <span className="md:hidden text-xs font-bold whitespace-nowrap">Helplines</span>
+                        <span className="hidden md:inline whitespace-nowrap">Bank Helplines</span>
                     </Link>
                 </div>
             </div>

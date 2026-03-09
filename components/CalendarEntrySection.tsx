@@ -24,7 +24,7 @@ export function CalendarEntrySection() {
     ];
 
     return (
-        <section id="official-calendar-2026" className="w-full py-8 text-white relative z-50 -mt-[70px] md:-mt-[82px] mb-0 scroll-mt-[400px]">
+        <section id="official-calendar-2026" className="w-full py-8 text-white relative z-50 -mt-[85px] md:-mt-[97px] mb-0 scroll-mt-[400px]">
             <div className="w-full max-w-none px-4 sm:max-w-[1050px] sm:mx-auto">
                 <div className="flex items-start md:items-center gap-3 mb-[8px]">
                     <div
