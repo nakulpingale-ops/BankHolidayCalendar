@@ -63,11 +63,61 @@ function FooterContent() {
                     <div className="flex flex-col gap-4">
                         <h3 className="text-[12px] font-bold text-[#7d3cff] uppercase tracking-widest">BANK SUPPORT</h3>
                         <div className="flex flex-col gap-3">
-                            <Link href="/bank-helplines" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Bank Helplines</Link>
-                            <Link href="/bank-helplines" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">HDFC Bank Helpline</Link>
-                            <Link href="/bank-helplines" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">SBI Customer Care</Link>
-                            <Link href="/bank-helplines" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">ICICI Bank Helpline</Link>
-                            <Link href="/bank-helplines" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Axis Bank Helpline</Link>
+                            <Link 
+                                href="/bank-helplines" 
+                                className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300"
+                                onClick={() => {
+                                    setTimeout(() => {
+                                        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                                    }, 10);
+                                }}
+                            >
+                                Bank Helplines
+                            </Link>
+                            <Link 
+                                href="/bank-helplines" 
+                                className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300"
+                                onClick={() => {
+                                    setTimeout(() => {
+                                        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                                    }, 10);
+                                }}
+                            >
+                                HDFC Bank Helpline
+                            </Link>
+                            <Link 
+                                href="/bank-helplines" 
+                                className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300"
+                                onClick={() => {
+                                    setTimeout(() => {
+                                        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                                    }, 10);
+                                }}
+                            >
+                                SBI Customer Care
+                            </Link>
+                            <Link 
+                                href="/bank-helplines" 
+                                className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300"
+                                onClick={() => {
+                                    setTimeout(() => {
+                                        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                                    }, 10);
+                                }}
+                            >
+                                ICICI Bank Helpline
+                            </Link>
+                            <Link 
+                                href="/bank-helplines" 
+                                className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300"
+                                onClick={() => {
+                                    setTimeout(() => {
+                                        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+                                    }, 10);
+                                }}
+                            >
+                                Axis Bank Helpline
+                            </Link>
                         </div>
                     </div>
 
