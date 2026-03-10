@@ -331,7 +331,7 @@ export function HolidayList() {
                                             setSelectedMonth(e.target.value === "All" ? "All" : Number(e.target.value));
                                         }}
                                         disabled={!!checkDate}
-                                        className="h-9 w-auto min-w-[128px] rounded-[4px] border border-white/20 bg-[#7d3cff] px-2 sm:px-3 text-sm text-white font-medium outline-none appearance-none hover:bg-[#8b52ff] focus:ring-[0.5px] focus:ring-white/30 shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="h-9 w-auto min-w-[110px] rounded-[4px] border-0 bg-[#7d3cff] px-2 sm:px-3 text-sm text-white font-medium outline-none appearance-none hover:bg-[#8b52ff] focus:ring-[0.5px] focus:ring-white/30 shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                         title={checkDate ? "Clear date to browse months" : "Select Month"}
                                     >
                                         <option value="All" className="bg-[#0e0a18] text-white">All months</option>
@@ -345,73 +345,79 @@ export function HolidayList() {
                                 </div>
 
 
-                                <span className="md:hidden text-[10px] text-white/50 whitespace-nowrap">or</span>
-                                <span className="hidden md:inline text-xs text-white/50 whitespace-nowrap">or</span>
-
-                                {/* Unified date input: visible on desktop, hidden on mobile */}
-                                <input
-                                    ref={dateInputRef}
-                                    type="date"
-                                    value={checkDate}
-                                    onChange={(e) => setCheckDate(e.target.value)}
-                                    className="h-9 w-auto min-w-[128px] rounded-[4px] border px-2 sm:px-3 text-sm outline-none transition-colors uppercase appearance-none
-                                        hidden md:block
-                                        text-white/90
-                                        bg-black/20
-                                        border-white/10
-                                        caret-current
-                                        placeholder:text-[rgba(255,255,255,0.45)] placeholder:opacity-100
-                                        focus:border-[rgba(125,60,255,0.6)] focus:shadow-[0_0_0_2px_rgba(125,60,255,0.25)]
-                                        hover:border-[#7d3cff]/30"
-                                    placeholder="DD-MM-YYYY"
-                                />
-
-                                {/* Desktop: Clear button */}
-                                {checkDate && (
+                                {/* Mobile Group: Date Picker + Toggle */}
+                                <div className="flex md:hidden items-center gap-2">
+                                    <span className="text-[10px] text-white/50 whitespace-nowrap">or</span>
+                                    
+                                    {/* Mobile: Icon-only date picker button */}
                                     <button
-                                        onClick={() => setCheckDate("")}
-                                        className="hidden md:block h-9 px-2 rounded-[4px] border border-white/10 bg-white/5 hover:bg-white/10 text-xs text-white/70 transition-colors"
-                                        title="Clear date and return to list"
-                                    >
-                                        Clear
-                                    </button>
-                                )}
-
-                                {/* Mobile: Icon-only date picker button */}
-                                <button
-                                    onClick={() => {
-                                        if (dateInputRef.current) {
-                                            // Try modern showPicker API first, fallback to click
-                                            if ('showPicker' in dateInputRef.current) {
-                                                try {
-                                                    (dateInputRef.current as any).showPicker();
-                                                } catch (e) {
+                                        onClick={() => {
+                                            if (dateInputRef.current) {
+                                                if ('showPicker' in dateInputRef.current) {
+                                                    try {
+                                                        (dateInputRef.current as any).showPicker();
+                                                    } catch (e) {
+                                                        (dateInputRef.current as any).click();
+                                                    }
+                                                } else {
                                                     (dateInputRef.current as any).click();
                                                 }
-                                            } else {
-                                                (dateInputRef.current as any).click();
                                             }
-                                        }
-                                    }}
-                                    className="md:hidden h-9 w-9 shrink-0 flex items-center justify-center rounded-[4px] bg-[#7d3cff] border-white/20 hover:bg-[#8b52ff] text-white transition-all active:scale-95 shadow-lg"
-                                    title="Select a custom date"
-                                    aria-label="Select a custom date"
-                                >
-                                    <CalendarDays className="w-4 h-4" />
-                                </button>
-
-                                {/* Mobile: Clear button */}
-                                {checkDate && (
-                                    <button
-                                        onClick={() => setCheckDate("")}
-                                        className="md:hidden h-9 px-2.5 shrink-0 rounded-[4px] border border-white/10 bg-white/5 hover:bg-white/10 text-xs text-white/70 transition-colors active:scale-95"
-                                        title="Clear date"
+                                        }}
+                                        className="h-9 w-9 shrink-0 flex items-center justify-center rounded-[4px] bg-[#7d3cff] border-white/20 hover:bg-[#8b52ff] text-white transition-all active:scale-95 shadow-lg"
+                                        title="Select a custom date"
+                                        aria-label="Select a custom date"
                                     >
-                                        Clear
+                                        <CalendarDays className="w-4 h-4" />
                                     </button>
-                                )}
 
-                                {/* Desktop Saturday Toggle - MOVED TO Right Group */}
+                                    {/* Mobile Saturday Toggle - Inline */}
+                                    <label className="flex items-center gap-2 cursor-pointer group focus:outline-none">
+                                        <span className="text-[10px] text-white/70 group-hover:text-white transition-colors select-none leading-tight text-right">
+                                            2nd/4th Sat <br /> & Sundays
+                                        </span>
+                                        <div className="relative flex items-center">
+                                            <input
+                                                type="checkbox"
+                                                checked={includeSaturdayClosures}
+                                                onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
+                                                className="sr-only peer"
+                                            />
+                                            <div className="w-7 h-3.5 bg-white/10 rounded-full peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
+                                            <div className="absolute left-0.5 w-2.5 h-2.5 bg-white/60 rounded-full peer-checked:translate-x-3.5 transition-transform peer-checked:bg-white"></div>
+                                        </div>
+                                    </label>
+                                </div>
+
+                                {/* Desktop: Date input and Clear button */}
+                                <div className="hidden md:flex items-center gap-3">
+                                    <span className="text-xs text-white/50 whitespace-nowrap">or</span>
+                                    <input
+                                        ref={dateInputRef}
+                                        type="date"
+                                        value={checkDate}
+                                        onChange={(e) => setCheckDate(e.target.value)}
+                                        className="h-9 w-auto min-w-[128px] rounded-[4px] border px-2 sm:px-3 text-sm outline-none transition-colors uppercase appearance-none
+                                            text-white/90
+                                            bg-black/20
+                                            border-white/10
+                                            caret-current
+                                            placeholder:text-[rgba(255,255,255,0.45)] placeholder:opacity-100
+                                            focus:border-[rgba(125,60,255,0.6)] focus:shadow-[0_0_0_2px_rgba(125,60,255,0.25)]
+                                            hover:border-[#7d3cff]/30"
+                                        placeholder="DD-MM-YYYY"
+                                    />
+
+                                    {checkDate && (
+                                        <button
+                                            onClick={() => setCheckDate("")}
+                                            className="h-9 px-2 rounded-[4px] border border-white/10 bg-white/5 hover:bg-white/10 text-xs text-white/70 transition-colors"
+                                            title="Clear date and return to list"
+                                        >
+                                            Clear
+                                        </button>
+                                    )}
+                                </div>
                             </div>
 
                             {/* Right Group: View Toggle & Filters */}
@@ -420,7 +426,7 @@ export function HolidayList() {
                                 <div className="hidden lg:flex items-center">
                                     <label className="flex items-center gap-2 cursor-pointer group">
                                         <span className="text-xs text-white/70 group-hover:text-white transition-colors select-none leading-tight">
-                                            2nd/4th Sat <br /> and Sundays
+                                            Include 2nd/4th Sat and Sundays
                                         </span>
                                         <div className="relative flex items-center">
                                             <input
@@ -459,24 +465,7 @@ export function HolidayList() {
                             </div>
                         </div>
 
-                        {/* Mobile Saturday Toggle */}
-                        <div className="flex lg:hidden items-center justify-start pl-0 pr-2 py-1 mt-[5px]">
-                            <label className="flex items-center gap-4 cursor-pointer group">
-                                <span className="text-[14px] text-white/70 group-hover:text-white transition-colors select-none leading-tight">
-                                    2nd/4th Sat <br /> and Sundays
-                                </span>
-                                <div className="relative flex items-center scale-[1.35] origin-right ml-1">
-                                    <input
-                                        type="checkbox"
-                                        checked={includeSaturdayClosures}
-                                        onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
-                                        className="sr-only peer"
-                                    />
-                                    <div className="w-7 h-3.5 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
-                                    <div className="absolute left-0.5 w-2.5 h-2.5 bg-white/60 rounded-full peer-checked:translate-x-3.5 transition-transform peer-checked:bg-white"></div>
-                                </div>
-                            </label>
-                        </div>
+
                     </div>
 
                     {/* CONTENT AREA */}
@@ -619,28 +608,14 @@ export function HolidayList() {
                                                 const isPast = isPastDate(h.dateISO);
                                                 const isActualHoliday = !h.isSaturdayClosure && !h.isSundayClosure;
                                                 return (
-                                                    <div key={`${h.dateISO}-${idx}-mob`} className={`bg-[#0e0a18]/80 border border-[#7d3cff]/55 rounded-[4px] p-4 shadow-lg active:scale-[0.99] transition-transform`}>
-                                                        <div className="flex justify-between items-start mb-2">
-                                                            <div className="flex flex-col">
-                                                                <span className={`text-xs font-bold uppercase tracking-widest text-white`}>{h.dayOfWeek}</span>
-                                                                <span className={`text-lg font-bold text-white`}>{format(h.date, "dd MMM")}</span>
+                                                    <div key={`${h.dateISO}-${idx}-mob`} className="flex flex-col p-4 border-b border-white/5 hover:bg-white/5 transition-colors">
+                                                        <div className="flex justify-between items-start mb-1">
+                                                            <div className="text-sm font-medium text-white">
+                                                                {h.dayOfWeek}: {format(h.date, "dd MMM")} - {h.name}
                                                             </div>
                                                             {getStatusBadge(false, isPast)}
                                                         </div>
-                                                        <div className={`h-px w-full my-2 ${isPast ? 'bg-white/5' : 'bg-white/5'}`}></div>
-                                                        <div className="flex items-center flex-wrap gap-2 mb-2">
-                                                            <h3 className={`text-base font-semibold leading-tight text-white`}>
-                                                                {h.name}
-                                                            </h3>
-                                                            {!isPast && (
-                                                                <span className="text-[12px] text-red-400 whitespace-nowrap">
-                                                                    {getDaysAwayText(h.date)}
-                                                                </span>
-                                                            )}
-                                                        </div>
-                                                        <span className={`text-[12px] tracking-wide text-white`}>
-                                                            {formatType(h.type)}
-                                                        </span>
+                                                        <div className="text-xs text-gray-400 font-medium">{formatType(h.type)}</div>
                                                     </div>
                                                 );
                                             })}

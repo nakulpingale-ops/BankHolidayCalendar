@@ -328,9 +328,9 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                 {/* B. Control Bar (Filters & Actions) - Hidden on Print */}
                 <div className="w-full print:hidden">
                     <div id="inner-page-filters" className="w-full relative z-20 bg-white/5 backdrop-blur-sm border border-[#7d3cff]/65 rounded-[4px] p-4 flex flex-col md:flex-row gap-4 items-center md:items-end justify-between shadow-2xl scroll-mt-[100px]">
-                        <div className="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
+                        <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
                             {/* Region Selector */}
-                            <div className="w-full">
+                            <div className="w-full md:w-auto">
                                 <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest pl-1">STATE/UT</label>
                                 <CustomSelect
                                     value={stateName}
@@ -343,46 +343,64 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                         }
                                     }}
                                     options={innerStateOptions}
-                                    className="h-[38px] w-full min-w-[300px] px-3 py-2 hover:border-[#7d3cff] transition-colors"
+                                    className="h-[38px] w-full md:min-w-[300px] px-3 py-2 hover:border-[#7d3cff] transition-colors"
                                 />
                             </div>
 
-                            {/* Month Filter */}
-                            <div className="w-full">
-                                <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest pl-1">Select Month</label>
-                                <CustomSelect
-                                    value={selectedMonth}
-                                    onChange={(val) => {
-                                        const parsed = val === "all" ? "all" : parseInt(val);
-                                        setSelectedMonth(parsed);
-                                    }}
-                                    options={[
-                                        { value: "all", label: "All Months" },
-                                        ...months.map((m, idx) => ({ value: idx, label: format(m, "MMMM") }))
-                                    ]}
-                                    className="h-[38px] w-full min-w-[200px] px-3 py-2 hover:border-[#7d3cff] transition-colors"
-                                />
+                            {/* Month Filter Mobile Row */}
+                            <div className="w-full md:w-auto flex items-end justify-between gap-3">
+                                {/* Month Filter */}
+                                <div className="flex-1 md:w-auto">
+                                    <label className="block text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest pl-1">Select Month</label>
+                                    <CustomSelect
+                                        value={selectedMonth}
+                                        onChange={(val) => {
+                                            const parsed = val === "all" ? "all" : parseInt(val);
+                                            setSelectedMonth(parsed);
+                                        }}
+                                        options={[
+                                            { value: "all", label: "All Months" },
+                                            ...months.map((m, idx) => ({ value: idx, label: format(m, "MMMM") }))
+                                        ]}
+                                        className="h-[38px] w-full md:min-w-[200px] px-3 py-2 hover:border-[#7d3cff] transition-colors"
+                                    />
+                                </div>
+                                
+                                {/* Saturday Toggle - Mobile Only */}
+                                <label className="flex md:hidden items-center gap-2 cursor-pointer group mb-1.5 focus:outline-none">
+                                    <span className="text-xs text-white/70 group-hover:text-white transition-colors select-none leading-tight text-right">
+                                        2nd/4th Sat <br /> and Sundays
+                                    </span>
+                                    <div className="relative flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            checked={includeSaturdayClosures}
+                                            onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
+                                            className="sr-only peer"
+                                        />
+                                        <div className="w-8 h-4 bg-white/10 rounded-full peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
+                                        <div className="absolute left-0.5 w-3 h-3 bg-white/60 rounded-full peer-checked:translate-x-4 transition-transform peer-checked:bg-white"></div>
+                                    </div>
+                                </label>
                             </div>
-
-
                         </div>
 
                         {/* Actions */}
-                        <div className="flex items-center gap-3" style={{ marginTop: '-3px', marginLeft: '2px' }}>
-                            {/* Saturday Toggle - right aligned next to share */}
-                            <label className="flex items-center gap-2 cursor-pointer group">
+                        <div className="flex items-center w-full md:w-auto justify-end gap-3" style={{ marginTop: '-3px', marginLeft: '2px' }}>
+                            {/* Saturday Toggle - Desktop Only */}
+                            <label className="hidden md:flex items-center gap-2 cursor-pointer group">
                                 <span className="text-xs text-white/70 group-hover:text-white transition-colors select-none leading-tight">
-                                    2nd/4th Sat <br /> and Sundays
+                                    Include 2nd/4th Sat and Sundays
                                 </span>
                                 <div className="relative flex items-center">
                                     <input
                                         type="checkbox"
-                                        id="saturdayToggle"
+                                        id="saturdayToggleDesktop"
                                         checked={includeSaturdayClosures}
                                         onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
                                         className="sr-only peer"
                                     />
-                                    <div className="w-8 h-4 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
+                                    <div className="w-8 h-4 bg-white/10 rounded-full peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
                                     <div className="absolute left-0.5 w-3 h-3 bg-white/60 rounded-full peer-checked:translate-x-4 transition-transform peer-checked:bg-white"></div>
                                 </div>
                             </label>
@@ -428,7 +446,8 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                     <PrintHeader stateName={stateName} />
 
                     <div className="overflow-x-auto rounded-[4px] border border-white/10 print:border-black print:rounded-none">
-                        <table className="w-full text-left border-collapse print:w-full">
+                        {/* Desktop List View - Hidden on Mobile */}
+                        <table className="hidden md:table w-full text-left border-collapse print:w-full print:table">
                             <thead className="bg-white/5 text-xs uppercase text-gray-400 font-bold tracking-wider print:bg-gray-100 print:text-black print:border-b print:border-black">
                                 <tr>
                                     <th className="p-4 border-b border-white/10 print:border-black print:p-2">Date</th>
@@ -477,6 +496,32 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                 )}
                             </tbody>
                         </table>
+
+                        {/* Mobile List View - Hidden on Desktop */}
+                        <div className="md:hidden flex flex-col divide-y divide-white/5 print:hidden">
+                            {visibleHolidays.length > 0 ? (
+                                visibleHolidays.map((h, idx) => (
+                                    <div key={idx} className="flex flex-col p-4 hover:bg-white/5 transition-colors">
+                                        <div className="flex justify-between items-start mb-1">
+                                            <div className="text-sm font-medium text-white">
+                                                {format(h.date, "dd MMM")} - {format(h.date, "EEEE")}
+                                            </div>
+                                            {stateName === "All States/UTs" && (
+                                                <div className="text-xs text-gray-500 bg-white/5 border border-white/10 px-2 py-0.5 rounded">
+                                                    {h.state}
+                                                </div>
+                                            )}
+                                        </div>
+                                        <div className="text-base font-bold text-white mb-1">{h.name}</div>
+                                        <div className="text-xs text-red-400 font-medium">Closed ({formatType(h.type)})</div>
+                                    </div>
+                                ))
+                            ) : (
+                                <div className="p-8 text-center text-gray-500">
+                                    {isLoading ? "Loading..." : "No holidays found for this selection."}
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     {/* Footer Actions - Hidden on Print */}
