@@ -19,8 +19,10 @@ function CanonicalUrlInner() {
         let canonicalUrl = `${canonicalBase}${pathname}`;
 
         // Preserve only the 'state' parameter (page identity)
+        // Exception: On state-specific slug pages, we don't need ?state parameter
+        const isStateSlugPage = pathname.endsWith("-bank-holiday-2026");
         const stateParam = searchParams.get('state');
-        if (stateParam) {
+        if (stateParam && !isStateSlugPage) {
             canonicalUrl += `?state=${encodeURIComponent(stateParam)}`;
         }
 

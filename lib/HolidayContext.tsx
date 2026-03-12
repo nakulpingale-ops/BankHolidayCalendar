@@ -48,14 +48,34 @@ export function HolidayProvider({ children }: { children: React.ReactNode }) {
 
         // Update URL status parameter without refresh
         if (typeof window !== "undefined") {
-            const slug = stateToSlug(state);
-            const newUrl = `${window.location.pathname}?state=${slug}`;
-            window.history.pushState({ state }, "", newUrl);
+            const pathname = window.location.pathname;
+            // If we are on a state slug page, don't append ?state parameter
+            const isStateSlugPage = pathname.endsWith("-bank-holiday-2026");
+            
+            if (!isStateSlugPage) {
+                const slug = stateToSlug(state);
+                const newUrl = `${pathname}?state=${slug}`;
+                window.history.pushState({ state }, "", newUrl);
+            }
         }
     };
 
     const detectUserLocation = async (): Promise<string> => {
         try {
+            // Check if we are already on a state slug page before auto-detecting
+            if (typeof window !== "undefined") {
+                const pathname = window.location.pathname;
+                if (pathname.endsWith("-bank-holiday-2026")) {
+                    const slugPart = pathname.split("/").pop()?.replace("-bank-holiday-2026", "");
+                    if (slugPart && slugPart !== "all") {
+                        const matchedState = slugToState(slugPart);
+                        if (matchedState) {
+                            setSelectedStateInternal(matchedState);
+                            return matchedState;
+                        }
+                    }
+                }
+            }
             const timeoutPromise = new Promise((_, reject) =>
                 setTimeout(() => reject(new Error("Timeout")), 2000)
             );
