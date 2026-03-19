@@ -72,12 +72,14 @@ export function enrichCsvData(data: CsvHolidayRow[]): CsvHolidayRow[] {
     }));
 }
 
-// 1. Fetch and Parse CSV
+// 1. Fetch and Parse CSV (runtime, never cached)
 export async function fetchHolidaysCsv(): Promise<CsvHolidayRow[]> {
     try {
-        const response = await fetch("/holidays2026.csv"); // Using the file mentioned in prompt
+        const response = await fetch(`/holidays2026.csv?ts=${Date.now()}`, {
+            cache: "no-store",
+        });
         if (!response.ok) {
-            console.error("Failed to fetch CSV");
+            console.error("CSV FETCH FAILED – HTTP", response.status);
             return [];
         }
         const text = await response.text();
@@ -86,10 +88,25 @@ export async function fetchHolidaysCsv(): Promise<CsvHolidayRow[]> {
             skipEmptyLines: true,
         });
 
+        console.log("CSV FETCHED –", data.length, "rows loaded");
         return enrichCsvData(data); // Add stateKey
     } catch (error) {
-        console.error("Error loading holidays:", error);
+        console.error("CSV FETCH FAILED", error);
         return [];
+    }
+}
+
+// Helper: Returns today's date in YYYY-MM-DD (local time zone safe)
+export function getTodayISO(): string {
+    return new Date().toISOString().split("T")[0];
+}
+
+// Helper: Warn when no holiday is found for today
+export function warnIfNoHolidayToday(holidays: CsvHolidayRow[], state: string): void {
+    const today = getTodayISO();
+    const found = holidays.some(h => h.Date === today && (h.State === "All" || h.State === state));
+    if (!found) {
+        console.warn("No holiday for today", today, "in state:", state);
     }
 }
 

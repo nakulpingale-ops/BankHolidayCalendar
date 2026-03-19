@@ -8,7 +8,8 @@ import {
     CsvHolidayRow,
     getCombinedHolidays,
     HolidayItem,
-    normalizeKey // Update import
+    normalizeKey,
+    warnIfNoHolidayToday,
 } from "@/src/lib/holidays";
 
 import { INDIAN_STATES, stateToSlug, slugToState } from "@/lib/constants";
@@ -35,11 +36,12 @@ export function HolidayProvider({ children }: { children: React.ReactNode }) {
     // Default to Maharashtra as fallback
     const [selectedState, setSelectedStateInternal] = useState("Maharashtra");
 
-    // Load CSV data client-side using new utility
+    // Load CSV data client-side (runtime fetch, never cached)
     useEffect(() => {
         fetchHolidaysCsv().then(data => {
             setHolidays(data);
             setLoading(false);
+            warnIfNoHolidayToday(data, selectedState);
         });
     }, []);
 
