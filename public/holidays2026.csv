@@ -1,4 +1,4 @@
-﻿Date,Holiday,State,Status
+Date,Holiday,State,Status
 2026-01-26,Republic Day,Andaman And Nicobar Islands,Closed
 2026-02-15,Maha Shivratri,Andaman And Nicobar Islands,Closed
 2026-03-04,Holi,Andaman And Nicobar Islands,Closed
@@ -383,6 +383,7 @@
 2026-02-15,Maha Shivratri,Maharashtra,Closed
 2026-02-19,Chhatrapati Shivaji Maharaj Jayanti,Maharashtra,Closed
 2026-03-04,Holi,Maharashtra,Closed
+2026-03-19,Gudi Padwa,Maharashtra,Closed
 2026-03-21,Id-ul-Fitr,Maharashtra,Closed
 2026-03-31,Mahavir Jayanti,Maharashtra,Closed
 2026-04-01,Yearly Closing of Bank Accounts,Maharashtra,Closed
@@ -709,3 +710,5 @@
 2026-11-08,Kalipuja,West Bengal,Closed
 2026-11-24,Birth Day of Guru Nanak,West Bengal,Closed
 2026-12-25,Christmas,West Bengal,Closed
+,"Nationalized/PSU Banks: Closed 
+Private Sector Banks: Open",PAN INDIA,Closed
