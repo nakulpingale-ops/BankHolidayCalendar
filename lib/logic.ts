@@ -1,5 +1,5 @@
 import { isSaturday, isSunday, getDate, format } from 'date-fns';
-import { HOLIDAYS_2025 } from './constants';
+import { HOLIDAYS_2026 } from './constants';
 
 export type BankStatus = {
     isOpen: boolean;
@@ -28,11 +28,11 @@ export function isBankOpen(date: Date, state: string): BankStatus {
     // 3. Check for Holidays
     const dateString = format(date, 'yyyy-MM-dd');
 
-    if (HOLIDAYS_2025.ALL[dateString]) {
-        return { isOpen: false, reason: HOLIDAYS_2025.ALL[dateString], type: 'holiday' };
+    if (HOLIDAYS_2026.ALL[dateString]) {
+        return { isOpen: false, reason: HOLIDAYS_2026.ALL[dateString], type: 'holiday' };
     }
 
-    const stateHolidays = HOLIDAYS_2025[state] || {};
+    const stateHolidays = HOLIDAYS_2026[state] || {};
     if (stateHolidays[dateString]) {
         return { isOpen: false, reason: stateHolidays[dateString], type: 'holiday' };
     }

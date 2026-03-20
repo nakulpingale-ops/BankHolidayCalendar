@@ -107,14 +107,11 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
         });
     }, [displayedHolidays]);
 
-    // Filter based on Saturday toggle AND exclude Sundays from inner page list
+    // Filter based on Saturday toggle AND include Sundays if toggle is ON
     const visibleHolidays = useMemo(() => {
-        // First, exclude Sundays from the list (keep them only for homepage "Next closure" insight)
-        const holidaysWithoutSundays = holidaysWithSatFlag.filter(h => !isSunday(h.date));
-
-        // Then apply Saturday toggle
-        if (includeSaturdayClosures) return holidaysWithoutSundays;
-        return holidaysWithoutSundays.filter(h => !h.isSaturdayClosure);
+        if (includeSaturdayClosures) return holidaysWithSatFlag;
+        // If toggle is OFF: Exclude both 2nd/4th Sats AND all Sundays
+        return holidaysWithSatFlag.filter(h => !h.isSaturdayClosure && !isSunday(h.date));
     }, [holidaysWithSatFlag, includeSaturdayClosures]);
 
     // --- Insights Computation (Unique Content) ---
@@ -327,7 +324,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
             <div className="flex flex-col gap-[5px] w-full max-w-[1050px] mx-auto px-4">
                 {/* B. Control Bar (Filters & Actions) - Hidden on Print */}
                 <div className="w-full print:hidden">
-                    <div id="inner-page-filters" className="w-full relative z-20 bg-white/5 backdrop-blur-sm border border-[#7d3cff]/65 rounded-[4px] p-4 flex flex-col md:flex-row gap-4 items-center md:items-end justify-between shadow-2xl scroll-mt-[100px]">
+                    <div id="inner-page-filters" className="w-full relative z-[100] bg-white/5 backdrop-blur-sm border border-[#7d3cff]/65 rounded-[4px] p-4 flex flex-col md:flex-row gap-4 items-center md:items-end justify-between shadow-2xl scroll-mt-[100px]">
                         <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
                             {/* Region Selector */}
                             <div className="w-full md:w-auto">

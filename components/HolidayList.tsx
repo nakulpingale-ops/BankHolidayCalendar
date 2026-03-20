@@ -50,30 +50,13 @@ export function HolidayList() {
     const allHolidays = useMemo(() => {
         const rawHolidays = getHolidays(selectedState, year);
 
-        const start = new Date(year, 0, 1);
-        const end = new Date(year, 11, 31);
-        const days = eachDayOfInterval({ start, end });
-        const sundays = days.filter((d: Date) => isSunday(d));
-
-        const existingDates = new Set(rawHolidays.map((h: HolidayItem) => h.dateISO));
-
-        const sundayHolidays = sundays
-            .filter((d: Date) => !existingDates.has(format(d, "yyyy-MM-dd")))
-            .map((d: Date) => ({
-                date: d,
-                dateISO: format(d, "yyyy-MM-dd"),
-                name: "Sunday",
-                state: selectedState,
-                type: "weekend" as const,
-                dayOfWeek: format(d, "EEE"),
-                isSaturdayClosure: false,
-                isSundayClosure: true
-            }));
-
-        const combined = [...rawHolidays.map((h: HolidayItem) => {
+        // Sundays and 2nd/4th Saturdays are now included in the result of getHolidays()
+        // We just enrich them with flags for UI styling
+        const combined = rawHolidays.map((h: HolidayItem) => {
             const dateObj = h.date;
             const weekOfMonth = getWeekOfMonth(dateObj);
             const isSat = isSaturday(dateObj);
+            const isSun = isSunday(dateObj);
             const nameLower = h.name.toLowerCase();
 
             const isSaturdayClosure =
@@ -81,10 +64,9 @@ export function HolidayList() {
                 nameLower.includes("fourth saturday") ||
                 (isSat && h.type === "Banking" && (weekOfMonth === 2 || weekOfMonth === 4));
 
-            return { ...h, isSaturdayClosure, isSundayClosure: false };
-        }), ...sundayHolidays];
+            return { ...h, isSaturdayClosure, isSundayClosure: isSun };
+        });
 
-        combined.sort((a, b) => a.date.getTime() - b.date.getTime());
         return combined as (HolidayItem & { isSaturdayClosure: boolean; isSundayClosure: boolean })[];
     }, [selectedState, getHolidays, year]);
 

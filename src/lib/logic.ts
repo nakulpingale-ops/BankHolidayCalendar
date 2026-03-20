@@ -1,5 +1,5 @@
 import { isSaturday, isSunday, getDate, getMonth, getYear, format, parseISO } from 'date-fns';
-import { HOLIDAYS_2025 } from './constants';
+import { HOLIDAYS_2026 } from './constants';
 
 export type BankStatus = {
     isOpen: boolean;
@@ -34,13 +34,13 @@ export function isBankOpen(date: Date, state: string): BankStatus {
     const dateString = format(date, 'yyyy-MM-dd');
 
     // Check National/All-India holidays
-    if (HOLIDAYS_2025.ALL.includes(dateString)) {
+    if (HOLIDAYS_2026.ALL.includes(dateString)) {
         // We need to fetch the specific holiday name if we had a map, for now generic
         return { isOpen: false, reason: "Public Holiday", type: 'holiday' };
     }
 
     // Check State-specific holidays
-    const stateHolidays = HOLIDAYS_2025[state] || [];
+    const stateHolidays = HOLIDAYS_2026[state] || [];
     if (stateHolidays.includes(dateString)) {
         return { isOpen: false, reason: `${state} State Holiday`, type: 'holiday' };
     }

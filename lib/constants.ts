@@ -37,23 +37,22 @@ export const INDIAN_STATES = [
     "West Bengal",
 ];
 
-export const HOLIDAYS_2025: Record<string, Record<string, string>> = {
+export const HOLIDAYS_2026: Record<string, Record<string, string>> = {
     ALL: {
-        "2025-01-26": "Republic Day",
-        "2025-08-15": "Independence Day",
-        "2025-10-02": "Gandhi Jayanti",
-        "2025-12-25": "Christmas",
+        "2026-01-26": "Republic Day",
+        "2026-08-15": "Independence Day",
+        "2026-10-02": "Gandhi Jayanti",
+        "2026-12-25": "Christmas",
     },
     Maharashtra: {
-        "2025-02-19": "Chhatrapati Shivaji Maharaj Jayanti",
-        "2025-05-01": "Maharashtra Day",
-        "2025-08-27": "Ganesh Chaturthi",
+        "2026-02-19": "Chhatrapati Shivaji Maharaj Jayanti",
+        "2026-05-01": "Maharashtra Day",
     },
     Delhi: {
         // Add specific Delhi holidays if needed
     },
     Karnataka: {
-        "2025-11-01": "Kannada Rajyotsava",
+        "2026-11-01": "Kannada Rajyotsava",
     },
 };
 

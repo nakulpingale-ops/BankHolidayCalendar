@@ -153,12 +153,13 @@ export function HolidayProvider({ children }: { children: React.ReactNode }) {
 
         // 2. Check CSV for specific holidays
         const holiday = holidays.find((h) => {
-            const holidayDate = parse(h.Date, "yyyy-MM-dd", new Date());
-            // Fallback parse if needed, but getCombinedHolidays handles this robustly.
-            // Here we do a quick check on raw data for performance, or we could use the optimized map.
-            // For simplicity and to match previous logic, we parse here.
+            // CSV format is dd-MM-yyyy (e.g. "21-03-2026" = 21 March 2026)
+            let holidayDate = parse(h.Date, "dd-MM-yyyy", new Date());
+            // Fallback to yyyy-MM-dd if first parse fails
+            if (!holidayDate || isNaN(holidayDate.getTime())) {
+                holidayDate = parse(h.Date, "yyyy-MM-dd", new Date());
+            }
 
-            // Note: CsvHolidayRow Date is string YYYY-MM-DD
             if (!holidayDate || isNaN(holidayDate.getTime())) return false;
 
             const normalizedParamState = normalizeKey(state);

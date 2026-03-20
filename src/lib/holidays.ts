@@ -98,7 +98,11 @@ export async function fetchHolidaysCsv(): Promise<CsvHolidayRow[]> {
 
 // Helper: Returns today's date in YYYY-MM-DD (local time zone safe)
 export function getTodayISO(): string {
-    return new Date().toISOString().split("T")[0];
+    const d = new Date();
+    const year = d.getFullYear();
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const day = String(d.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
 }
 
 // Helper: Warn when no holiday is found for today
@@ -142,13 +146,13 @@ export function computeBankingHolidays(year: number, state: string): HolidayItem
 export function normalizeCsvRow(row: CsvHolidayRow): HolidayItem | null {
     if (!row.Date || !row.Holiday) return null;
 
-    // Parse date safely. Assuming CSV format is YYYY-MM-DD based on file view
-    // If format is different, adjust parsing structure.
-    let parsedDate = parse(row.Date, "yyyy-MM-dd", new Date());
+    // CSV format is dd-MM-yyyy (e.g. "04-03-2026" = 4 March 2026)
+    // Try dd-MM-yyyy first, then yyyy-MM-dd as fallback for robustness
+    let parsedDate = parse(row.Date, "dd-MM-yyyy", new Date());
 
-    // Fallback if generic parse fails
+    // Fallback to yyyy-MM-dd if first parse fails
     if (!isValid(parsedDate)) {
-        parsedDate = new Date(row.Date);
+        parsedDate = parse(row.Date, "yyyy-MM-dd", new Date());
     }
 
     if (!isValid(parsedDate)) return null;
@@ -243,6 +247,26 @@ export function getCombinedHolidays(csvData: CsvHolidayRow[], selectedState: str
             });
         }
     }
+
+    // 2.6 Add Sundays (Generic)
+    const start = startOfYear(new Date(year, 0, 1));
+    const end = endOfYear(new Date(year, 0, 1));
+    const days = eachDayOfInterval({ start, end });
+    const sundays = days.filter(d => isSunday(d));
+
+    sundays.forEach(sunDate => {
+        const sunISO = format(sunDate, "yyyy-MM-dd");
+        if (!holidayMap.has(sunISO)) {
+            holidayMap.set(sunISO, {
+                date: sunDate,
+                dateISO: sunISO,
+                name: "Sunday",
+                state: selectedState,
+                type: "Weekend",
+                dayOfWeek: "Sun"
+            });
+        }
+    });
 
     // D. Convert back to array and Sort
     return Array.from(holidayMap.values()).sort((a, b) => a.date.getTime() - b.date.getTime());
