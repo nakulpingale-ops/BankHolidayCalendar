@@ -62,7 +62,7 @@ export function FaqSection() {
                             <div
                                 key={index}
                                 className={cn(
-                                    "group rounded-[4px] bg-[#121212]/80 backdrop-blur-sm border border-[#7d3cff]/45 overflow-hidden transition-all duration-300",
+                                    "group rounded-xl bg-[#121212]/80 backdrop-blur-sm border border-[#7d3cff]/45 overflow-hidden transition-all duration-300",
                                     "hover:shadow-[0_0_15px_rgba(125,60,255,0.15)] hover:border-[#7d3cff]",
                                     isOpen ? "border-[#7d3cff] bg-[#121212]" : ""
                                 )}

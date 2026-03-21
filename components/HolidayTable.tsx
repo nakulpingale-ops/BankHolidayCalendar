@@ -18,7 +18,7 @@ const HolidayTable = () => {
     return (
         <div className="w-full max-w-[1050px] mx-auto px-4 mt-8">
             <h2 className="text-2xl font-bold mb-4 text-white">Official Holiday List 2026</h2>
-            <div className="overflow-x-auto rounded-[4px] border border-white/10">
+            <div className="overflow-x-auto rounded-xl border border-white/10">
                 <table className="w-full text-left border-collapse">
                     <thead className="bg-white/5 text-xs uppercase text-gray-400 font-bold tracking-wider">
                         <tr>

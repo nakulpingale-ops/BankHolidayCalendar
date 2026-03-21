@@ -40,7 +40,7 @@ export function DayView({ mode, hideHeader = false }: DayViewProps) {
         setIsDetecting(false);
     };
 
-    if (!mounted) return <div className="h-[400px] w-full animate-pulse bg-gray-900/20 rounded-[4px]"></div>;
+    if (!mounted) return <div className="h-[400px] w-full animate-pulse bg-gray-900/20 rounded-xl"></div>;
 
     const targetDate = mode === "today" ? todayDate : addDays(todayDate, 1);
     const status = isBankOpen(targetDate, selectedState);
@@ -87,7 +87,7 @@ export function DayView({ mode, hideHeader = false }: DayViewProps) {
                             <select
                                 value={selectedState}
                                 onChange={(e) => setSelectedState(e.target.value)}
-                                className="w-full bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/65 text-white text-sm rounded-[4px] focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] block py-3 pl-4 pr-10 transition-all outline-none appearance-none hover:border-[#7d3cff] cursor-pointer truncate shadow-lg"
+                                className="w-full bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/65 text-white text-sm rounded-xl focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] block py-3 pl-4 pr-10 transition-all outline-none appearance-none hover:border-[#7d3cff] cursor-pointer truncate shadow-lg"
                             >
                                 {INDIAN_STATES.map(s => <option key={s} value={s} className="bg-black text-white">{s}</option>)}
                             </select>

@@ -33,15 +33,15 @@ export function BankHelplinesClient() {
         </p>
 
         <div className="flex flex-wrap gap-4 mt-3">
-            <div className="flex items-center gap-2 text-sm text-gray-500 bg-white/5 px-3 py-2 rounded-[4px] border border-white/5">
+            <div className="flex items-center gap-2 text-sm text-gray-500 bg-white/5 px-3 py-2 rounded-xl border border-white/5">
                 <CreditCard className="w-4 h-4 text-[#7d3cff]" />
                 Block Cards
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-500 bg-white/5 px-3 py-2 rounded-[4px] border border-white/5">
+            <div className="flex items-center gap-2 text-sm text-gray-500 bg-white/5 px-3 py-2 rounded-xl border border-white/5">
                 <ShieldAlert className="w-4 h-4 text-[#7d3cff]" />
                 Report Fraud
             </div>
-            <div className="flex items-center gap-2 text-sm text-gray-500 bg-white/5 px-3 py-2 rounded-[4px] border border-white/5">
+            <div className="flex items-center gap-2 text-sm text-gray-500 bg-white/5 px-3 py-2 rounded-xl border border-white/5">
                 <LifeBuoy className="w-4 h-4 text-[#7d3cff]" />
                 24/7 Support
             </div>

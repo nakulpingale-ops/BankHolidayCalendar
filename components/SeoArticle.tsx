@@ -84,7 +84,7 @@ export function SeoArticle() {
                 </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-8 not-prose">
                     {['UPI', 'IMPS', 'RTGS', 'NEFT'].map(service => (
-                        <div key={service} className="bg-white/5 border border-white/10 p-4 rounded-[4px] flex items-center gap-3">
+                        <div key={service} className="bg-white/5 border border-white/10 p-4 rounded-xl flex items-center gap-3">
                             <div className="w-3 h-3 bg-green-500 rounded-full shadow-[0_0_10px_rgba(34,197,94,0.5)]"></div>
                             <span className="font-bold text-white">{service}</span>
                             <span className="text-xs text-green-400 font-mono ml-auto">24/7 ACTIVE</span>
@@ -92,7 +92,7 @@ export function SeoArticle() {
                     ))}
                 </div>
 
-                <div className="bg-gradient-to-r from-[#7d3cff]/10 to-blue-900/10 border-l-4 border-[#7d3cff] p-6 my-8 rounded-[4px]">
+                <div className="bg-gradient-to-r from-[#7d3cff]/10 to-blue-900/10 border-l-4 border-[#7d3cff] p-6 my-8 rounded-xl">
                     <p className="font-bold text-purple-200 mb-2 font-display uppercase tracking-widest text-sm">Pro Tip</p>
                     <p className="text-gray-300 m-0">Always schedule high-value clearing transactions before known holiday streaks to avoid delays.</p>
                 </div>

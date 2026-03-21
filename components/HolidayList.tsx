@@ -243,7 +243,7 @@ export function HolidayList() {
     };
 
     const isActionDisabled = !checkDate && filteredHolidays.length === 0;
-    const actionButtonClass = `p-2 border border-[#7d3cff]/20 rounded-[4px] text-[#7d3cff] hover:border-[#7d3cff] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-[#7d3cff]/20 print:hidden`;
+    const actionButtonClass = `p-2 border border-[#7d3cff]/20 rounded-xl text-[#7d3cff] hover:border-[#7d3cff] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-[#7d3cff]/20 print:hidden`;
 
 
     // Helper for Type Badge/Color
@@ -294,8 +294,8 @@ export function HolidayList() {
         <section id="state-holidays-complete-list" className="w-full pt-0 -mt-[9px] pb-0 mb-8 text-white relative z-20">
             <div className="w-full max-w-none px-4 sm:max-w-[1050px] sm:mx-auto">
                 {/* LIST BOX WRAPPER */}
-                <div className="w-full flex flex-col border-0 md:border md:border-[#7d3cff]/45 md:rounded-[4px] md:bg-[#121212]/80 md:shadow-2xl">
-                    <div className="w-full mb-0 sticky top-20 z-30 p-2 sm:p-2 border-b-0 sm:border-b sm:border-white/10 bg-transparent sm:bg-[#0e0a18]/95 sm:backdrop-blur-md sm:rounded-t-[4px] print:hidden">
+                <div className="w-full flex flex-col border-0 md:border md:border-[#7d3cff]/45 md:rounded-xl md:bg-[#121212]/80 md:shadow-2xl">
+                    <div className="w-full mb-0 sticky top-20 z-30 p-2 sm:p-2 border-b-0 sm:border-b sm:border-white/10 bg-transparent sm:bg-[#0e0a18]/95 sm:backdrop-blur-md sm:rounded-t-xl print:hidden">
 
                         {/* Unified Header: Dropdown + Date Check + View Toggle */}
                         <div className="flex items-center justify-between gap-2 sm:gap-4 flex-nowrap">
@@ -313,7 +313,7 @@ export function HolidayList() {
                                             setSelectedMonth(e.target.value === "All" ? "All" : Number(e.target.value));
                                         }}
                                         disabled={!!checkDate}
-                                        className="h-9 w-auto min-w-[110px] rounded-[4px] border-0 bg-[#7d3cff] px-2 sm:px-3 text-sm text-white font-medium outline-none appearance-none hover:bg-[#8b52ff] focus:ring-[0.5px] focus:ring-white/30 shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="h-9 w-auto min-w-[110px] rounded-xl border-0 bg-[#7d3cff] px-2 sm:px-3 text-sm text-white font-medium outline-none appearance-none hover:bg-[#8b52ff] focus:ring-[0.5px] focus:ring-white/30 shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                         title={checkDate ? "Clear date to browse months" : "Select Month"}
                                     >
                                         <option value="All" className="bg-[#0e0a18] text-white">All months</option>
@@ -330,7 +330,7 @@ export function HolidayList() {
                                 {/* Mobile Group: Date Picker + Toggle */}
                                 <div className="flex md:hidden items-center gap-2">
                                     <span className="text-[10px] text-white/50 whitespace-nowrap">or</span>
-                                    
+
                                     {/* Mobile: Icon-only date picker button */}
                                     <button
                                         onClick={() => {
@@ -346,7 +346,7 @@ export function HolidayList() {
                                                 }
                                             }
                                         }}
-                                        className="h-9 w-9 shrink-0 flex items-center justify-center rounded-[4px] bg-[#7d3cff] border-white/20 hover:bg-[#8b52ff] text-white transition-all active:scale-95 shadow-lg"
+                                        className="h-9 w-9 shrink-0 flex items-center justify-center rounded-xl bg-[#7d3cff] border-white/20 hover:bg-[#8b52ff] text-white transition-all active:scale-95 shadow-lg"
                                         title="Select a custom date"
                                         aria-label="Select a custom date"
                                     >
@@ -365,8 +365,8 @@ export function HolidayList() {
                                                 onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
                                                 className="sr-only peer"
                                             />
-                                            <div className="w-7 h-3.5 bg-white/10 rounded-full peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
-                                            <div className="absolute left-0.5 w-2.5 h-2.5 bg-white/60 rounded-full peer-checked:translate-x-3.5 transition-transform peer-checked:bg-white"></div>
+                                            <div className="w-[42px] h-[21px] bg-white/10 rounded-full peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
+                                            <div className="absolute left-[3px] w-[15px] h-[15px] bg-white/60 rounded-full peer-checked:translate-x-[21px] transition-transform peer-checked:bg-white bottom-[3px]"></div>
                                         </div>
                                     </label>
                                 </div>
@@ -379,7 +379,7 @@ export function HolidayList() {
                                         type="date"
                                         value={checkDate}
                                         onChange={(e) => setCheckDate(e.target.value)}
-                                        className="h-9 w-auto min-w-[128px] rounded-[4px] border px-2 sm:px-3 text-sm outline-none transition-colors uppercase appearance-none
+                                        className="h-9 w-auto min-w-[128px] rounded-xl border px-2 sm:px-3 text-sm outline-none transition-colors uppercase appearance-none
                                             text-white/90
                                             bg-black/20
                                             border-white/10
@@ -393,7 +393,7 @@ export function HolidayList() {
                                     {checkDate && (
                                         <button
                                             onClick={() => setCheckDate("")}
-                                            className="h-9 px-2 rounded-[4px] border border-white/10 bg-white/5 hover:bg-white/10 text-xs text-white/70 transition-colors"
+                                            className="h-9 px-2 rounded-xl border border-white/10 bg-white/5 hover:bg-white/10 text-xs text-white/70 transition-colors"
                                             title="Clear date and return to list"
                                         >
                                             Clear
@@ -417,8 +417,8 @@ export function HolidayList() {
                                                 onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
                                                 className="sr-only peer"
                                             />
-                                            <div className="w-8 h-4 bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
-                                            <div className="absolute left-0.5 w-3 h-3 bg-white/60 rounded-full peer-checked:translate-x-4 transition-transform peer-checked:bg-white"></div>
+                                            <div className="w-[48px] h-[24px] bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
+                                            <div className="absolute left-[3px] w-[18px] h-[18px] bg-white/60 rounded-full peer-checked:translate-x-[24px] transition-transform peer-checked:bg-white bottom-[3px]"></div>
                                         </div>
                                     </label>
                                 </div>
@@ -426,7 +426,7 @@ export function HolidayList() {
                                 <div className="flex items-center gap-3 shrink-0">
                                     <button
                                         onClick={() => handleViewChange("list")}
-                                        className={`p-1.5 rounded-[4px] transition-all ${viewMode === "list" ? "bg-[#7d3cff]/20 text-[#7d3cff] ring-1 ring-[#7d3cff]/50" : "text-gray-400 hover:text-white"}`}
+                                        className={`p-1.5 rounded-xl transition-all ${viewMode === "list" ? "bg-[#7d3cff]/20 text-[#7d3cff] ring-1 ring-[#7d3cff]/50" : "text-gray-400 hover:text-white"}`}
                                         aria-label="List View"
                                         aria-pressed={viewMode === "list"}
                                     >
@@ -437,7 +437,7 @@ export function HolidayList() {
                                             if (checkDate) setCheckDate(""); // Switch out of date mode
                                             handleViewChange("calendar");
                                         }}
-                                        className={`p-1.5 rounded-[4px] transition-all ${viewMode === "calendar" ? "bg-[#7d3cff]/20 text-[#7d3cff] ring-1 ring-[#7d3cff]/50" : "text-gray-400 hover:text-white"}`}
+                                        className={`p-1.5 rounded-xl transition-all ${viewMode === "calendar" ? "bg-[#7d3cff]/20 text-[#7d3cff] ring-1 ring-[#7d3cff]/50" : "text-gray-400 hover:text-white"}`}
                                         aria-label="Calendar View"
                                         aria-pressed={viewMode === "calendar"}
                                     >
@@ -465,7 +465,7 @@ export function HolidayList() {
                                     </div>
 
                                     {/* Result Table (Desktop) */}
-                                    <div className="hidden sm:block overflow-hidden rounded-b-[4px] print:block print:rounded-none">
+                                    <div className="hidden sm:block overflow-hidden rounded-b-xl print:block print:rounded-none">
                                         <table className="w-full table-fixed text-left border-collapse print:w-full">
                                             <thead>
                                                 <tr className="bg-white/5 border-b border-white/10 print:bg-gray-100">
@@ -504,7 +504,7 @@ export function HolidayList() {
 
                                     {/* Result Card (Mobile) */}
                                     <div className="sm:hidden p-4">
-                                        <div className="bg-[#0e0a18]/80 border border-white/10 rounded-[4px] p-4 shadow-lg active:scale-[0.99] transition-transform">
+                                        <div className="bg-[#0e0a18]/80 border border-white/10 rounded-xl p-4 shadow-lg active:scale-[0.99] transition-transform">
                                             <div className="flex justify-between items-start mb-2">
                                                 <div className="flex flex-col">
                                                     <span className="text-xs font-bold uppercase tracking-widest text-white">{format(dateCheckResult.date, "EEE")}</span>
@@ -527,13 +527,13 @@ export function HolidayList() {
                             ) : (
                                 // MONTH LIST VIEW
                                 filteredHolidays.length === 0 ? (
-                                    <div className="w-full py-12 text-center border border-white/10 rounded-[4px] bg-white/5">
+                                    <div className="w-full py-12 text-center border border-white/10 rounded-xl bg-white/5">
                                         <p className="text-gray-400">No holidays found for this selection.</p>
                                     </div>
                                 ) : (
                                     <>
                                         {/* Desktop Table View */}
-                                        <div className="hidden sm:block overflow-hidden rounded-b-[4px] print:block print:rounded-none">
+                                        <div className="hidden sm:block overflow-hidden rounded-b-xl print:block print:rounded-none">
                                             <table className="w-full table-fixed text-left border-collapse print:w-full">
                                                 <thead>
                                                     <tr className="bg-white/5 border-b border-white/10 print:bg-gray-100">
@@ -668,7 +668,7 @@ export function HolidayList() {
 
                                                 title={tooltipLabel}
                                                 aria-label={hasHoliday ? `${format(date, 'd MMMM yyyy')}: ${holidayNames}` : (isOpenWorkingDay ? `${format(date, 'd MMMM yyyy')}, Open` : format(date, 'd MMMM yyyy'))}
-                                                className={`aspect-square rounded-[4px] flex flex-col items-center justify-center relative transition-all border group
+                                                className={`aspect-square rounded-xl flex flex-col items-center justify-center relative transition-all border group
                                                 ${isSelected ? 'border-[#ef4444] ring-1 ring-[#ef4444] bg-[#ef4444]/10' : ''}
                                                 
                                                 ${hasHoliday && !isSelected ?
@@ -722,7 +722,7 @@ export function HolidayList() {
 
                                 {/* Holiday Details Panel */}
                                 {selectedDateDetails && (
-                                    <div className="mt-4 p-4 rounded-[4px] border border-[#ef4444]/30 bg-[#ef4444]/5 animate-in fade-in slide-in-from-top-2">
+                                    <div className="mt-4 p-4 rounded-xl border border-[#ef4444]/30 bg-[#ef4444]/5 animate-in fade-in slide-in-from-top-2">
                                         <div className="flex items-baseline justify-between mb-2">
                                             <h4 className="text-lg font-bold text-white">
                                                 {format(selectedDateDetails.date, "EEEE, d MMM yyyy")}

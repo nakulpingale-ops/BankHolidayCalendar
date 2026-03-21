@@ -18,7 +18,7 @@ export function CompareStates({ currentState }: { currentState: string }) {
     const statesToShow = COMPARE_STATES.filter(s => s !== currentState);
 
     return (
-        <section className="mb-3 bg-[#0e0a18]/50 border border-white/5 rounded-[4px] p-6 print:hidden">
+        <section className="mb-3 bg-[#0e0a18]/50 border border-white/5 rounded-xl p-6 print:hidden">
             <h3 className="text-lg font-bold text-white mb-4">Compare with other states</h3>
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
                 {statesToShow.map(state => (

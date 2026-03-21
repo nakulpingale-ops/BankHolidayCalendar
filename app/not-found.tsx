@@ -40,7 +40,7 @@ export default function NotFound() {
                     <div className="pt-4">
                         <Link
                             href="/"
-                            className="inline-flex items-center justify-center px-8 py-4 bg-[#14A900] hover:bg-[#12970a] text-white text-sm font-bold uppercase tracking-widest rounded-[4px] transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
+                            className="inline-flex items-center justify-center px-8 py-4 bg-[#14A900] hover:bg-[#12970a] text-white text-sm font-bold uppercase tracking-widest rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]"
                         >
                             Go Back to 2026 Calendar
                         </Link>

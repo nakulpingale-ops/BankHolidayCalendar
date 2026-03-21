@@ -24,7 +24,7 @@ export default function ContactPage() {
                 <p>
                     For all inquiries, please email us at:
                 </p>
-                <div className="bg-[#1c1c21] border border-white/10 p-6 rounded-[4px] inline-block">
+                <div className="bg-[#1c1c21] border border-white/10 p-6 rounded-xl inline-block">
                     <a href="mailto:support@holbank.com" className="text-xl font-bold text-white hover:text-[#7d3cff] transition-colors">
                         support@holbank.com
                     </a>

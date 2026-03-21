@@ -73,7 +73,7 @@ export default function Home() {
                         <h2 className="text-2xl font-bold tracking-tight">Need to Contact Your Bank?</h2>
                     </div>
 
-                    <div className="w-full bg-[#121212]/80 backdrop-blur-sm border-[0.25px] border-[#7d3cff]/45 rounded-[4px] p-6 shadow-xl grid grid-cols-1 md:grid-cols-2 items-center gap-6">
+                    <div className="w-full bg-[#121212]/80 backdrop-blur-sm border-[0.25px] border-[#7d3cff]/45 rounded-xl p-6 shadow-xl grid grid-cols-1 md:grid-cols-2 items-center gap-6">
                         <div className="w-full">
                             <p className="text-gray-400 text-[14px] leading-relaxed mt-2">
                                 Access verified customer care helplines for major banks in India. <br />
@@ -83,7 +83,7 @@ export default function Home() {
 
                         <Link
                             href="/bank-helplines"
-                            className="w-full h-14 bg-[#7d3cff] hover:bg-[#8b52ff] text-white text-sm font-medium px-8 rounded-[4px] transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer shadow-lg shadow-purple-500/10"
+                            className="w-full h-14 bg-[#7d3cff] hover:bg-[#8b52ff] text-white text-sm font-medium px-8 rounded-xl transition-all flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer shadow-lg shadow-purple-500/10"
                         >
                             View Bank Helplines
                             <ArrowRight className="w-5 h-5 text-white" />

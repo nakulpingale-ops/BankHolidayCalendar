@@ -250,7 +250,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
     };
 
     const isActionDisabled = visibleHolidays.length === 0;
-    const actionButtonClass = `p-2 border border-[#7d3cff]/20 rounded-[4px] text-[#7d3cff] hover:border-[#7d3cff] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-[#7d3cff]/20 print:hidden`;
+    const actionButtonClass = `p-2 border border-[#7d3cff]/20 rounded-xl text-[#7d3cff] hover:border-[#7d3cff] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-[#7d3cff]/20 print:hidden`;
 
     return (
         <div className="flex flex-col gap-8 pt-[92px] pb-8 w-full">
@@ -278,7 +278,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
             {/* Insights Block - New Unique Content */}
             {stateName !== "All States/UTs" && (
                 <section className="w-full max-w-[1050px] mx-auto px-4 print:hidden">
-                    <div className="bg-[#1c1c21] border border-[#7d3cff]/30 rounded-[4px] p-5 shadow-lg">
+                    <div className="bg-[#1c1c21] border border-[#7d3cff]/30 rounded-xl p-5 shadow-lg">
                         <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-2">
                             <TrendingUp className="w-5 h-5 text-[#7d3cff]" />
                             <h2 className="text-lg font-bold text-white uppercase tracking-wide">
@@ -286,19 +286,19 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                             </h2>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <div className="bg-white/5 p-3 rounded-[4px] border border-white/5">
+                            <div className="bg-white/5 p-3 rounded-xl border border-white/5">
                                 <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Total Official Holidays</div>
                                 <div className="text-2xl font-bold text-white">{insights.totalOfficial} <span className="text-sm font-normal text-gray-500">Days</span></div>
                             </div>
-                            <div className="bg-white/5 p-3 rounded-[4px] border border-white/5">
+                            <div className="bg-white/5 p-3 rounded-xl border border-white/5">
                                 <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Upcoming Holiday</div>
                                 <div className="text-lg font-bold text-[#7d3cff]">{insights.nextHoliday}</div>
                             </div>
-                            <div className="bg-white/5 p-3 rounded-[4px] border border-white/5">
+                            <div className="bg-white/5 p-3 rounded-xl border border-white/5">
                                 <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Busiest Month</div>
                                 <div className="text-sm font-medium text-white">{insights.topMonths[0] || "N/A"}</div>
                             </div>
-                            <div className="bg-white/5 p-3 rounded-[4px] border border-white/5">
+                            <div className="bg-white/5 p-3 rounded-xl border border-white/5">
                                 <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Saturday Closures</div>
                                 <div className="text-xl font-bold text-white">{insights.totalSaturdays} <span className="text-sm font-normal text-gray-500">(2nd/4th)</span></div>
                             </div>
@@ -324,7 +324,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
             <div className="flex flex-col gap-[5px] w-full max-w-[1050px] mx-auto px-4">
                 {/* B. Control Bar (Filters & Actions) - Hidden on Print */}
                 <div className="w-full print:hidden">
-                    <div id="inner-page-filters" className="w-full relative z-[100] bg-white/5 backdrop-blur-sm border border-[#7d3cff]/65 rounded-[4px] p-4 flex flex-col md:flex-row gap-4 items-center md:items-end justify-between shadow-2xl scroll-mt-[100px]">
+                    <div id="inner-page-filters" className="w-full relative z-[100] bg-white/5 backdrop-blur-sm border border-[#7d3cff]/65 rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center md:items-end justify-between shadow-2xl scroll-mt-[100px]">
                         <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
                             {/* Region Selector */}
                             <div className="w-full md:w-auto">
@@ -442,7 +442,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                 <section className="w-full max-w-[1050px] mx-auto px-4 print:block print:visible print:w-full print:p-0 print-container">
                     <PrintHeader stateName={stateName} />
 
-                    <div className="overflow-x-auto rounded-[4px] border border-white/10 print:border-black print:rounded-none">
+                    <div className="overflow-x-auto rounded-xl border border-white/10 print:border-black print:rounded-none">
                         {/* Desktop List View - Hidden on Mobile */}
                         <table className="hidden md:table w-full text-left border-collapse print:w-full print:table">
                             <thead className="bg-white/5 text-xs uppercase text-gray-400 font-bold tracking-wider print:bg-gray-100 print:text-black print:border-b print:border-black">
@@ -566,7 +566,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                 {/* G2 & G3: Major Cities + Planning Tip - Below Month Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* G2: Major Cities */}
-                    <div className="bg-[#0e0a18] border border-[#7d3cff]/30 rounded-[4px] p-5">
+                    <div className="bg-[#0e0a18] border border-[#7d3cff]/30 rounded-xl p-5">
                         <h4 className="font-bold text-white mb-2 flex items-center gap-2">
                             <MapPin className="w-4 h-4 text-[#7d3cff]" />
                             Major Cities
@@ -580,7 +580,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                     </div>
 
                     {/* G3: Planning Tip */}
-                    <div className="bg-gradient-to-br from-[#7d3cff]/10 to-transparent border border-[#7d3cff]/20 rounded-[4px] p-5">
+                    <div className="bg-gradient-to-br from-[#7d3cff]/10 to-transparent border border-[#7d3cff]/20 rounded-xl p-5">
                         <h4 className="font-bold text-white mb-2 flex items-center gap-2">
                             <Calendar className="w-4 h-4 text-[#7d3cff]" />
                             Planning Tip
