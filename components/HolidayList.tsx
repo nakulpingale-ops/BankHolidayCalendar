@@ -313,7 +313,7 @@ export function HolidayList() {
                                             setSelectedMonth(e.target.value === "All" ? "All" : Number(e.target.value));
                                         }}
                                         disabled={!!checkDate}
-                                        className="h-9 w-auto min-w-[110px] rounded-xl border-0 bg-[#7d3cff] px-2 sm:px-3 text-sm text-white font-medium outline-none appearance-none hover:bg-[#8b52ff] focus:ring-[0.5px] focus:ring-white/30 shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="h-9 w-auto min-w-[110px] md:w-[140px] rounded-xl border-0 bg-[#7d3cff] px-2 sm:px-3 text-sm text-white font-medium outline-none appearance-none hover:bg-[#8b52ff] focus:ring-[0.5px] focus:ring-white/30 shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                         title={checkDate ? "Clear date to browse months" : "Select Month"}
                                     >
                                         <option value="All" className="bg-[#0e0a18] text-white">All months</option>
@@ -379,7 +379,7 @@ export function HolidayList() {
                                         type="date"
                                         value={checkDate}
                                         onChange={(e) => setCheckDate(e.target.value)}
-                                        className="h-9 w-auto min-w-[128px] rounded-xl border px-2 sm:px-3 text-sm outline-none transition-colors uppercase appearance-none
+                                        className="h-9 w-auto min-w-[128px] md:w-[140px] rounded-xl border px-2 sm:px-3 text-sm outline-none transition-colors uppercase appearance-none
                                             text-white/90
                                             bg-black/20
                                             border-white/10

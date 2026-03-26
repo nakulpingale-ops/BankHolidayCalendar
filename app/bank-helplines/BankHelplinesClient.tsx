@@ -15,7 +15,7 @@ export function BankHelplinesClient() {
   );
 
   return (
-    <div className="w-full min-h-screen bg-black text-white">
+    <div className="w-full min-h-screen bg-[#1A1A1A] text-white">
       {/* Hero Header Section */}
       <section className="max-w-[1050px] mx-auto px-4 py-16 md:py-24 text-left">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7d3cff]/10 border border-[#7d3cff]/20 text-[#7d3cff] text-xs font-bold uppercase tracking-widest mb-6">

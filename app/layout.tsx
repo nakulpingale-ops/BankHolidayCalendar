@@ -65,7 +65,7 @@ export default function RootLayout({
         <PagesDevGuard />
         <CanonicalUrl />
       </head>
-      <body className={`${interTight.className} w-full min-h-screen overflow-x-hidden bg-black flex flex-col items-center text-white antialiased`} suppressHydrationWarning>
+      <body className={`${interTight.className} w-full min-h-screen overflow-x-hidden bg-[#1A1A1A] flex flex-col items-center text-white antialiased`} suppressHydrationWarning>
         <DebugGlow />
 
 

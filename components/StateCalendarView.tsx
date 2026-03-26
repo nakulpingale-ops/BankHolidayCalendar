@@ -324,7 +324,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
             <div className="flex flex-col gap-[5px] w-full max-w-[1050px] mx-auto px-4">
                 {/* B. Control Bar (Filters & Actions) - Hidden on Print */}
                 <div className="w-full print:hidden">
-                    <div id="inner-page-filters" className="w-full relative z-[100] bg-white/5 backdrop-blur-sm border border-[#7d3cff]/65 rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center md:items-end justify-between shadow-2xl scroll-mt-[100px]">
+                    <div id="inner-page-filters" className="w-full relative z-[100] bg-[#131313] backdrop-blur-sm border border-[#7d3cff]/65 rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center md:items-end justify-between shadow-2xl scroll-mt-[100px]">
                         <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
                             {/* Region Selector */}
                             <div className="w-full md:w-auto">
@@ -442,7 +442,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                 <section className="w-full max-w-[1050px] mx-auto px-4 print:block print:visible print:w-full print:p-0 print-container">
                     <PrintHeader stateName={stateName} />
 
-                    <div className="overflow-x-auto rounded-xl border border-white/10 print:border-black print:rounded-none">
+                    <div className="overflow-x-auto rounded-xl border border-white/10 bg-[#131313] print:border-black print:rounded-none">
                         {/* Desktop List View - Hidden on Mobile */}
                         <table className="hidden md:table w-full text-left border-collapse print:w-full print:table">
                             <thead className="bg-white/5 text-xs uppercase text-gray-400 font-bold tracking-wider print:bg-gray-100 print:text-black print:border-b print:border-black">

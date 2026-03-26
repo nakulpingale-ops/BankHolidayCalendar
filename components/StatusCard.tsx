@@ -42,20 +42,7 @@ export function StatusCard({ label, date, state, status, headingLevel = "h2" }: 
         { name: "Forex Windows", available: isPhysicalOpen },
     ];
 
-    // Determine tooltip text
-    const getTooltipText = () => {
-        if (status.isOpen) return "Normal working day";
-        switch (status.reason) {
-            case 'Sunday':
-                return "Weekly Holiday: All banks in India remain closed on Sundays as per RBI guidelines.";
-            case 'Second Saturday':
-                return "Weekend Holiday: Banks are closed on the 2nd Saturday of every month.";
-            case 'Fourth Saturday':
-                return "Weekend Holiday: Banks are closed on the 4th Saturday of every month.";
-            default:
-                return `Holiday: ${status.reason}`;
-        }
-    };
+    // Tooltip logic removed natively inline.
 
     const [flash, setFlash] = useState(false);
 
@@ -108,7 +95,7 @@ export function StatusCard({ label, date, state, status, headingLevel = "h2" }: 
                         }`}
                 >
                     {/* Text Container - 650px max on desktop, full width on mobile */}
-                    <div className="md:max-w-[650px] text-center">
+                    <div className="md:max-w-[650px] text-center flex flex-col gap-1 items-center">
                         <span className="text-white text-[14px] font-normal relative z-10 break-words text-center max-w-full inline" style={{ overflowWrap: 'break-word', wordWrap: 'break-word', lineHeight: '1.4' }}>
                             {state === "Dadra and Nagar Haveli and Daman and Diu" ? (
                                 // Special two-line layout for longest UT name
@@ -128,21 +115,12 @@ export function StatusCard({ label, date, state, status, headingLevel = "h2" }: 
                                 </>
                             )}
                         </span>
+                        
+                        <span className="flex items-center gap-1.5 text-[13px] text-white/90 font-medium mt-0.5">
+                            <Info className="w-4 h-4 opacity-80" />
+                            {status.isOpen ? "Regular Working Day" : status.reason}
+                        </span>
                     </div>
-
-                    {/* Info Icon with Tooltip - Inline */}
-                    {!status.isOpen && (
-                        <div className="relative group/info shrink-0">
-                            <Info className="w-4 h-4 text-white hover:text-white/80 cursor-pointer transition-colors" />
-                            <div className="fixed inset-x-4 top-1/2 -translate-y-1/2 md:absolute md:inset-auto md:bottom-full md:left-1/2 md:-translate-x-1/2 mb-0 md:mb-3 w-auto md:w-max max-w-[calc(100vw-32px)] md:max-w-[200px] px-3 py-2 bg-[#1e293b] border border-white/10 rounded-xl shadow-2xl opacity-0 invisible group-hover/info:opacity-100 group-hover/info:visible transition-all duration-200 z-50 pointer-events-none transform md:translate-y-1 group-hover/info:translate-y-0 text-center md:text-left">
-                                <span className="text-[11px] text-white font-medium block leading-tight whitespace-normal">
-                                    {getTooltipText()}
-                                </span>
-                                {/* Arrow */}
-                                <div className="hidden md:block absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-[#1e293b] border-r border-b border-white/10 transform rotate-45"></div>
-                            </div>
-                        </div>
-                    )}
                 </div>
 
                 {/* Services Footer */}
