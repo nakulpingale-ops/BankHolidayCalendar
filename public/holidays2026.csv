@@ -3,7 +3,7 @@ Date,Holiday,State,Status
 2026-02-15,Maha Shivratri,Andaman And Nicobar Islands,Closed
 2026-03-04,Holi,Andaman And Nicobar Islands,Closed
 2026-03-21,Eid al-Fitr,Andaman And Nicobar Islands,Closed
-2026-03-27,Ram Navami,Andaman And Nicobar Islands,Closed
+2026-03-27,Sri Rama Navami,Andaman And Nicobar Islands,Closed
 2026-04-01,Annual Closing of Bank Accounts,Andaman And Nicobar Islands,Closed
 2026-04-03,Good Friday,Andaman And Nicobar Islands,Closed
 2026-05-01,Buddha Purnima,Andaman And Nicobar Islands,Closed
@@ -21,6 +21,7 @@ Date,Holiday,State,Status
 2026-02-15,Maha Shivratri,Andhra Pradesh,Closed
 2026-03-04,Holi,Andhra Pradesh,Closed
 2026-03-21,Id-ul-Fitr,Andhra Pradesh,Closed
+2026-03-27,Sri Rama Navami,Andhra Pradesh,Closed
 2026-04-03,Good Friday,Andhra Pradesh,Closed
 2026-04-05,Babu Jagjivan Ram's Birthday,Andhra Pradesh,Closed
 2026-04-14,Dr B R Ambedkar Jayanti,Andhra Pradesh,Closed
@@ -77,7 +78,7 @@ Date,Holiday,State,Status
 2026-03-04,Holi 2nd Day,Bihar,Closed
 2026-03-21,Eid al-Fitr,Bihar,Closed
 2026-03-22,Bihar Divas,Bihar,Closed
-2026-03-27,Shri Ram Navami,Bihar,Closed
+2026-03-27,Sri Rama Navami,Bihar,Closed
 2026-04-01,Yearly Closing of Bank Accounts,Bihar,Closed
 2026-04-03,Good Friday,Bihar,Closed
 2026-04-14,Dr B R Ambedkar Jayanti,Bihar,Closed
@@ -99,6 +100,7 @@ Date,Holiday,State,Status
 2026-02-15,Maha Shivaratri,Chandigarh,Closed
 2026-03-04,Holi,Chandigarh,Closed
 2026-03-21,Id-ul-Fitr,Chandigarh,Closed
+2026-03-26,Sri Rama Navami,Chandigarh,Closed
 2026-03-31,Mahavir Jayanti,Chandigarh,Closed
 2026-04-03,Good Friday,Chandigarh,Closed
 2026-05-01,Buddha Purnima,Chandigarh,Closed
@@ -183,6 +185,7 @@ Date,Holiday,State,Status
 2026-02-15,Maha Shivratri,Gujarat,Closed
 2026-03-03,Holi 2nd Day,Gujarat,Closed
 2026-03-21,Eid al-Fitr,Gujarat,Closed
+2026-03-26,Sri Rama Navami,Gujarat,Closed
 2026-04-14,Dr B R Ambedkar Jayanti,Gujarat,Closed
 2026-05-27,Eid-al-Adha,Gujarat,Closed
 2026-06-26,Muharram,Gujarat,Closed
@@ -220,6 +223,7 @@ Date,Holiday,State,Status
 2026-02-15,Maha Shivaratri,Himachal Pradesh,Closed
 2026-03-04,Holi,Himachal Pradesh,Closed
 2026-03-21,Eid al-Fitr,Himachal Pradesh,Closed
+2026-03-26,Sri Rama Navami,Himachal Pradesh,Closed
 2026-04-01,Annual Closing of Bank Account,Himachal Pradesh,Closed
 2026-04-15,Himachal Day,Himachal Pradesh,Closed
 2026-04-19,Bhagvan Shree Parshuram Jayanti,Himachal Pradesh,Closed
@@ -266,7 +270,7 @@ Date,Holiday,State,Status
 2026-03-04,Holi,Jharkhand,Closed
 2026-03-21,Eid al-Fitr,Jharkhand,Closed
 2026-03-21,Sarhul,Jharkhand,Closed
-2026-03-27,Shri Ram Navami,Jharkhand,Closed
+2026-03-26,Shri Sri Rama Navami,Jharkhand,Closed
 2026-03-31,Mahavir Jayanti,Jharkhand,Closed
 2026-04-01,Yearly Closing of Bank Accounts,Jharkhand,Closed
 2026-04-03,Good Friday,Jharkhand,Closed
@@ -290,6 +294,7 @@ Date,Holiday,State,Status
 2026-02-15,Maha Shivratri,Karnataka,Closed
 2026-03-20,Ugadi,Karnataka,Closed
 2026-03-21,Khutba-e-Ramzan,Karnataka,Closed
+2026-03-26,Sri Rama Navami,Karnataka,Closed
 2026-03-31,Mahaveera Jayanthi,Karnataka,Closed
 2026-04-03,Good Friday,Karnataka,Closed
 2026-04-14,Dr B R Ambedkar Jayanti,Karnataka,Closed
@@ -363,6 +368,7 @@ Date,Holiday,State,Status
 2026-02-15,Maha Shivratri,Madhya Pradesh,Closed
 2026-03-04,Holi,Madhya Pradesh,Closed
 2026-03-21,Id-ul-Fitr,Madhya Pradesh,Closed
+2026-03-27,Sri Rama Navami,Madhya Pradesh,Closed
 2026-03-31,Mahavir Jayanti,Madhya Pradesh,Closed
 2026-04-01,Annual Closing of Bank Accounts,Madhya Pradesh,Closed
 2026-04-03,Good Friday,Madhya Pradesh,Closed
@@ -382,6 +388,7 @@ Date,Holiday,State,Status
 2026-03-04,Holi,Maharashtra,Closed
 2026-03-19,Gudi Padwa,Maharashtra,Closed
 2026-03-21,Id-ul-Fitr,Maharashtra,Closed
+2026-03-26,Sri Rama Navami,Maharashtra,Closed
 2026-03-31,Mahavir Jayanti,Maharashtra,Closed
 2026-04-01,Yearly Closing of Bank Accounts,Maharashtra,Closed
 2026-04-03,Good Friday,Maharashtra,Closed
@@ -447,6 +454,7 @@ Date,Holiday,State,Status
 2026-02-20,State Day,Mizoram,Closed
 2026-03-03,Holi,Mizoram,Closed
 2026-03-06,Chapchar Kut,Mizoram,Closed
+2026-03-26,Sri Rama Navami,Mizoram,Closed
 2026-04-01,Annual Closing of Bank Accounts,Mizoram,Closed
 2026-04-03,Good Friday,Mizoram,Closed
 2026-05-01,Buddha Pournima,Mizoram,Closed
@@ -483,7 +491,7 @@ Date,Holiday,State,Status
 2026-02-15,Maha Shivaratri,Odisha,Closed
 2026-03-04,Holi,Odisha,Closed
 2026-03-21,Eid al-Fitr,Odisha,Closed
-2026-03-27,Sri Ramnavami,Odisha,Closed
+2026-03-26,Sri Rama Navami,Odisha,Closed
 2026-04-01,Annual Closing of Bank Account,Odisha,Closed
 2026-04-03,Good Friday,Odisha,Closed
 2026-06-15,Raja Sankranti,Odisha,Closed
@@ -520,7 +528,7 @@ Date,Holiday,State,Status
 2026-02-01,Guru Ravidas Jayanti,Punjab,Closed
 2026-03-04,Holi,Punjab,Closed
 2026-03-21,Eid al-Fitr,Punjab,Closed
-2026-03-27,Shri Ram Navami,Punjab,Closed
+2026-03-27,Shri Sri Rama Navami,Punjab,Closed
 2026-04-01,Annual Closing of Bank Accounts,Punjab,Closed
 2026-06-18,Martyr's Day of Guru Arjun Dev Ji,Punjab,Closed
 2026-08-15,Independence Day,Punjab,Closed
@@ -535,6 +543,7 @@ Date,Holiday,State,Status
 2026-02-15,Maha Shivaratri,Rajasthan,Closed
 2026-03-04,Holi,Rajasthan,Closed
 2026-03-21,Id-ul-Fitr,Rajasthan,Closed
+2026-03-26,Sri Rama Navami,Rajasthan,Closed
 2026-03-31,Mahavir Jayanti,Rajasthan,Closed
 2026-05-27,Eid-al-Adha,Rajasthan,Closed
 2026-06-26,Muharram,Rajasthan,Closed
@@ -552,7 +561,7 @@ Date,Holiday,State,Status
 2026-02-18,Losar,Sikkim,Closed
 2026-03-04,Holi,Sikkim,Closed
 2026-03-21,Eid al-Fitr,Sikkim,Closed
-2026-03-27,Ram Navami,Sikkim,Closed
+2026-03-27,Sri Rama Navami,Sikkim,Closed
 2026-04-03,Good Friday,Sikkim,Closed
 2026-05-16,State Day,Sikkim,Closed
 2026-05-31,Saga Dawa,Sikkim,Closed
@@ -574,6 +583,7 @@ Date,Holiday,State,Status
 2026-01-26,Republic Day,Tamil Nadu,Closed
 2026-03-20,Telugu New Year's Day,Tamil Nadu,Closed
 2026-03-21,Eid al-Fitr,Tamil Nadu,Closed
+2026-03-26,Sri Rama Navami,Tamil Nadu,Closed
 2026-03-31,Mahavir Jayanti,Tamil Nadu,Closed
 2026-04-01,Annual Closing of Bank Accounts,Tamil Nadu,Closed
 2026-04-03,Good Friday,Tamil Nadu,Closed
@@ -642,7 +652,7 @@ Date,Holiday,State,Status
 2026-03-03,Holika Dahan,Uttar Pradesh,Closed
 2026-03-04,Holi,Uttar Pradesh,Closed
 2026-03-21,Eid al-Fitr,Uttar Pradesh,Closed
-2026-03-27,Shri Ram Navami,Uttar Pradesh,Closed
+2026-03-26,Sri Rama Navami,Uttar Pradesh,Closed
 2026-03-31,Mahavir Jayanti,Uttar Pradesh,Closed
 2026-04-01,Yearly Closing of Bank Accounts,Uttar Pradesh,Closed
 2026-04-03,Good Friday,Uttar Pradesh,Closed
@@ -665,7 +675,7 @@ Date,Holiday,State,Status
 2026-02-15,Maha Shivratri,Uttarakhand,Closed
 2026-03-04,Holi,Uttarakhand,Closed
 2026-03-21,Eid al-Fitr,Uttarakhand,Closed
-2026-03-27,Ram Navami,Uttarakhand,Closed
+2026-03-26,Sri Rama Navami,Uttarakhand,Closed
 2026-04-01,Annual Closing of Bank Accounts,Uttarakhand,Closed
 2026-04-03,Good Friday,Uttarakhand,Closed
 2026-04-14,Dr B R Ambedkar Jayanti,Uttarakhand,Closed
@@ -685,6 +695,7 @@ Date,Holiday,State,Status
 2026-01-26,Republic Day,West Bengal,Closed
 2026-03-03,Doljatra,West Bengal,Closed
 2026-03-21,Eid al-Fitr,West Bengal,Closed
+2026-03-26,Sri Rama Navami,West Bengal,Closed
 2026-04-03,Good Friday,West Bengal,Closed
 2026-04-14,Dr B R Ambedkar Jayanti,West Bengal,Closed
 2026-04-15,Bengali New Year,West Bengal,Closed
