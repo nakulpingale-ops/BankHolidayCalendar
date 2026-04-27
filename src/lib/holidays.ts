@@ -74,15 +74,48 @@ export function enrichCsvData(data: CsvHolidayRow[]): CsvHolidayRow[] {
 
 // 1. Fetch and Parse CSV (runtime, never cached)
 export async function fetchHolidaysCsv(): Promise<CsvHolidayRow[]> {
+    let text = "";
+
+    // A. Try Local Public File first (Fastest)
     try {
-        const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS1Ahvu0GCKd8m3pQrA3nY44QTk4sB-NAULWgef9olKoJ6gqQxqGVyyYu20TBBYTVgh6m31HY-_f2kb/pub?output=csv", {
-            cache: "no-store",
-        });
-        if (!response.ok) {
-            console.error("CSV FETCH FAILED – HTTP", response.status);
+        // Resolve absolute URL for server-side fetches, relative for client
+        const baseUrl = typeof window !== "undefined" 
+            ? "" 
+            : (process.env.NEXT_PUBLIC_BASE_URL || (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"));
+        
+        const localUrl = `${baseUrl}/holidays2026.csv`;
+        const localResponse = await fetch(localUrl, { cache: "no-store" });
+        
+        if (localResponse.ok) {
+            text = await localResponse.text();
+            console.log("CSV FETCHED FROM LOCAL");
+        } else {
+            throw new Error(`Local fetch HTTP ${localResponse.status}`);
+        }
+    } catch (localError) {
+        console.log("Local CSV fetch failed, falling back to Google Sheets");
+        
+        // B. Fallback to Google Sheets
+        try {
+            const remoteResponse = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS1Ahvu0GCKd8m3pQrA3nY44QTk4sB-NAULWgef9olKoJ6gqQxqGVyyYu20TBBYTVgh6m31HY-_f2kb/pub?output=csv", {
+                cache: "no-store",
+            });
+            
+            if (!remoteResponse.ok) {
+                console.error("REMOTE CSV FETCH FAILED – HTTP", remoteResponse.status);
+                return [];
+            }
+            text = await remoteResponse.text();
+            console.log("CSV FETCHED FROM GOOGLE SHEETS");
+        } catch (remoteError) {
+            console.error("BOTH CSV FETCHES FAILED", remoteError);
             return [];
         }
-        const text = await response.text();
+    }
+
+    if (!text) return [];
+
+    try {
         const { data } = Papa.parse<CsvHolidayRow>(text, {
             header: true,
             skipEmptyLines: true,
@@ -93,10 +126,10 @@ export async function fetchHolidaysCsv(): Promise<CsvHolidayRow[]> {
             }
         });
 
-        console.log("CSV FETCHED –", data.length, "rows loaded");
+        console.log("CSV PARSED –", data.length, "rows loaded");
         return enrichCsvData(data); // Add stateKey
-    } catch (error) {
-        console.error("CSV FETCH FAILED", error);
+    } catch (parseError) {
+        console.error("CSV PARSE FAILED", parseError);
         return [];
     }
 }
