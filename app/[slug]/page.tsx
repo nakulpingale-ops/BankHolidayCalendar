@@ -3,28 +3,11 @@ import { Metadata } from "next";
 import { INDIAN_STATES, slugToState, stateToSlug } from "@/lib/constants";
 import { StateCalendarView } from "@/components/StateCalendarView";
 
-import fs from "fs";
-import path from "path";
-import Papa from "papaparse";
-import { getCombinedHolidays, CsvHolidayRow, enrichCsvData } from "@/src/lib/holidays";
+import { getCombinedHolidays, CsvHolidayRow, fetchHolidaysCsv } from "@/src/lib/holidays";
 
 const BASE_URL = "https://bankholidaycalendar.com";
 
-// Helper for data loading
-function getCsvData(): CsvHolidayRow[] {
-    try {
-        const filePath = path.join(process.cwd(), "public", "holidays2026.csv");
-        const fileContent = fs.readFileSync(filePath, "utf8");
-        const { data } = Papa.parse<CsvHolidayRow>(fileContent, {
-            header: true,
-            skipEmptyLines: true,
-        });
-        return enrichCsvData(data);
-    } catch (e) {
-        console.error("Error reading CSV:", e);
-        return [];
-    }
-}
+
 
 // Helper to load holidays server-side for Metadata
 async function getHolidayMetadata(stateName: string, csvData: CsvHolidayRow[]) {
@@ -66,7 +49,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
 
     // Load Data
-    const csvData = getCsvData();
+    const csvData = await fetchHolidaysCsv();
 
     // Fetch data-driven counts
     const { holidayCount, topHolidays } = await getHolidayMetadata(stateName, csvData);
@@ -136,7 +119,7 @@ export default async function StateCalendarPage({ params }: { params: Promise<{ 
     }
 
     // Load Data
-    const csvData = getCsvData();
+    const csvData = await fetchHolidaysCsv();
 
     // --- Schema Generation ---
     const { holidayCount } = await getHolidayMetadata(initialStateName, csvData);

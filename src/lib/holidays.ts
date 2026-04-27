@@ -75,7 +75,7 @@ export function enrichCsvData(data: CsvHolidayRow[]): CsvHolidayRow[] {
 // 1. Fetch and Parse CSV (runtime, never cached)
 export async function fetchHolidaysCsv(): Promise<CsvHolidayRow[]> {
     try {
-        const response = await fetch(`/holidays2026.csv?ts=${Date.now()}`, {
+        const response = await fetch("https://docs.google.com/spreadsheets/d/e/2PACX-1vS1Ahvu0GCKd8m3pQrA3nY44QTk4sB-NAULWgef9olKoJ6gqQxqGVyyYu20TBBYTVgh6m31HY-_f2kb/pub?output=csv", {
             cache: "no-store",
         });
         if (!response.ok) {
@@ -86,6 +86,11 @@ export async function fetchHolidaysCsv(): Promise<CsvHolidayRow[]> {
         const { data } = Papa.parse<CsvHolidayRow>(text, {
             header: true,
             skipEmptyLines: true,
+            transformHeader: (header: string) => {
+                const lower = header.toLowerCase();
+                if (lower.includes('state')) return 'State';
+                return header;
+            }
         });
 
         console.log("CSV FETCHED –", data.length, "rows loaded");
