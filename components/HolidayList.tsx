@@ -11,7 +11,7 @@ import { PrintHeader } from "./PrintHeader";
 import { useSaturdayToggle } from "@/lib/hooks";
 
 export function HolidayList() {
-    const { selectedState, getHolidays, isBankOpen } = useHolidayData();
+    const { selectedState, getHolidays, isBankOpen, loading } = useHolidayData();
     const year = 2026;
     const [toast, setToast] = useState<{ show: boolean; message: string }>({ show: false, message: "" });
 
@@ -528,7 +528,14 @@ export function HolidayList() {
                                 // MONTH LIST VIEW
                                 filteredHolidays.length === 0 ? (
                                     <div className="w-full py-12 text-center border border-white/10 rounded-xl bg-white/5">
-                                        <p className="text-gray-400">No holidays found for this selection.</p>
+                                        {loading ? (
+                                            <div className="flex flex-col items-center justify-center gap-3">
+                                                <div className="w-8 h-8 border-4 border-[#7d3cff]/30 border-t-[#7d3cff] rounded-full animate-spin"></div>
+                                                <p className="text-gray-400 text-sm font-medium animate-pulse">Loading holidays...</p>
+                                            </div>
+                                        ) : (
+                                            <p className="text-gray-400">No holidays found for this selection.</p>
+                                        )}
                                     </div>
                                 ) : (
                                     <>

@@ -487,7 +487,14 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                 ) : (
                                     <tr>
                                         <td colSpan={stateName === "All States/UTs" ? 5 : 4} className="p-8 text-center text-gray-500 print:text-black">
-                                            {isLoading ? "Loading..." : "No holidays found for this selection."}
+                                            {isLoading ? (
+                                                <div className="flex flex-col items-center justify-center gap-3 py-4">
+                                                    <div className="w-8 h-8 border-4 border-[#7d3cff]/30 border-t-[#7d3cff] rounded-full animate-spin"></div>
+                                                    <p className="text-gray-400 text-sm font-medium animate-pulse">Loading holidays...</p>
+                                                </div>
+                                            ) : (
+                                                "No holidays found for this selection."
+                                            )}
                                         </td>
                                     </tr>
                                 )}
@@ -515,7 +522,14 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                 ))
                             ) : (
                                 <div className="p-8 text-center text-gray-500">
-                                    {isLoading ? "Loading..." : "No holidays found for this selection."}
+                                    {isLoading ? (
+                                        <div className="flex flex-col items-center justify-center gap-3 py-4">
+                                            <div className="w-8 h-8 border-4 border-[#7d3cff]/30 border-t-[#7d3cff] rounded-full animate-spin"></div>
+                                            <p className="text-gray-400 text-sm font-medium animate-pulse">Loading holidays...</p>
+                                        </div>
+                                    ) : (
+                                        "No holidays found for this selection."
+                                    )}
                                 </div>
                             )}
                         </div>
