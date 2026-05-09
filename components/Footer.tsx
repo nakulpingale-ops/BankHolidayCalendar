@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
@@ -123,11 +124,26 @@ function FooterContent() {
 
                     {/* Task 3: BRANDING & COPYRIGHT */}
                     <div className="flex flex-col gap-4 md:items-end md:text-right">
-                        <div className="flex flex-col gap-1">
-                            <span className="text-[10px] text-[#6b7280] uppercase tracking-widest leading-relaxed">
+                        <Link
+                            href="https://play.google.com/store/apps/details?id=com.holbank.bankholiday"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:opacity-80 transition-opacity mb-2 flex justify-center md:justify-end w-full"
+                            aria-label="Download BANKODE app from Google Play Store"
+                        >
+                            <Image
+                                src="/playstore.png"
+                                alt="Download BANKODE on Google Play"
+                                width={150}
+                                height={44}
+                                className="w-[140px] md:w-[150px] h-auto"
+                            />
+                        </Link>
+                        <div className="flex flex-col gap-1 items-center md:items-end">
+                            <span className="text-[10px] text-[#6b7280] uppercase tracking-widest leading-relaxed text-center md:text-right">
                                 © 2026 HolBank IP. All rights reserved.
                             </span>
-                            <span className="text-[10px] text-[#6b7280] uppercase tracking-widest font-bold">
+                            <span className="text-[10px] text-[#6b7280] uppercase tracking-widest font-bold text-center md:text-right">
                                 Verified Financial Utility.
                             </span>
                         </div>

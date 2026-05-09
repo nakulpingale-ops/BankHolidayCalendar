@@ -107,11 +107,11 @@ export function StatusCard({ label, date, state, status, headingLevel = "h2" }: 
                                 </span>
                             ) : status.isOpen ? (
                                 <>
-                                    <span className="font-bold">YES.</span> Banks are open {label.toLowerCase()} in <span className="block sm:inline">{state}</span>
+                                    <span className="font-bold">YES.</span> Banks are open {label.toLowerCase()} in {state}
                                 </>
                             ) : (
                                 <>
-                                    <span className="font-bold">NO.</span> Banks are closed {label.toLowerCase()} in <span className="block sm:inline">{state}</span>
+                                    <span className="font-bold">NO.</span> Banks are closed {label.toLowerCase()} in {state}
                                 </>
                             )}
                         </span>
