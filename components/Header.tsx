@@ -2,9 +2,13 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { Phone } from "lucide-react";
+import { Phone, Download } from "lucide-react";
+import { useState } from "react";
+import { DownloadQRModal } from "./DownloadQRModal";
 
 export function Header() {
+    const [isQRModalOpen, setIsQRModalOpen] = useState(false);
+
     return (
         <header className="fixed top-0 left-0 z-50 w-full pt-4 pb-4 transition-all duration-300 bg-black/20 backdrop-blur-md border-b border-purple-500/20 print:hidden">
             <div className="flex items-center justify-between w-full max-w-none px-4 sm:max-w-[1050px] sm:mx-auto">
@@ -64,32 +68,43 @@ export function Header() {
                         <span className="md:hidden text-xs font-bold whitespace-nowrap">Helplines</span>
                         <span className="hidden md:inline whitespace-nowrap">Bank Helplines</span>
                     </Link>
-                    <Link
-                        href="https://play.google.com/store/apps/details?id=com.holbank.bankholiday"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center hover:opacity-80 transition-opacity flex-shrink-0 border-l border-white/10 pl-3 md:pl-4"
-                        aria-label="Download BANKODE app from Google Play Store"
-                    >
-                        {/* Mobile Icon */}
-                        <Image
-                            src="/playstore_icon.png"
-                            alt="Download BANKODE on Google Play"
-                            width={24}
-                            height={24}
-                            className="w-[23px] h-auto block md:hidden"
-                        />
-                        {/* Desktop Badge */}
-                        <Image
-                            src="/playstore.png"
-                            alt="Download BANKODE on Google Play"
-                            width={135}
-                            height={40}
-                            className="hidden md:block w-[135px] h-auto"
-                        />
-                    </Link>
+                    
+                    <div className="flex items-center flex-shrink-0 border-l border-white/10 pl-3 md:pl-4">
+                        {/* Mobile: Link directly to Play Store */}
+                        <Link
+                            href="https://play.google.com/store/apps/details?id=com.holbank.bankholiday"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="block md:hidden hover:opacity-80 transition-opacity"
+                            aria-label="Download BANKODE app from Google Play Store"
+                        >
+                            <Image
+                                src="/playstore_icon.png"
+                                alt="Download BANKODE on Google Play"
+                                width={24}
+                                height={24}
+                                className="w-[23px] h-auto"
+                            />
+                        </Link>
+
+                        {/* Desktop: Text CTA that opens QR modal */}
+                        <button
+                            onClick={() => setIsQRModalOpen(true)}
+                            className="hidden md:flex items-center gap-2 text-xs font-medium text-gray-300 hover:text-[#7d3cff] transition-colors group"
+                            aria-label="Open download QR code modal"
+                        >
+                            <Download className="w-3.5 h-3.5 text-[#7d3cff]" />
+                            <span className="whitespace-nowrap">Download App</span>
+                        </button>
+                    </div>
                 </div>
             </div>
+
+            <DownloadQRModal 
+                isOpen={isQRModalOpen} 
+                onClose={() => setIsQRModalOpen(false)} 
+            />
         </header>
     );
 }
+
