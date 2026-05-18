@@ -2,10 +2,9 @@
 
 import { useState, useMemo, useEffect, useRef } from "react";
 import { format, getMonth, parseISO, isSameDay, isSaturday, getWeekOfMonth, isSunday, eachDayOfInterval } from "date-fns";
-import Papa from "papaparse";
 import { useHolidayData, HolidayItem } from "@/lib/HolidayContext";
 import { isPastDate, isTodayDate } from "@/src/lib/holidays";
-import { List, Calendar, CalendarDays, ChevronLeft, ChevronRight, Share2, CalendarPlus, Download, Printer } from "lucide-react";
+import { List, Calendar, CalendarDays, ChevronLeft, ChevronRight, Share2, Printer } from "lucide-react";
 import { Toast } from "@/components/Toast";
 import { PrintHeader } from "./PrintHeader";
 import { useSaturdayToggle } from "@/lib/hooks";
@@ -183,59 +182,6 @@ export function HolidayList() {
         } catch (err) {
             console.error("Error sharing:", err);
         }
-    };
-
-    const handleDownloadCSV = () => {
-        const dataToExport = filteredHolidays.map(h => ({
-            Date: h.dateISO,
-            Day: h.dayOfWeek,
-            Holiday: h.name,
-            State: h.state,
-            Type: formatType(h.type),
-            Status: "Closed"
-        }));
-
-        const csv = Papa.unparse(dataToExport);
-        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        const filename = `${selectedState.replace(/ /g, "-")}-Bank-Holidays-${year}.csv`;
-        link.setAttribute("download", filename);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        showSuccessToast("Success! Action completed.");
-    };
-
-    const handleAddToCalendar = () => {
-        let icsContent = "BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//BankHolidayCalendar//EN\n";
-
-        filteredHolidays.forEach((h) => {
-            const dateStr = h.dateISO.replace(/[-]/g, ""); // YYYYMMDD
-            const uid = `${dateStr}-${h.name.replace(/\s+/g, "")}@bankholidaycalendar.com`;
-
-            icsContent += "BEGIN:VEVENT\n";
-            icsContent += `UID:${uid}\n`;
-            icsContent += `DTSTART;VALUE=DATE:${dateStr}\n`;
-            icsContent += `SUMMARY:${h.name} (${formatType(h.type)})\n`;
-            icsContent += `DESCRIPTION:Bank Holiday in ${h.state}. Type: ${formatType(h.type)}\n`;
-            icsContent += "END:VEVENT\n";
-        });
-
-        icsContent += "END:VCALENDAR";
-
-        const blob = new Blob([icsContent], { type: "text/calendar;charset=utf-8" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.setAttribute("download", `${selectedState.toLowerCase().replace(/ /g, "-")}-holidays-${year}.ics`);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        showSuccessToast("Success! Action completed.");
     };
 
     const handlePrint = () => {
@@ -764,22 +710,6 @@ export function HolidayList() {
                         title="Share"
                     >
                         <Share2 className="w-4 h-4" />
-                    </button>
-                    <button
-                        onClick={handleAddToCalendar}
-                        disabled={isActionDisabled}
-                        className={actionButtonClass}
-                        title="Add to Calendar (.ics)"
-                    >
-                        <CalendarPlus className="w-4 h-4" />
-                    </button>
-                    <button
-                        onClick={handleDownloadCSV}
-                        disabled={isActionDisabled}
-                        className={actionButtonClass}
-                        title="Download CSV"
-                    >
-                        <Download className="w-4 h-4" />
                     </button>
                     <button
                         onClick={handlePrint}

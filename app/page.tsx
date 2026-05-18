@@ -13,6 +13,7 @@ import { BrandHeadline } from "@/components/BrandHeadline";
 import { AlertCircle, CheckCircle, PhoneCall, ArrowRight } from "lucide-react";
 import { Metadata } from "next";
 import { HomeVerificationLines } from "@/components/HomeVerificationLines";
+import { AppPromoSection } from "@/components/AppPromoSection";
 
 export const metadata: Metadata = {
     title: "Official Bank Holiday Calendar 2026 - India State/UT Wise",
@@ -91,6 +92,9 @@ export default function Home() {
                     </div>
                 </div>
             </section>
+
+            {/* App Promotion Showcase */}
+            <AppPromoSection />
 
             {/* FAQ Section */}
             <div className="print:hidden">

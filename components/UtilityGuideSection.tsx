@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarPlus, Download, Share2 } from "lucide-react";
+import { Bell, CalendarRange, Share2 } from "lucide-react";
 
 interface UtilityGuideSectionProps {
     stateName: string;
@@ -24,25 +24,25 @@ export function UtilityGuideSection({ stateName }: UtilityGuideSectionProps) {
                         </p>
                     </div>
 
-                    {/* Add to Calendar */}
+                    {/* Smart Reminders */}
                     <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-2 text-[#7d3cff]">
-                            <CalendarPlus className="w-5 h-5" />
-                            <span className="font-bold text-sm uppercase tracking-wide">Add to Calendar</span>
+                            <Bell className="w-5 h-5" />
+                            <span className="font-bold text-sm uppercase tracking-wide">Smart Reminders</span>
                         </div>
                         <p className="text-gray-400 text-sm leading-relaxed">
-                            Click the calendar icon to download an .ics file. Open this file on your phone or computer to automatically save this holiday to your Google, Apple, or Outlook calendar.
+                            Get the BANKODE app to receive intelligent, automatic notifications before upcoming bank holidays. Never miss a bank closure again.
                         </p>
                     </div>
 
-                    {/* Download List */}
+                    {/* Plan Long Weekends */}
                     <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-2 text-[#7d3cff]">
-                            <Download className="w-5 h-5" />
-                            <span className="font-bold text-sm uppercase tracking-wide">Download List</span>
+                            <CalendarRange className="w-5 h-5" />
+                            <span className="font-bold text-sm uppercase tracking-wide">Plan Long Weekends</span>
                         </div>
                         <p className="text-gray-400 text-sm leading-relaxed">
-                            Click the download icon to save the complete 2026 holiday list for {stateName} as a .csv file. This file can be opened in Microsoft Excel or Google Sheets for your personal records.
+                            Use BANKODE's Smart Leaves feature to maximize your time off by planning your holidays around long weekends.
                         </p>
                     </div>
                 </div>
