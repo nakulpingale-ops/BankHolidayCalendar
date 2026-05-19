@@ -180,7 +180,7 @@ export function FeedbackPopup() {
                                 Is our 2026 data accurate for your state?
                             </p>
                             <p className="text-[12px] text-gray-400 mb-5">
-                                Currently viewing: <span className="text-[#7d3cff]">{selectedState}</span>
+                                Currently viewing: <span className="text-[#2563eb]">{selectedState}</span>
                             </p>
 
                             {showMissingInput ? (
@@ -227,7 +227,7 @@ export function FeedbackPopup() {
                                     </button>
                                     <button
                                         onClick={handleCheckAnotherState}
-                                        className="w-full h-10 flex items-center justify-center gap-2 bg-white/5 hover:bg-[#7d3cff]/20 border border-white/10 hover:border-[#7d3cff]/50 text-white text-[13px] font-medium rounded transition-all duration-200"
+                                        className="w-full h-10 flex items-center justify-center gap-2 bg-white/5 hover:bg-[#2563eb]/20 border border-white/10 hover:border-[#2563eb]/50 text-white text-[13px] font-medium rounded transition-all duration-200"
                                     >
                                         <ArrowRight className="w-4 h-4" />
                                         Check another state

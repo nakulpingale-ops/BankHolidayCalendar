@@ -49,46 +49,41 @@ export function AppPromoSection() {
                 {/* 1. Header Styling Alignment */}
                 <div className="flex items-center justify-between mb-[8px]">
                     <div className="flex items-start md:items-center gap-3">
-                        <Smartphone className="w-6 h-6 text-[#7d3cff] stroke-[2]" />
+                        <Smartphone className="w-6 h-6 text-[#2563eb] stroke-[2]" />
                         <h2 className="text-2xl font-bold tracking-tight">Get the Full BANKODE Experience</h2>
                     </div>
+                </div>
 
-                    <div className="flex items-center">
-                        {/* Mobile: Link directly to Play Store */}
+                <div className="w-full bg-[#121212]/80 backdrop-blur-sm border-[0.25px] border-[#2563eb]/45 rounded-xl p-6 shadow-xl grid grid-cols-1 md:grid-cols-2 items-center gap-6 mt-4 mb-8">
+                    <div className="w-full">
+                        <p className="text-gray-400 text-[14px] leading-relaxed">
+                            Track bank holidays, plan smart leaves, receive holiday notifications, explore long weekends, and access state-wise calendars — all in one beautifully designed app built for bank employees and everyday planners.
+                        </p>
+                    </div>
+
+                    <div className="flex flex-col w-full">
+                        <button
+                            onClick={() => setIsQRModalOpen(true)}
+                            className="w-full h-14 bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-medium px-8 rounded-xl transition-all hidden md:flex items-center justify-center gap-2 active:scale-[0.98] cursor-pointer shadow-lg shadow-blue-500/10"
+                        >
+                            Download App
+                            <Download className="w-5 h-5 text-white" />
+                        </button>
+
                         <Link
                             href="https://play.google.com/store/apps/details?id=com.holbank.bankholiday"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="block md:hidden hover:opacity-80 transition-opacity"
-                            aria-label="Download BANKODE app from Google Play Store"
+                            className="w-full h-14 bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-sm font-medium px-8 rounded-xl transition-all flex md:hidden items-center justify-center gap-2 active:scale-[0.98] cursor-pointer shadow-lg shadow-blue-500/10"
                         >
-                            <Image
-                                src="/playstore_icon.png"
-                                alt="Download BANKODE on Google Play"
-                                width={24}
-                                height={24}
-                                className="w-[24px] h-auto"
-                            />
+                            Download App
+                            <Download className="w-5 h-5 text-white" />
                         </Link>
-
-                        {/* Desktop: Text CTA that opens QR modal */}
-                        <button
-                            onClick={() => setIsQRModalOpen(true)}
-                            className="hidden md:flex items-center gap-2 text-xs font-medium text-gray-300 hover:text-[#7d3cff] transition-colors group"
-                            aria-label="Open download QR code modal"
-                        >
-                            <Download className="w-3.5 h-3.5 text-[#7d3cff]" />
-                            <span className="whitespace-nowrap">Download App</span>
-                        </button>
                     </div>
                 </div>
 
                 {/* 2. Bounding Width Fix & 5. Internal Padding Cleanup */}
-                <div className="w-full bg-[#121212]/80 backdrop-blur-sm border-[0.25px] border-[#7d3cff]/45 rounded-xl p-6 md:p-10 shadow-xl flex flex-col items-center">
-                    
-                    <p className="text-gray-400 text-[14px] leading-relaxed mb-10 max-w-3xl text-center">
-                        Track bank holidays, plan smart leaves, receive holiday notifications, explore long weekends, and access state-wise calendars — all in one beautifully designed app built for bank employees and everyday planners.
-                    </p>
+                <div className="w-full flex flex-col items-center mt-2">
 
                     {/* 3. Screenshot Size and Layout */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 xl:gap-8 w-full mb-12 max-w-5xl">
@@ -96,14 +91,15 @@ export function AppPromoSection() {
                             <button 
                                 key={num}
                                 onClick={() => setSelectedImage(num)}
-                                className="relative aspect-[9/19] w-full rounded-[20px] overflow-hidden border border-[#8b5cf6]/20 bg-black/40 shadow-xl group hover:-translate-y-1 hover:scale-[1.02] transition-all duration-250 ease-out focus:outline-none focus:ring-2 focus:ring-[#7d3cff]/50 cursor-pointer"
+                                className="relative aspect-[9/19] w-full rounded-[20px] overflow-hidden border border-[#3b82f6]/20 bg-black/40 shadow-xl group hover:-translate-y-1 hover:scale-[1.02] transition-all duration-250 ease-out focus:outline-none focus:ring-2 focus:ring-[#2563eb]/50 cursor-pointer"
                                 aria-label={`View enlarged app screenshot ${num}`}
                             >
-                                <div className="absolute inset-0 bg-purple-500/0 group-hover:bg-purple-500/10 transition-colors duration-250 z-10 pointer-events-none" />
+                                <div className="absolute inset-0 bg-blue-500/0 group-hover:bg-blue-500/10 transition-colors duration-250 z-10 pointer-events-none" />
                                 <Image
                                     src={`/SS_1080x1920_${num}.png`}
                                     alt={`BANKODE App Screenshot ${num}`}
                                     fill
+                                    quality={100}
                                     className="object-cover"
                                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                                 />
@@ -145,6 +141,7 @@ export function AppPromoSection() {
                                 src={`/SS_1080x1920_${selectedImage}.png`}
                                 alt={`Enlarged BANKODE App Screenshot ${selectedImage}`}
                                 fill
+                                quality={100}
                                 className="object-contain bg-[#0e0a18]"
                                 sizes="(max-width: 768px) 90vw, 80vw"
                                 priority

@@ -17,7 +17,7 @@ export default function NotFound() {
                             BankHolidayCalendar<span className="text-white/25">.com</span>
                         </span>
                         <span className="text-xs text-gray-500 font-medium tracking-normal -mt-0.5">
-                            a <span className="text-[#7c3cfd] font-bold">HOLBANK</span> product
+                            a <span className="text-[#7d3cff] font-bold">HOLBANK</span> product
                         </span>
                     </Link>
                 </div>

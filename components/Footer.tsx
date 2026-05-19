@@ -25,8 +25,8 @@ function FooterContent() {
                     <div className="space-y-3">
                         <h3 className="text-[12px] font-bold text-[#7d3cff] uppercase tracking-widest">HOLBANK GLOBAL NETWORK</h3>
                         <div className="flex flex-col gap-3">
-                            <Link href="https://saturdaytracker.com" target="_blank" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Saturday Tracker</Link>
-                            <Link href="/" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Bank Holiday Calendar</Link>
+                            <Link href="https://saturdaytracker.com" target="_blank" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Saturday Tracker</Link>
+                            <Link href="/" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Bank Holiday Calendar</Link>
                             {/* <span className="text-[13px] text-[#6b7280]">Coming Soon: Bank Holiday List</span> */}
                             <span className="text-[13px] text-[#6b7280]">Coming Soon: Plan Long Weekends</span>
                         </div>
@@ -34,39 +34,39 @@ function FooterContent() {
 
                     {/* POPULAR PAGES */}
                     <div className="space-y-3">
-                        <h3 className="text-[12px] font-bold text-[#7d3cff] uppercase tracking-widest">POPULAR PAGES</h3>
+                        <h3 className="text-[12px] font-bold text-[#2563eb] uppercase tracking-widest">POPULAR PAGES</h3>
                         <div className="flex flex-col gap-3">
-                            <Link href="/all-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">All Bank Holidays 2026</Link>
+                            <Link href="/all-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">All Bank Holidays 2026</Link>
                             {/* Removed 2025 Link as per request */}
-                            <Link href={todayHref} className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Bank Holiday Today</Link>
-                            <Link href={tomorrowHref} className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Bank Holiday Tomorrow</Link>
-                            <Link href="/maharashtra-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Maharashtra Bank Holidays 2026</Link>
-                            <Link href="/delhi-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Delhi Bank Holidays 2026</Link>
-                            <Link href="/karnataka-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Karnataka Bank Holidays 2026</Link>
-                            <Link href="/tamil-nadu-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Tamil Nadu Bank Holidays 2026</Link>
+                            <Link href={todayHref} className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Bank Holiday Today</Link>
+                            <Link href={tomorrowHref} className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Bank Holiday Tomorrow</Link>
+                            <Link href="/maharashtra-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Maharashtra Bank Holidays 2026</Link>
+                            <Link href="/delhi-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Delhi Bank Holidays 2026</Link>
+                            <Link href="/karnataka-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Karnataka Bank Holidays 2026</Link>
+                            <Link href="/tamil-nadu-bank-holiday-2026" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Tamil Nadu Bank Holidays 2026</Link>
                         </div>
                     </div>
 
                     {/* Task 2: RESOURCES */}
                     <div className="flex flex-col gap-4">
-                        <h3 className="text-[12px] font-bold text-[#7d3cff] uppercase tracking-widest">RESOURCES</h3>
+                        <h3 className="text-[12px] font-bold text-[#2563eb] uppercase tracking-widest">RESOURCES</h3>
                         <div className="flex flex-col gap-3">
-                            <Link href="/about" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">About Us</Link>
-                            <Link href="/contact" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Contact</Link>
-                            <Link href="/sources-methodology" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Sources & Methodology</Link>
-                            <Link href="/privacy-policy" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Privacy Policy</Link>
-                            <Link href="/terms" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Terms of Service</Link>
-                            <Link href="/disclaimer" className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300">Disclaimer</Link>
+                            <Link href="/about" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">About Us</Link>
+                            <Link href="/contact" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Contact</Link>
+                            <Link href="/sources-methodology" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Sources & Methodology</Link>
+                            <Link href="/privacy-policy" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Privacy Policy</Link>
+                            <Link href="/terms" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Terms of Service</Link>
+                            <Link href="/disclaimer" className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300">Disclaimer</Link>
                         </div>
                     </div>
 
                     {/* BANK SUPPORT */}
                     <div className="flex flex-col gap-4">
-                        <h3 className="text-[12px] font-bold text-[#7d3cff] uppercase tracking-widest">BANK SUPPORT</h3>
+                        <h3 className="text-[12px] font-bold text-[#2563eb] uppercase tracking-widest">BANK SUPPORT</h3>
                         <div className="flex flex-col gap-3">
                             <Link 
                                 href="/bank-helplines" 
-                                className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300"
+                                className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300"
                                 onClick={() => {
                                     setTimeout(() => {
                                         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -77,7 +77,7 @@ function FooterContent() {
                             </Link>
                             <Link 
                                 href="/bank-helplines" 
-                                className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300"
+                                className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300"
                                 onClick={() => {
                                     setTimeout(() => {
                                         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -88,7 +88,7 @@ function FooterContent() {
                             </Link>
                             <Link 
                                 href="/bank-helplines" 
-                                className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300"
+                                className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300"
                                 onClick={() => {
                                     setTimeout(() => {
                                         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -99,7 +99,7 @@ function FooterContent() {
                             </Link>
                             <Link 
                                 href="/bank-helplines" 
-                                className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300"
+                                className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300"
                                 onClick={() => {
                                     setTimeout(() => {
                                         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
@@ -110,7 +110,7 @@ function FooterContent() {
                             </Link>
                             <Link 
                                 href="/bank-helplines" 
-                                className="text-[14px] text-[#e5e7eb] hover:text-[#7d3cff] transition-colors duration-300"
+                                className="text-[14px] text-[#e5e7eb] hover:text-[#2563eb] transition-colors duration-300"
                                 onClick={() => {
                                     setTimeout(() => {
                                         window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });

@@ -192,7 +192,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
     };
 
     const isActionDisabled = visibleHolidays.length === 0;
-    const actionButtonClass = `p-2 border border-[#7d3cff]/20 rounded-xl text-[#7d3cff] hover:border-[#7d3cff] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-[#7d3cff]/20 print:hidden`;
+    const actionButtonClass = `p-2 border border-[#2563eb]/20 rounded-xl text-[#2563eb] hover:border-[#2563eb] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-[#2563eb]/20 print:hidden`;
 
     return (
         <div className="flex flex-col gap-8 pt-[92px] pb-8 w-full">
@@ -212,7 +212,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                         <span className="block md:inline">ANNUAL BANKING</span>
                         <span className="block md:inline"> CALENDAR 2026</span>
                     </span>
-                    <span className="block mt-[3px] md:-mt-1 text-[#7d3cff] text-[24px] md:text-[42px]">{stateName === "All States/UTs" ? "ALL INDIA" : stateName}</span>
+                    <span className="block mt-[3px] md:-mt-1 text-[#2563eb] text-[24px] md:text-[42px]">{stateName === "All States/UTs" ? "ALL INDIA" : stateName}</span>
                 </h1>
 
             </header>
@@ -220,9 +220,9 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
             {/* Insights Block - New Unique Content */}
             {stateName !== "All States/UTs" && (
                 <section className="w-full max-w-[1050px] mx-auto px-4 print:hidden">
-                    <div className="bg-[#1c1c21] border border-[#7d3cff]/30 rounded-xl p-5 shadow-lg">
+                    <div className="bg-[#1c1c21] border border-[#2563eb]/30 rounded-xl p-5 shadow-lg">
                         <div className="flex items-center gap-2 mb-4 border-b border-white/10 pb-2">
-                            <TrendingUp className="w-5 h-5 text-[#7d3cff]" />
+                            <TrendingUp className="w-5 h-5 text-[#2563eb]" />
                             <h2 className="text-lg font-bold text-white uppercase tracking-wide">
                                 State Holiday Insights (2026)
                             </h2>
@@ -234,7 +234,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                             </div>
                             <div className="bg-white/5 p-3 rounded-xl border border-white/5">
                                 <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Upcoming Holiday</div>
-                                <div className="text-lg font-bold text-[#7d3cff]">{insights.nextHoliday}</div>
+                                <div className="text-lg font-bold text-[#2563eb]">{insights.nextHoliday}</div>
                             </div>
                             <div className="bg-white/5 p-3 rounded-xl border border-white/5">
                                 <div className="text-xs text-gray-400 uppercase tracking-wider mb-1">Busiest Month</div>
@@ -266,7 +266,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
             <div className="flex flex-col gap-[5px] w-full max-w-[1050px] mx-auto px-4">
                 {/* B. Control Bar (Filters & Actions) - Hidden on Print */}
                 <div className="w-full print:hidden">
-                    <div id="inner-page-filters" className="w-full relative z-[100] bg-[#131313] backdrop-blur-sm border border-[#7d3cff]/65 rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center md:items-end justify-between shadow-2xl scroll-mt-[100px]">
+                    <div id="inner-page-filters" className="w-full relative z-[100] bg-[#131313] backdrop-blur-sm border border-[#2563eb]/65 rounded-xl p-4 flex flex-col md:flex-row gap-4 items-center md:items-end justify-between shadow-2xl scroll-mt-[100px]">
                         <div className="flex flex-col md:flex-row gap-4 w-full md:w-auto">
                             {/* Region Selector */}
                             <div className="w-full md:w-auto">
@@ -282,7 +282,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                         }
                                     }}
                                     options={innerStateOptions}
-                                    className="h-[38px] w-full md:min-w-[300px] px-3 py-2 hover:border-[#7d3cff] transition-colors"
+                                    className="h-[38px] w-full md:min-w-[300px] px-3 py-2 hover:border-[#2563eb] transition-colors"
                                 />
                             </div>
 
@@ -301,7 +301,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                             { value: "all", label: "All Months" },
                                             ...months.map((m, idx) => ({ value: idx, label: format(m, "MMMM") }))
                                         ]}
-                                        className="h-[38px] w-full md:min-w-[200px] px-3 py-2 hover:border-[#7d3cff] transition-colors"
+                                        className="h-[38px] w-full md:min-w-[200px] px-3 py-2 hover:border-[#2563eb] transition-colors"
                                     />
                                 </div>
                                 
@@ -317,7 +317,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                             onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
                                             className="sr-only peer"
                                         />
-                                        <div className="w-8 h-4 bg-white/10 rounded-full peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
+                                        <div className="w-8 h-4 bg-white/10 rounded-full peer-checked:bg-[#2563eb]/60 transition-colors"></div>
                                         <div className="absolute left-0.5 w-3 h-3 bg-white/60 rounded-full peer-checked:translate-x-4 transition-transform peer-checked:bg-white"></div>
                                     </div>
                                 </label>
@@ -339,7 +339,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                         onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
                                         className="sr-only peer"
                                     />
-                                    <div className="w-8 h-4 bg-white/10 rounded-full peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
+                                    <div className="w-8 h-4 bg-white/10 rounded-full peer-checked:bg-[#2563eb]/60 transition-colors"></div>
                                     <div className="absolute left-0.5 w-3 h-3 bg-white/60 rounded-full peer-checked:translate-x-4 transition-transform peer-checked:bg-white"></div>
                                 </div>
                             </label>
@@ -415,7 +415,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                         <td colSpan={stateName === "All States/UTs" ? 5 : 4} className="p-8 text-center text-gray-500 print:text-black">
                                             {isLoading ? (
                                                 <div className="flex flex-col items-center justify-center gap-3 py-4">
-                                                    <div className="w-8 h-8 border-4 border-[#7d3cff]/30 border-t-[#7d3cff] rounded-full animate-spin"></div>
+                                                    <div className="w-8 h-8 border-4 border-[#2563eb]/30 border-t-[#2563eb] rounded-full animate-spin"></div>
                                                     <p className="text-gray-400 text-sm font-medium animate-pulse">Loading holidays...</p>
                                                 </div>
                                             ) : (
@@ -450,7 +450,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                                 <div className="p-8 text-center text-gray-500">
                                     {isLoading ? (
                                         <div className="flex flex-col items-center justify-center gap-3 py-4">
-                                            <div className="w-8 h-8 border-4 border-[#7d3cff]/30 border-t-[#7d3cff] rounded-full animate-spin"></div>
+                                            <div className="w-8 h-8 border-4 border-[#2563eb]/30 border-t-[#2563eb] rounded-full animate-spin"></div>
                                             <p className="text-gray-400 text-sm font-medium animate-pulse">Loading holidays...</p>
                                         </div>
                                     ) : (
@@ -490,9 +490,9 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                 {/* G2 & G3: Major Cities + Planning Tip - Below Month Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {/* G2: Major Cities */}
-                    <div className="bg-[#0e0a18] border border-[#7d3cff]/30 rounded-xl p-5">
+                    <div className="bg-[#0e0a18] border border-[#2563eb]/30 rounded-xl p-5">
                         <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                            <MapPin className="w-4 h-4 text-[#7d3cff]" />
+                            <MapPin className="w-4 h-4 text-[#2563eb]" />
                             Major Cities
                         </h4>
                         <p className="text-sm text-gray-400 leading-relaxed">
@@ -504,16 +504,16 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                     </div>
 
                     {/* G3: Planning Tip */}
-                    <div className="bg-gradient-to-br from-[#7d3cff]/10 to-transparent border border-[#7d3cff]/20 rounded-xl p-5">
+                    <div className="bg-gradient-to-br from-[#2563eb]/10 to-transparent border border-[#2563eb]/20 rounded-xl p-5">
                         <h4 className="font-bold text-white mb-2 flex items-center gap-2">
-                            <Calendar className="w-4 h-4 text-[#7d3cff]" />
+                            <Calendar className="w-4 h-4 text-[#2563eb]" />
                             Planning Tip
                         </h4>
                         <p className="text-sm text-gray-300 leading-relaxed mb-3">
                             Plan your bank visits early. 2nd and 4th Saturdays are always closed.
                         </p>
                         {visibleHolidays.some(h => h.date.getDay() === 1 || h.date.getDay() === 5) && (
-                            <p className="text-sm text-[#7d3cff] font-medium">
+                            <p className="text-sm text-[#2563eb] font-medium">
                                 Several holidays in 2026 fall on a Friday or Monday, creating long weekends. Check the list for details.
                             </p>
                         )}
@@ -530,7 +530,7 @@ export function StateCalendarView({ slug, initialStateName, initialHolidays }: S
                             <Link
                                 key={state}
                                 href={`/${stateToSlug(state)}-bank-holiday-2026`}
-                                className="text-sm text-[#e5e7eb] hover:text-[#7d3cff] transition-colors py-1"
+                                className="text-sm text-[#e5e7eb] hover:text-[#2563eb] transition-colors py-1"
                             >
                                 {state}
                             </Link>

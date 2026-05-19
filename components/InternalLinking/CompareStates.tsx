@@ -25,7 +25,7 @@ export function CompareStates({ currentState }: { currentState: string }) {
                     <Link
                         key={state}
                         href={`/${stateToSlug(state)}-bank-holiday-2026`}
-                        className="text-sm text-gray-400 hover:text-[#7d3cff] transition-colors"
+                        className="text-sm text-gray-400 hover:text-[#2563eb] transition-colors"
                     >
                         {state} Holidays 2026
                     </Link>

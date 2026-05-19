@@ -22,7 +22,7 @@ export function Toast({ message, isVisible, onClose }: ToastProps) {
     if (!isVisible) return null;
 
     return (
-        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-3 px-6 py-3 bg-[#0a0a0a]/90 backdrop-blur-md border border-[#7d3cff]/50 rounded-full shadow-[0_0_15px_rgba(125,60,255,0.3)] animate-toast-enter">
+        <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-[100] flex items-center gap-3 px-6 py-3 bg-[#0a0a0a]/90 backdrop-blur-md border border-[#2563eb]/50 rounded-full shadow-[0_0_15px_rgba(125,60,255,0.3)] animate-toast-enter">
             <div className="flex items-center justify-center w-5 h-5 rounded-full bg-green-500/20 border border-green-500/50">
                 <Check className="w-3 h-3 text-green-400" strokeWidth={3} />
             </div>

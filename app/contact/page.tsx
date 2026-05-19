@@ -20,12 +20,12 @@ export default function ContactPage() {
             </section>
 
             <section className="mb-10 space-y-4">
-                <h2 className="text-xl font-bold text-[#7d3cff]">How to Reach Us</h2>
+                <h2 className="text-xl font-bold text-[#2563eb]">How to Reach Us</h2>
                 <p>
                     For all inquiries, please email us at:
                 </p>
                 <div className="bg-[#1c1c21] border border-white/10 p-6 rounded-xl inline-block">
-                    <a href="mailto:support@holbank.com" className="text-xl font-bold text-white hover:text-[#7d3cff] transition-colors">
+                    <a href="mailto:support@holbank.com" className="text-xl font-bold text-white hover:text-[#2563eb] transition-colors">
                         support@holbank.com
                     </a>
                 </div>
@@ -35,11 +35,11 @@ export default function ContactPage() {
             </section>
 
             <section className="mb-10 space-y-4">
-                <h2 className="text-xl font-bold text-[#7d3cff]">Report an Error</h2>
+                <h2 className="text-xl font-bold text-[#2563eb]">Report an Error</h2>
                 <p>
                     If you believe a specific holiday date for your state is incorrect, please include the following in your email:
                 </p>
-                <ul className="list-disc pl-5 space-y-2 marker:text-[#7d3cff]">
+                <ul className="list-disc pl-5 space-y-2 marker:text-[#2563eb]">
                     <li>The State/UT involved.</li>
                     <li>The Date and Name of the holiday.</li>
                     <li>A link to an official government notification or news source verifying the change.</li>

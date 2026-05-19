@@ -18,12 +18,12 @@ export function BankHelplinesClient() {
     <div className="w-full min-h-screen bg-[#1A1A1A] text-white">
       {/* Hero Header Section */}
       <section className="max-w-[1050px] mx-auto px-4 py-16 md:py-24 text-left">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#7d3cff]/10 border border-[#7d3cff]/20 text-[#7d3cff] text-xs font-bold uppercase tracking-widest mb-6">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#2563eb]/10 border border-[#2563eb]/20 text-[#2563eb] text-xs font-bold uppercase tracking-widest mb-6">
           <ShieldAlert className="w-3.5 h-3.5" />
           Verified Financial Data
         </div>
         <h1 className="text-4xl md:text-6xl font-black mb-2 uppercase tracking-tighter leading-none">
-          Bank Customer Care <span className="text-[#7d3cff]">Helplines</span>
+          Bank Customer Care <span className="text-[#2563eb]">Helplines</span>
         </h1>
 
         <p className="text-gray-400 text-[14px] leading-relaxed">
@@ -34,15 +34,15 @@ export function BankHelplinesClient() {
 
         <div className="flex flex-wrap gap-4 mt-3">
             <div className="flex items-center gap-2 text-sm text-gray-500 bg-white/5 px-3 py-2 rounded-xl border border-white/5">
-                <CreditCard className="w-4 h-4 text-[#7d3cff]" />
+                <CreditCard className="w-4 h-4 text-[#2563eb]" />
                 Block Cards
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500 bg-white/5 px-3 py-2 rounded-xl border border-white/5">
-                <ShieldAlert className="w-4 h-4 text-[#7d3cff]" />
+                <ShieldAlert className="w-4 h-4 text-[#2563eb]" />
                 Report Fraud
             </div>
             <div className="flex items-center gap-2 text-sm text-gray-500 bg-white/5 px-3 py-2 rounded-xl border border-white/5">
-                <LifeBuoy className="w-4 h-4 text-[#7d3cff]" />
+                <LifeBuoy className="w-4 h-4 text-[#2563eb]" />
                 24/7 Support
             </div>
         </div>
@@ -56,8 +56,8 @@ export function BankHelplinesClient() {
                 placeholder="Search bank..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full px-4 py-3 rounded-md bg-[#0E0E0E] text-white placeholder-gray-500 border focus:outline-none focus:ring-1 focus:ring-[#7D3CFF]"
-                style={{ borderColor: "#7D3CFF" }}
+                className="w-full px-4 py-3 rounded-md bg-[#0E0E0E] text-white placeholder-gray-500 border focus:outline-none focus:ring-1 focus:ring-[#2563eb]"
+                style={{ borderColor: "#2563eb" }}
             />
         </div>
 
@@ -98,7 +98,7 @@ export function BankHelplinesClient() {
                         alert("Copied to clipboard!");
                       }
                     }}
-                    className="text-[#7d3cff] hover:text-[#8b52ff] transition-colors p-2"
+                    className="text-[#2563eb] hover:text-[#1d4ed8] transition-colors p-2"
                     aria-label={`Share ${bank.name} helpline`}
                   >
                     <Share2 size={18} />
@@ -111,7 +111,7 @@ export function BankHelplinesClient() {
                       <React.Fragment key={i}>
                         <a 
                           href={`tel:${num.replace(/\s+/g, '')}`}
-                          className="text-white text-sm hover:text-[#7d3cff] transition-colors underline decoration-white/20 underline-offset-4"
+                          className="text-white text-sm hover:text-[#2563eb] transition-colors underline decoration-white/20 underline-offset-4"
                         >
                           {num}
                         </a>

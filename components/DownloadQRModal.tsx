@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useCallback } from "react";
+import { useEffect, useCallback, useState } from "react";
 import { X } from "lucide-react";
 import Image from "next/image";
+import { createPortal } from "react-dom";
 
 interface DownloadQRModalProps {
     isOpen: boolean;
@@ -10,6 +11,12 @@ interface DownloadQRModalProps {
 }
 
 export function DownloadQRModal({ isOpen, onClose }: DownloadQRModalProps) {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     // Handle Escape key press
     const handleEsc = useCallback((event: KeyboardEvent) => {
         if (event.key === "Escape") {
@@ -32,11 +39,11 @@ export function DownloadQRModal({ isOpen, onClose }: DownloadQRModalProps) {
         };
     }, [isOpen, handleEsc]);
 
-    if (!isOpen) return null;
+    if (!isOpen || !mounted) return null;
 
-    return (
+    const modalContent = (
         <div 
-            className="fixed inset-0 z-[100] flex items-start justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 pt-[170px]"
+            className="fixed inset-0 z-[9999] flex items-start justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 pt-[170px]"
             onClick={onClose}
             aria-modal="true"
             role="dialog"
@@ -49,7 +56,7 @@ export function DownloadQRModal({ isOpen, onClose }: DownloadQRModalProps) {
                 <div className="absolute top-4 right-4 z-10">
                     <button
                         onClick={onClose}
-                        className="p-1 rounded-full bg-gray-100 text-gray-500 hover:text-black hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-[#7d3cff]/50"
+                        className="p-1 rounded-full bg-gray-100 text-gray-500 hover:text-black hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-[#2563eb]/50"
                         aria-label="Close modal"
                     >
                         <X className="w-5 h-5" />
@@ -83,4 +90,6 @@ export function DownloadQRModal({ isOpen, onClose }: DownloadQRModalProps) {
             </div>
         </div>
     );
+
+    return createPortal(modalContent, document.body);
 }

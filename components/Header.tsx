@@ -10,7 +10,7 @@ export function Header() {
     const [isQRModalOpen, setIsQRModalOpen] = useState(false);
 
     return (
-        <header className="fixed top-0 left-0 z-50 w-full pt-4 pb-4 transition-all duration-300 bg-black/20 backdrop-blur-md border-b border-purple-500/20 print:hidden">
+        <header className="fixed top-0 left-0 z-50 w-full pt-4 pb-4 transition-all duration-300 bg-black/20 backdrop-blur-md border-b border-blue-500/20 print:hidden">
             <div className="flex items-center justify-between w-full max-w-none px-4 sm:max-w-[1050px] sm:mx-auto">
                 <div className="flex flex-col -ml-4">
                     <Link href="/" className="hover:opacity-90 transition-opacity flex items-center">
@@ -31,7 +31,7 @@ export function Header() {
                 <div className="flex items-center gap-4 md:gap-8 min-w-0 flex-shrink">
                     <Link
                         href="/all-bank-holiday-2026"
-                        className="flex items-center gap-1 md:gap-2 text-xs font-medium text-gray-300 hover:text-[#7d3cff] transition-colors group flex-shrink-0"
+                        className="flex items-center gap-1 md:gap-2 text-xs font-medium text-gray-300 hover:text-[#2563eb] transition-colors group flex-shrink-0"
                         onClick={(e) => {
                             // Scroll to top when clicking, especially for same-page navigation
                             setTimeout(() => {
@@ -57,14 +57,14 @@ export function Header() {
                     </Link>
                     <Link
                         href="/bank-helplines"
-                        className="flex items-center gap-1 md:gap-2 text-xs font-medium text-gray-300 hover:text-[#7d3cff] transition-colors group flex-shrink-0 border-l border-white/10 pl-4"
+                        className="flex items-center gap-1 md:gap-2 text-xs font-medium text-gray-300 hover:text-[#2563eb] transition-colors group flex-shrink-0 border-l border-white/10 pl-4"
                         onClick={() => {
                             setTimeout(() => {
                                 window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
                             }, 100);
                         }}
                     >
-                        <Phone className="w-3.5 h-3.5 text-[#7d3cff] flex-shrink-0" />
+                        <Phone className="w-3.5 h-3.5 text-[#2563eb] flex-shrink-0" />
                         <span className="md:hidden text-xs font-bold whitespace-nowrap">Helplines</span>
                         <span className="hidden md:inline whitespace-nowrap">Bank Helplines</span>
                     </Link>
@@ -90,10 +90,10 @@ export function Header() {
                         {/* Desktop: Text CTA that opens QR modal */}
                         <button
                             onClick={() => setIsQRModalOpen(true)}
-                            className="hidden md:flex items-center gap-2 text-xs font-medium text-gray-300 hover:text-[#7d3cff] transition-colors group"
+                            className="hidden md:flex items-center gap-2 text-xs font-medium text-gray-300 hover:text-[#2563eb] transition-colors group"
                             aria-label="Open download QR code modal"
                         >
-                            <Download className="w-3.5 h-3.5 text-[#7d3cff]" />
+                            <Download className="w-3.5 h-3.5 text-[#2563eb]" />
                             <span className="whitespace-nowrap">Download App</span>
                         </button>
                     </div>

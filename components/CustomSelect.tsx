@@ -44,7 +44,7 @@ export function CustomSelect({ value, onChange, options, placeholder, className 
                 onClick={() => setIsOpen(!isOpen)}
                 className={cn(
                     "flex items-center justify-between w-full text-left outline-none appearance-none cursor-pointer",
-                    "bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/65 text-white text-sm rounded-xl hover:border-[#7d3cff] focus:border-[#7d3cff] focus:ring-[0.5px] focus:ring-[#7d3cff] shadow-lg transition-all",
+                    "bg-[#0e0a18] border-[0.25px] border-[#2563eb]/65 text-white text-sm rounded-xl hover:border-[#2563eb] focus:border-[#2563eb] focus:ring-[0.5px] focus:ring-[#2563eb] shadow-lg transition-all",
                     // Base padding that can be overridden by className, but className usually wins for collision
                     // We rely on className to pass in specific padding if needed, or defaults here
                     "px-3 py-2",
@@ -73,7 +73,7 @@ export function CustomSelect({ value, onChange, options, placeholder, className 
                                 }}
                                 className={cn(
                                     "px-4 py-2 text-sm text-white hover:bg-white/10 cursor-pointer transition-colors",
-                                    String(option.value) === String(value) ? "bg-[#7d3cff]/20 text-[#bfdbfe]" : ""
+                                    String(option.value) === String(value) ? "bg-[#2563eb]/20 text-[#bfdbfe]" : ""
                                 )}
                             >
                                 {option.label}

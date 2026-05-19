@@ -58,7 +58,7 @@ export function DayView({ mode, hideHeader = false }: DayViewProps) {
                 <div className={`flex flex-col md:flex-row ${hideHeader ? 'justify-end' : 'justify-between'} items-end gap-4 ${!hideHeader ? 'border-b border-white/10 pb-6' : ''}`}>
                     {!hideHeader && (
                         <div className="flex items-center gap-3">
-                            <Calendar className="w-8 h-8 text-[#7d3cff]" />
+                            <Calendar className="w-8 h-8 text-[#2563eb]" />
                             <div>
                                 <h1 className="text-2xl md:text-3xl font-black tracking-tight leading-none uppercase">
                                     <span className="text-gray-400 block text-lg font-bold mb-1">Are banks open</span>
@@ -76,7 +76,7 @@ export function DayView({ mode, hideHeader = false }: DayViewProps) {
                             <button
                                 onClick={handleDetect}
                                 disabled={isDetecting}
-                                className="flex items-center gap-1 text-[12px] font-medium text-[#7d3cff] hover:text-[#14A900] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait uppercase tracking-normal"
+                                className="flex items-center gap-1 text-[12px] font-medium text-[#2563eb] hover:text-[#14A900] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait uppercase tracking-normal"
                                 title="Auto-detect location"
                             >
                                 <MapPin className={`w-[14px] h-[14px] ${isDetecting ? 'animate-pulse' : ''}`} />
@@ -87,7 +87,7 @@ export function DayView({ mode, hideHeader = false }: DayViewProps) {
                             <select
                                 value={selectedState}
                                 onChange={(e) => setSelectedState(e.target.value)}
-                                className="w-full bg-[#0e0a18] border-[0.25px] border-[#7D3CFF]/65 text-white text-sm rounded-xl focus:ring-[0.5px] focus:ring-[#7d3cff] focus:border-[#7d3cff] block py-3 pl-4 pr-10 transition-all outline-none appearance-none hover:border-[#7d3cff] cursor-pointer truncate shadow-lg"
+                                className="w-full bg-[#0e0a18] border-[0.25px] border-[#2563eb]/65 text-white text-sm rounded-xl focus:ring-[0.5px] focus:ring-[#2563eb] focus:border-[#2563eb] block py-3 pl-4 pr-10 transition-all outline-none appearance-none hover:border-[#2563eb] cursor-pointer truncate shadow-lg"
                             >
                                 {INDIAN_STATES.map(s => <option key={s} value={s} className="bg-black text-white">{s}</option>)}
                             </select>
@@ -122,7 +122,7 @@ export function DayView({ mode, hideHeader = false }: DayViewProps) {
                     {mode === 'today' ? (
                         <Link
                             href="/tomorrow"
-                            className="flex items-center gap-2 text-[#7d3cff] hover:text-[#14A900] transition-colors text-sm font-bold uppercase border border-[#7d3cff]/30 px-4 py-2 rounded bg-[#7d3cff]/5"
+                            className="flex items-center gap-2 text-[#2563eb] hover:text-[#14A900] transition-colors text-sm font-bold uppercase border border-[#2563eb]/30 px-4 py-2 rounded bg-[#2563eb]/5"
                         >
                             Check Tomorrow's Status
                             <ArrowRight className="w-4 h-4" />
@@ -130,7 +130,7 @@ export function DayView({ mode, hideHeader = false }: DayViewProps) {
                     ) : (
                         <Link
                             href="/today"
-                            className="flex items-center gap-2 text-[#7d3cff] hover:text-[#14A900] transition-colors text-sm font-bold uppercase border border-[#7d3cff]/30 px-4 py-2 rounded bg-[#7d3cff]/5"
+                            className="flex items-center gap-2 text-[#2563eb] hover:text-[#14A900] transition-colors text-sm font-bold uppercase border border-[#2563eb]/30 px-4 py-2 rounded bg-[#2563eb]/5"
                         >
                             <ArrowLeft className="w-4 h-4" />
                             Check Today's Status

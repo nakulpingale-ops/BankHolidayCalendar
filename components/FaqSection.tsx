@@ -51,7 +51,7 @@ export function FaqSection() {
         <section className="py-12 border-t border-white/5 w-full">
             <div className="w-full max-w-none px-4 sm:max-w-[1050px] sm:mx-auto">
                 <div className="flex items-center gap-3 mb-[14px]">
-                    <MessageCircleQuestion className="w-6 h-6 text-[#7d3cff]" />
+                    <MessageCircleQuestion className="w-6 h-6 text-[#2563eb]" />
                     <h3 className="text-2xl font-bold text-white tracking-tight">FAQs</h3>
                 </div>
 
@@ -62,9 +62,9 @@ export function FaqSection() {
                             <div
                                 key={index}
                                 className={cn(
-                                    "group rounded-xl bg-[#121212]/80 backdrop-blur-sm border border-[#7d3cff]/45 overflow-hidden transition-all duration-300",
-                                    "hover:shadow-[0_0_15px_rgba(125,60,255,0.15)] hover:border-[#7d3cff]",
-                                    isOpen ? "border-[#7d3cff] bg-[#121212]" : ""
+                                    "group rounded-xl bg-[#121212]/80 backdrop-blur-sm border border-[#2563eb]/45 overflow-hidden transition-all duration-300",
+                                    "hover:shadow-[0_0_15px_rgba(125,60,255,0.15)] hover:border-[#2563eb]",
+                                    isOpen ? "border-[#2563eb] bg-[#121212]" : ""
                                 )}
                             >
                                 <button
@@ -74,12 +74,12 @@ export function FaqSection() {
                                 >
                                     <span className={cn(
                                         "text-[14px] font-medium transition-colors",
-                                        isOpen ? "text-white" : "text-gray-200 group-hover:text-purple-200"
+                                        isOpen ? "text-white" : "text-gray-200 group-hover:text-blue-200"
                                     )}>
                                         {faq.question}
                                     </span>
                                     <span className="ml-4 flex-shrink-0 text-gray-400 group-hover:text-white transition-colors">
-                                        {isOpen ? <ChevronUp className="w-5 h-5 text-[#7d3cff]" /> : <ChevronDown className="w-5 h-5" />}
+                                        {isOpen ? <ChevronUp className="w-5 h-5 text-[#2563eb]" /> : <ChevronDown className="w-5 h-5" />}
                                     </span>
                                 </button>
 

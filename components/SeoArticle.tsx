@@ -5,24 +5,24 @@ export function SeoArticle() {
         <article className="w-full max-w-none px-4 sm:max-w-[1050px] sm:mx-auto pb-8 prose prose-invert break-words">
             <div className="prose prose-invert max-w-none 
                 prose-p:text-[14px] prose-p:leading-relaxed prose-p:text-gray-400 
-                prose-h2:text-[18px] prose-h2:font-bold prose-h2:text-transparent prose-h2:bg-clip-text prose-h2:bg-gradient-to-r prose-h2:from-white prose-h2:to-purple-200 prose-h2:mt-8 prose-h2:mb-4
+                prose-h2:text-[18px] prose-h2:font-bold prose-h2:text-transparent prose-h2:bg-clip-text prose-h2:bg-gradient-to-r prose-h2:from-white prose-h2:to-blue-200 prose-h2:mt-8 prose-h2:mb-4
                 prose-h3:text-[16px] prose-h3:font-semibold prose-h3:text-white prose-h3:mt-6
-                prose-a:text-[#7d3cff] prose-a:no-underline hover:prose-a:text-[#6c2ee0]
+                prose-a:text-[#2563eb] prose-a:no-underline hover:prose-a:text-[#6c2ee0]
                 prose-strong:text-white prose-li:text-gray-300 prose-li:text-[14px]
                 prose-ul:my-4 prose-li:my-1">
 
-                <h1 className="text-3xl font-bold mb-6 tracking-tight bg-gradient-to-r from-white via-purple-100 to-gray-400 bg-clip-text text-transparent">
+                <h1 className="text-3xl font-bold mb-6 tracking-tight bg-gradient-to-r from-white via-blue-100 to-gray-400 bg-clip-text text-transparent">
                     Comprehensive Guide to Indian Bank Holidays & Service Availability
                 </h1>
 
                 <p>
                     Understanding bank holidays in India can be confusing due to the mix of national regulations and state-specific holidays.
                     Whether you are planning a financial transaction or need to visit a branch physically, knowing the rules governing bank operations is crucial.
-                    This guide clarifies the regulations set by the <strong className="text-purple-200">Reserve Bank of India (RBI)</strong> and the Negotiable Instruments Act, 1881.
+                    This guide clarifies the regulations set by the <strong className="text-blue-200">Reserve Bank of India (RBI)</strong> and the Negotiable Instruments Act, 1881.
                 </p>
 
                 <h2 className="flex items-center gap-3">
-                    <span className="w-1 h-6 bg-[#7d3cff] rounded-full"></span>
+                    <span className="w-1 h-6 bg-[#2563eb] rounded-full"></span>
                     The Negotiable Instruments Act, 1881 (Section 25)
                 </h2>
                 <p>
@@ -33,7 +33,7 @@ export function SeoArticle() {
                 </p>
 
                 <h2 className="flex items-center gap-3">
-                    <span className="w-1 h-6 bg-[#7d3cff] rounded-full"></span>
+                    <span className="w-1 h-6 bg-[#2563eb] rounded-full"></span>
                     The "2nd and 4th Saturday" Rule
                 </h2>
                 <p>
@@ -59,7 +59,7 @@ export function SeoArticle() {
                 </p>
 
                 <h2 className="flex items-center gap-3">
-                    <span className="w-1 h-6 bg-[#7d3cff] rounded-full"></span>
+                    <span className="w-1 h-6 bg-[#2563eb] rounded-full"></span>
                     Gazetted vs. State-Specific Holidays
                 </h2>
                 <p>
@@ -76,7 +76,7 @@ export function SeoArticle() {
                 </p>
 
                 <h2 className="flex items-center gap-3">
-                    <span className="w-1 h-6 bg-[#7d3cff] rounded-full"></span>
+                    <span className="w-1 h-6 bg-[#2563eb] rounded-full"></span>
                     Digital Banking: 24/7 Availability
                 </h2>
                 <p>
@@ -92,8 +92,8 @@ export function SeoArticle() {
                     ))}
                 </div>
 
-                <div className="bg-gradient-to-r from-[#7d3cff]/10 to-blue-900/10 border-l-4 border-[#7d3cff] p-6 my-8 rounded-xl">
-                    <p className="font-bold text-purple-200 mb-2 font-display uppercase tracking-widest text-sm">Pro Tip</p>
+                <div className="bg-gradient-to-r from-[#2563eb]/10 to-blue-900/10 border-l-4 border-[#2563eb] p-6 my-8 rounded-xl">
+                    <p className="font-bold text-blue-200 mb-2 font-display uppercase tracking-widest text-sm">Pro Tip</p>
                     <p className="text-gray-300 m-0">Always schedule high-value clearing transactions before known holiday streaks to avoid delays.</p>
                 </div>
             </div>

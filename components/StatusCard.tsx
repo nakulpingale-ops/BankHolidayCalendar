@@ -61,7 +61,7 @@ export function StatusCard({ label, date, state, status, headingLevel = "h2" }: 
     return (
         <div
             className={`w-full flex flex-col h-full rounded-xl border-[0.5px] px-4 sm:px-6 pt-3 pb-5 sm:py-5 relative overflow-hidden transition-colors duration-150 group/card ${flash
-                ? "border-[#7d3cff] bg-[#7d3cff]/10 shadow-[0_0_30px_rgba(125,60,255,0.3)]"
+                ? "border-[#2563eb] bg-[#2563eb]/10 shadow-[0_0_30px_rgba(125,60,255,0.3)]"
                 : `${status.isOpen ? "border-[#14a900]" : "border-[#850000]"} bg-[#0E0B18] backdrop-blur-sm shadow-xl`
                 } min-h-[220px] md:min-h-0`}
         >

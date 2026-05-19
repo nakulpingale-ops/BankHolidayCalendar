@@ -8,7 +8,7 @@ export default function BankingServicesPage() {
                         <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tighter text-white font-inter">
                             Banking Services on Holidays
                         </h1>
-                        <div className="h-1 w-20 bg-[#7d3cff] mx-auto rounded-full"></div>
+                        <div className="h-1 w-20 bg-[#2563eb] mx-auto rounded-full"></div>
                     </header>
 
                     <div className="space-y-10 text-[14px] text-[#e5e7eb] leading-relaxed text-left font-inter">

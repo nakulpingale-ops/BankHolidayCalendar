@@ -26,15 +26,15 @@ export default function AboutPage() {
             </section>
 
             <section className="mb-10 space-y-4">
-                <h2 className="text-xl font-bold text-[#7d3cff]">Our Mission</h2>
+                <h2 className="text-xl font-bold text-[#2563eb]">Our Mission</h2>
                 <p>
                     Our mission is to simplify financial planning for every Indian. By providing a clean, accurate, and easy-to-use calendar of bank holidays, we help you avoid wasted trips to the bank and plan your transactions, EMIs, and investments better.
                 </p>
             </section>
 
             <section className="mb-10 space-y-4">
-                <h2 className="text-xl font-bold text-[#7d3cff]">Why Trust Us?</h2>
-                <ul className="list-disc pl-5 space-y-2 marker:text-[#7d3cff]">
+                <h2 className="text-xl font-bold text-[#2563eb]">Why Trust Us?</h2>
+                <ul className="list-disc pl-5 space-y-2 marker:text-[#2563eb]">
                     <li>
                         <strong className="text-white">State-Specific Accuracy:</strong> We don't just show a generic national list. We drill down to state-level specific holidays.
                     </li>

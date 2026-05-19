@@ -189,7 +189,7 @@ export function HolidayList() {
     };
 
     const isActionDisabled = !checkDate && filteredHolidays.length === 0;
-    const actionButtonClass = `p-2 border border-[#7d3cff]/20 rounded-xl text-[#7d3cff] hover:border-[#7d3cff] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-[#7d3cff]/20 print:hidden`;
+    const actionButtonClass = `p-2 border border-[#2563eb]/20 rounded-xl text-[#2563eb] hover:border-[#2563eb] transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:border-[#2563eb]/20 print:hidden`;
 
 
     // Helper for Type Badge/Color
@@ -197,7 +197,7 @@ export function HolidayList() {
         switch (type) {
             case "National": return "text-orange-400";
             case "Banking": return "text-blue-400";
-            case "State": return "text-[#7d3cff]";
+            case "State": return "text-[#2563eb]";
             case "weekend": return "text-red-400";
             case "holiday": return "text-orange-400";
             default: return "text-gray-400";
@@ -240,7 +240,7 @@ export function HolidayList() {
         <section id="state-holidays-complete-list" className="w-full pt-0 -mt-[9px] pb-0 mb-8 text-white relative z-20">
             <div className="w-full max-w-none px-4 sm:max-w-[1050px] sm:mx-auto">
                 {/* LIST BOX WRAPPER */}
-                <div className="w-full flex flex-col border-0 md:border md:border-[#7d3cff]/45 md:rounded-xl md:bg-[#121212]/80 md:shadow-2xl">
+                <div className="w-full flex flex-col border-0 md:border md:border-[#2563eb]/45 md:rounded-xl md:bg-[#121212]/80 md:shadow-2xl">
                     <div className="w-full mb-0 sticky top-20 z-30 p-2 sm:p-2 border-b-0 sm:border-b sm:border-white/10 bg-transparent sm:bg-[#0e0a18]/95 sm:backdrop-blur-md sm:rounded-t-xl print:hidden">
 
                         {/* Unified Header: Dropdown + Date Check + View Toggle */}
@@ -259,7 +259,7 @@ export function HolidayList() {
                                             setSelectedMonth(e.target.value === "All" ? "All" : Number(e.target.value));
                                         }}
                                         disabled={!!checkDate}
-                                        className="h-9 w-auto min-w-[110px] md:w-[140px] rounded-xl border-0 bg-[#7d3cff] px-2 sm:px-3 text-sm text-white font-medium outline-none appearance-none hover:bg-[#8b52ff] focus:ring-[0.5px] focus:ring-white/30 shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                        className="h-9 w-auto min-w-[110px] md:w-[140px] rounded-xl border-0 bg-[#2563eb] px-2 sm:px-3 text-sm text-white font-medium outline-none appearance-none hover:bg-[#1d4ed8] focus:ring-[0.5px] focus:ring-white/30 shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                         title={checkDate ? "Clear date to browse months" : "Select Month"}
                                     >
                                         <option value="All" className="bg-[#0e0a18] text-white">All months</option>
@@ -292,7 +292,7 @@ export function HolidayList() {
                                                 }
                                             }
                                         }}
-                                        className="h-9 w-9 shrink-0 flex items-center justify-center rounded-xl bg-[#7d3cff] border-white/20 hover:bg-[#8b52ff] text-white transition-all active:scale-95 shadow-lg"
+                                        className="h-9 w-9 shrink-0 flex items-center justify-center rounded-xl bg-[#2563eb] border-white/20 hover:bg-[#1d4ed8] text-white transition-all active:scale-95 shadow-lg"
                                         title="Select a custom date"
                                         aria-label="Select a custom date"
                                     >
@@ -311,7 +311,7 @@ export function HolidayList() {
                                                 onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
                                                 className="sr-only peer"
                                             />
-                                            <div className="w-[42px] h-[21px] bg-white/10 rounded-full peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
+                                            <div className="w-[42px] h-[21px] bg-white/10 rounded-full peer-checked:bg-[#2563eb]/60 transition-colors"></div>
                                             <div className="absolute left-[3px] w-[15px] h-[15px] bg-white/60 rounded-full peer-checked:translate-x-[21px] transition-transform peer-checked:bg-white bottom-[3px]"></div>
                                         </div>
                                     </label>
@@ -332,7 +332,7 @@ export function HolidayList() {
                                             caret-current
                                             placeholder:text-[rgba(255,255,255,0.45)] placeholder:opacity-100
                                             focus:border-[rgba(125,60,255,0.6)] focus:shadow-[0_0_0_2px_rgba(125,60,255,0.25)]
-                                            hover:border-[#7d3cff]/30"
+                                            hover:border-[#2563eb]/30"
                                         placeholder="DD-MM-YYYY"
                                     />
 
@@ -363,7 +363,7 @@ export function HolidayList() {
                                                 onChange={(e) => setIncludeSaturdayClosures(e.target.checked)}
                                                 className="sr-only peer"
                                             />
-                                            <div className="w-[48px] h-[24px] bg-white/10 rounded-full peer peer-checked:bg-[#7d3cff]/60 transition-colors"></div>
+                                            <div className="w-[48px] h-[24px] bg-white/10 rounded-full peer peer-checked:bg-[#2563eb]/60 transition-colors"></div>
                                             <div className="absolute left-[3px] w-[18px] h-[18px] bg-white/60 rounded-full peer-checked:translate-x-[24px] transition-transform peer-checked:bg-white bottom-[3px]"></div>
                                         </div>
                                     </label>
@@ -372,7 +372,7 @@ export function HolidayList() {
                                 <div className="flex items-center gap-3 shrink-0">
                                     <button
                                         onClick={() => handleViewChange("list")}
-                                        className={`p-1.5 rounded-xl transition-all ${viewMode === "list" ? "bg-[#7d3cff]/20 text-[#7d3cff] ring-1 ring-[#7d3cff]/50" : "text-gray-400 hover:text-white"}`}
+                                        className={`p-1.5 rounded-xl transition-all ${viewMode === "list" ? "bg-[#2563eb]/20 text-[#2563eb] ring-1 ring-[#2563eb]/50" : "text-gray-400 hover:text-white"}`}
                                         aria-label="List View"
                                         aria-pressed={viewMode === "list"}
                                     >
@@ -383,7 +383,7 @@ export function HolidayList() {
                                             if (checkDate) setCheckDate(""); // Switch out of date mode
                                             handleViewChange("calendar");
                                         }}
-                                        className={`p-1.5 rounded-xl transition-all ${viewMode === "calendar" ? "bg-[#7d3cff]/20 text-[#7d3cff] ring-1 ring-[#7d3cff]/50" : "text-gray-400 hover:text-white"}`}
+                                        className={`p-1.5 rounded-xl transition-all ${viewMode === "calendar" ? "bg-[#2563eb]/20 text-[#2563eb] ring-1 ring-[#2563eb]/50" : "text-gray-400 hover:text-white"}`}
                                         aria-label="Calendar View"
                                         aria-pressed={viewMode === "calendar"}
                                     >
@@ -476,7 +476,7 @@ export function HolidayList() {
                                     <div className="w-full py-12 text-center border border-white/10 rounded-xl bg-white/5">
                                         {loading ? (
                                             <div className="flex flex-col items-center justify-center gap-3">
-                                                <div className="w-8 h-8 border-4 border-[#7d3cff]/30 border-t-[#7d3cff] rounded-full animate-spin"></div>
+                                                <div className="w-8 h-8 border-4 border-[#2563eb]/30 border-t-[#2563eb] rounded-full animate-spin"></div>
                                                 <p className="text-gray-400 text-sm font-medium animate-pulse">Loading holidays...</p>
                                             </div>
                                         ) : (

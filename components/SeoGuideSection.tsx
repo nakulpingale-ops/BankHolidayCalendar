@@ -16,20 +16,20 @@ export function SeoGuideSection({ stateName }: SeoGuideSectionProps) {
 
                 <div className="prose prose-invert max-w-none 
                     prose-p:text-[14px] prose-p:leading-relaxed prose-p:text-gray-400 
-                    prose-h2:text-[18px] prose-h2:font-bold prose-h2:text-transparent prose-h2:bg-clip-text prose-h2:bg-gradient-to-r prose-h2:from-white prose-h2:to-purple-200 prose-h2:mt-8 prose-h2:mb-4
+                    prose-h2:text-[18px] prose-h2:font-bold prose-h2:text-transparent prose-h2:bg-clip-text prose-h2:bg-gradient-to-r prose-h2:from-white prose-h2:to-blue-200 prose-h2:mt-8 prose-h2:mb-4
                     prose-h3:text-[16px] prose-h3:font-semibold prose-h3:text-white prose-h3:mt-6
-                    prose-a:text-[#7d3cff] prose-a:no-underline hover:prose-a:text-[#6c2ee0]
+                    prose-a:text-[#2563eb] prose-a:no-underline hover:prose-a:text-[#6c2ee0]
                     prose-strong:text-white prose-li:text-gray-300 prose-li:text-[14px]
                     prose-ul:my-4 prose-li:my-1">
 
                     <p>
                         Searching for the most accurate <strong>Bank Holiday Calendar 2026</strong> for {displayState}? You are in the right place.
-                        Navigating through the various national and state-specific holidays can be complex, but our <strong>Bank Holiday Calendar 2026</strong> simplifies this by aggregating data directly from verified <strong className="text-purple-200">RBI circulars</strong> and official State Government gazettes.
+                        Navigating through the various national and state-specific holidays can be complex, but our <strong>Bank Holiday Calendar 2026</strong> simplifies this by aggregating data directly from verified <strong className="text-blue-200">RBI circulars</strong> and official State Government gazettes.
                         Whether you need to plan a high-value RTGS transfer or visit a branch for locker operations, checking the <strong>Bank Holiday Calendar 2026</strong> first ensures you never face a closed door.
                     </p>
 
                     <h2 className="flex items-center gap-3">
-                        <span className="w-1 h-6 bg-[#7d3cff] rounded-full"></span>
+                        <span className="w-1 h-6 bg-[#2563eb] rounded-full"></span>
                         How the Bank Holiday Calendar 2026 Works
                     </h2>
                     <p>
@@ -39,7 +39,7 @@ export function SeoGuideSection({ stateName }: SeoGuideSectionProps) {
                     </p>
 
                     <h2 className="flex items-center gap-3">
-                        <span className="w-1 h-6 bg-[#7d3cff] rounded-full"></span>
+                        <span className="w-1 h-6 bg-[#2563eb] rounded-full"></span>
                         The "2nd and 4th Saturday" Rule in 2026
                     </h2>
                     <p>
@@ -61,7 +61,7 @@ export function SeoGuideSection({ stateName }: SeoGuideSectionProps) {
                     </ul>
 
                     <h2 className="flex items-center gap-3">
-                        <span className="w-1 h-6 bg-[#7d3cff] rounded-full"></span>
+                        <span className="w-1 h-6 bg-[#2563eb] rounded-full"></span>
                         Digital Services During Holidays
                     </h2>
                     <p>
@@ -78,8 +78,8 @@ export function SeoGuideSection({ stateName }: SeoGuideSectionProps) {
                         ))}
                     </div>
 
-                    <div className="bg-gradient-to-r from-[#7d3cff]/10 to-blue-900/10 border-l-4 border-[#7d3cff] p-6 my-8 rounded-xl">
-                        <p className="font-bold text-purple-200 mb-2 font-display uppercase tracking-widest text-sm">Pro Tip</p>
+                    <div className="bg-gradient-to-r from-[#2563eb]/10 to-blue-900/10 border-l-4 border-[#2563eb] p-6 my-8 rounded-xl">
+                        <p className="font-bold text-blue-200 mb-2 font-display uppercase tracking-widest text-sm">Pro Tip</p>
                         <p className="text-gray-300 m-0">Always confirm high-value dates with the <strong>Bank Holiday Calendar 2026</strong> to avoid clearing delays.</p>
                     </div>
                 </div>

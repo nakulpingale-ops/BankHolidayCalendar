@@ -47,7 +47,7 @@ export function HomeVerificationLines() {
                     <button
                         onClick={handleDetect}
                         disabled={isDetecting}
-                        className="flex items-center gap-1 text-[12px] font-medium text-[#7d3cff] hover:text-[#14A900] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait uppercase tracking-normal"
+                        className="flex items-center gap-1 text-[12px] font-medium text-[#2563eb] hover:text-[#14A900] transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-wait uppercase tracking-normal"
                         title="Auto-detect location"
                     >
                         {isDetecting ? '...' : 'DETECT'}
@@ -57,7 +57,7 @@ export function HomeVerificationLines() {
                     <select
                         value={selectedState}
                         onChange={(e) => handleStateChange(e.target.value)}
-                        className="w-full h-12 bg-[#7D3CFF] border-none text-white text-base rounded-xl focus:ring-2 focus:ring-[#7d3cff]/45 block pl-4 pr-10 transition-all outline-none appearance-none hover:bg-[#5127A6] cursor-pointer truncate shadow-lg font-medium"
+                        className="w-full h-12 bg-[#2563eb] border-none text-white text-base rounded-xl focus:ring-2 focus:ring-[#2563eb]/45 block pl-4 pr-10 transition-all outline-none appearance-none hover:bg-[#5127A6] cursor-pointer truncate shadow-lg font-medium"
                     >
                         {INDIAN_STATES.map(s => <option key={s} value={s} className="bg-black text-white">{s}</option>)}
                     </select>

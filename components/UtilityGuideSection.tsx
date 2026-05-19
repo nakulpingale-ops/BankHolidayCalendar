@@ -15,7 +15,7 @@ export function UtilityGuideSection({ stateName }: UtilityGuideSectionProps) {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     {/* Share List */}
                     <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-2 text-[#7d3cff]">
+                        <div className="flex items-center gap-2 text-[#2563eb]">
                             <Share2 className="w-5 h-5" />
                             <span className="font-bold text-sm uppercase tracking-wide">Share List</span>
                         </div>
@@ -26,7 +26,7 @@ export function UtilityGuideSection({ stateName }: UtilityGuideSectionProps) {
 
                     {/* Smart Reminders */}
                     <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-2 text-[#7d3cff]">
+                        <div className="flex items-center gap-2 text-[#2563eb]">
                             <Bell className="w-5 h-5" />
                             <span className="font-bold text-sm uppercase tracking-wide">Smart Reminders</span>
                         </div>
@@ -37,7 +37,7 @@ export function UtilityGuideSection({ stateName }: UtilityGuideSectionProps) {
 
                     {/* Plan Long Weekends */}
                     <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-2 text-[#7d3cff]">
+                        <div className="flex items-center gap-2 text-[#2563eb]">
                             <CalendarRange className="w-5 h-5" />
                             <span className="font-bold text-sm uppercase tracking-wide">Plan Long Weekends</span>
                         </div>
